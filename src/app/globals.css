@@ -1204,3 +1204,20 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
 @media (max-width: 480px) {
   .btn-primary, .btn-outline { font-size: 0.9rem; padding: 11px 20px; }
 }
+
+/* ─── Accessibility: Reduced Motion ─────────────────────
+   Collapses all CSS transitions/animations for users who
+   have "Reduce Motion" enabled in their OS settings.
+   Framer Motion animations are disabled separately via the
+   useReducedMotion() hook in each motion component.
+   ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+    scroll-behavior:          auto   !important;
+  }
+}

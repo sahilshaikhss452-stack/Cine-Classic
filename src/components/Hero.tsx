@@ -1,13 +1,29 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 
 export default function Hero() {
   const [videoFailed, setVideoFailed] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef       = useRef<HTMLVideoElement>(null);
+  const sectionRef     = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  /* Track hero section scroll progress (0 = top of section at top of
+     viewport, 1 = bottom of section at top of viewport). */
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  /* Background slides down 20 % of its own height as the section scrolls
+     out — body bg (#060606) is the same dark colour so any edge gap is
+     invisible, keeping the effect seamless. */
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       style={{
         minHeight: '100vh',
@@ -18,43 +34,53 @@ export default function Hero() {
         overflow: 'hidden',
       }}
     >
-      {/* ── Cinematic background ─────────────────────────────── */}
+      {/* ── Parallax background container ────────────────────── */}
+      {/* Slightly taller than the section so parallax never exposes a gap */}
+      <motion.div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: 0, right: 0,
+          top: '-8%', height: '116%',
+          y: shouldReduceMotion ? 0 : bgY,
+        }}
+      >
+        {/* Fallback gradient — always present underneath the video */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `
+            radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,175,55,0.12) 0%, transparent 55%),
+            radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212,175,55,0.06) 0%, transparent 50%),
+            radial-gradient(ellipse 30% 30% at 80% 70%, rgba(212,175,55,0.04) 0%, transparent 50%),
+            linear-gradient(160deg, #080808 0%, #060606 100%)
+          `,
+        }} />
 
-      {/* Fallback gradient — always present underneath the video */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: `
-          radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,175,55,0.12) 0%, transparent 55%),
-          radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212,175,55,0.06) 0%, transparent 50%),
-          radial-gradient(ellipse 30% 30% at 80% 70%, rgba(212,175,55,0.04) 0%, transparent 50%),
-          linear-gradient(160deg, #080808 0%, #060606 100%)
-        `,
-      }} />
+        {/* Video background — place hero.mp4 in /public/videos/ */}
+        {!videoFailed && (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            onError={() => setVideoFailed(true)}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.45,
+            }}
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+            <source src="/videos/hero.webm" type="video/webm" />
+          </video>
+        )}
+      </motion.div>
 
-      {/* Video background — place hero.mp4 in /public/videos/ */}
-      {!videoFailed && (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          onError={() => setVideoFailed(true)}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: 0.45,
-          }}
-        >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-          <source src="/videos/hero.webm" type="video/webm" />
-        </video>
-      )}
-
-      {/* Dark gradient overlay — ensures text legibility */}
+      {/* Dark gradient overlay — no parallax, always ensures text legibility */}
       <div style={{
         position: 'absolute', inset: 0,
         background: 'linear-gradient(to top, rgba(6,6,6,0.92) 0%, rgba(6,6,6,0.55) 45%, rgba(6,6,6,0.35) 100%)',
