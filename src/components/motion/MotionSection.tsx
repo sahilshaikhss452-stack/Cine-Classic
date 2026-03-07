@@ -1,11 +1,11 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
-import { ReactNode, CSSProperties } from 'react';
+import { useRef, ReactNode, CSSProperties } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 
 interface MotionSectionProps {
   children: ReactNode;
-  /** Optional entrance delay in seconds — use for visual hierarchy (default 0) */
+  /** Optional entrance delay in seconds (default 0) */
   delay?: number;
   className?: string;
   style?: CSSProperties;
@@ -13,8 +13,9 @@ interface MotionSectionProps {
 
 /**
  * Wraps a page section with a cinematic fade-in + slide-up animation as it
- * enters the viewport (Apple-style scroll reveal). Renders without any wrapper
- * div when prefers-reduced-motion is active.
+ * enters the viewport. Uses useInView (explicit hook) instead of whileInView
+ * so the IntersectionObserver is wired directly to the ref — reliable in
+ * Next.js App Router SSR environments. Respects prefers-reduced-motion.
  */
 export default function MotionSection({
   children,
@@ -22,9 +23,17 @@ export default function MotionSection({
   className,
   style,
 }: MotionSectionProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  /* Respect the user's accessibility preference — no animation wrapper */
+  /* Trigger when element is 60px inside the viewport from the bottom.
+     once:true means the animation only plays the first time. */
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '0px 0px -60px 0px',
+  });
+
+  /* Respect user's accessibility preference — plain div, no animation */
   if (shouldReduceMotion) {
     return (
       <div className={className} style={style}>
@@ -35,13 +44,13 @@ export default function MotionSection({
 
   return (
     <motion.div
+      ref={ref}
       className={className}
       style={{ width: '100%', ...style }}
-      initial={{ opacity: 0, y: 48 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
+      initial={{ opacity: 0, y: 44 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 44 }}
       transition={{
-        duration: 0.75,
+        duration: 0.7,
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}
