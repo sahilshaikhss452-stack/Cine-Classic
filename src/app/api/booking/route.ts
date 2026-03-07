@@ -1,18 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
 
-// ─── Sanity write client ──────────────────────────────────────────────────────
-// Requires SANITY_WRITE_TOKEN in your environment variables.
-// Generate one at: https://sanity.io/manage → project → API → Tokens
-// Set permissions to "Editor" so it can create documents.
-const sanityWriteClient = createClient({
-  projectId : process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '',
-  dataset   : process.env.NEXT_PUBLIC_SANITY_DATASET   ?? 'production',
-  apiVersion: '2024-01-01',
-  useCdn    : false,   // MUST be false for write operations
-  token     : process.env.SANITY_WRITE_TOKEN,
-});
-
 interface BookingPayload {
   firstName:  string;
   lastName:   string;
@@ -68,9 +56,23 @@ export async function POST(req: NextRequest) {
   });
 
   // ─── Store in Sanity CMS ──────────────────────────────────────────────────
-  // If SANITY_WRITE_TOKEN is not set, we log and return success without writing.
-  if (process.env.SANITY_WRITE_TOKEN) {
+  // Requires SANITY_WRITE_TOKEN in Vercel environment variables.
+  // Generate at: https://sanity.io/manage → project → API → Tokens (Editor permission)
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  const writeToken = process.env.SANITY_WRITE_TOKEN;
+
+  if (projectId && writeToken) {
     try {
+      // Lazy-create the Sanity write client inside the handler so it never
+      // throws at module-init time when env vars aren't available.
+      const sanityWriteClient = createClient({
+        projectId,
+        dataset   : process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
+        apiVersion: '2024-01-01',
+        useCdn    : false,   // MUST be false for write operations
+        token     : writeToken,
+      });
+
       await sanityWriteClient.create({
         _type:          'bookingInquiry',
         name:           fullName,
@@ -89,7 +91,7 @@ export async function POST(req: NextRequest) {
       console.log('[Booking Inquiry] Saved to Sanity CMS ✓');
     } catch (err) {
       console.error('[Booking Inquiry] Sanity write failed:', err);
-      // Still return success to the user — don't block the UX if CMS write fails
+      // Still return success — don't block the UX if CMS write fails
     }
   } else {
     console.warn('[Booking Inquiry] SANITY_WRITE_TOKEN not set — inquiry logged but NOT saved to CMS.');
