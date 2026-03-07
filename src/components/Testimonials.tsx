@@ -25,13 +25,9 @@ export default function Testimonials() {
         </h2>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '1.25rem',
-        maxWidth: '1200px',
-        margin: '0 auto',
-      }}>
+      <p className="swipe-hint">swipe to browse ›</p>
+
+      <div className="testimonials-grid">
         {TESTIMONIALS.map((t, i) => (
           <div
             key={t.id}

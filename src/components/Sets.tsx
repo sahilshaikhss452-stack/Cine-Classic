@@ -26,7 +26,8 @@ export default function Sets() {
         </p>
       </div>
 
-      {/* Studios grid */}
+      {/* Studios grid — horizontal scroll on mobile */}
+      <p className="swipe-hint">swipe to browse ›</p>
       <div className="studio-sets-grid">
         {STUDIO_SETS.map((studio, i) => (
           <StudioCard key={studio.id} studio={studio} index={i} />

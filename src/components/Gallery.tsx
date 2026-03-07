@@ -29,7 +29,8 @@ export default function Gallery() {
         </p>
       </div>
 
-      {/* Masonry-style grid — responsive via CSS class in globals.css */}
+      {/* Masonry-style grid — horizontal scroll on mobile */}
+      <p className="swipe-hint">swipe to explore ›</p>
       <div className="gallery-grid">
         {GALLERY_ITEMS.map((item, i) => (
           <div

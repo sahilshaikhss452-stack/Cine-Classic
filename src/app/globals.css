@@ -1061,6 +1061,102 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
   .form-input { font-size: 16px !important; }
 }
 
+/* ─── Testimonials grid (desktop) ───────────────────────── */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ─── Mobile Horizontal Scroll Carousels ─────────────────────
+   Converts vertical grid stacks → Netflix-style swipe rows.
+   Desktop layout is UNCHANGED (grid classes still apply above 768px).
+   ─────────────────────────────────────────────────────────── */
+
+/* Swipe hint label — visible only on mobile */
+.swipe-hint {
+  display: none;
+}
+@media (max-width: 768px) {
+  .swipe-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.55;
+    margin-bottom: 0.85rem;
+  }
+}
+
+/* ── Shared horizontal-scroll behaviour ── */
+@media (max-width: 768px) {
+  .studio-sets-grid,
+  .gallery-grid,
+  .productions-types-grid,
+  .bts-grid,
+  .testimonials-grid {
+    display:          flex          !important;
+    flex-wrap:        nowrap        !important;
+    overflow-x:       auto         !important;
+    overflow-y:       visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width:  none;
+    -ms-overflow-style: none;
+    gap:              1rem         !important;
+    padding-bottom:   1.25rem      !important;
+    /* right padding exposes peek of next card */
+    padding-right:    calc(5% + 0.5rem) !important;
+    max-width:        100%         !important;
+    margin-left:      0            !important;
+    margin-right:     0            !important;
+  }
+
+  /* Hide browser scrollbar */
+  .studio-sets-grid::-webkit-scrollbar,
+  .gallery-grid::-webkit-scrollbar,
+  .productions-types-grid::-webkit-scrollbar,
+  .bts-grid::-webkit-scrollbar,
+  .testimonials-grid::-webkit-scrollbar { display: none; }
+
+  /* ── Card widths ── */
+  .studio-sets-grid      > *,
+  .productions-types-grid > *,
+  .testimonials-grid     > * {
+    min-width:        260px !important;
+    max-width:        260px !important;
+    flex-shrink:      0     !important;
+    scroll-snap-align: start;
+  }
+
+  .gallery-grid > * {
+    min-width:        240px !important;
+    max-width:        240px !important;
+    flex-shrink:      0     !important;
+    scroll-snap-align: start;
+  }
+
+  .bts-grid > * {
+    min-width:        250px !important;
+    max-width:        250px !important;
+    flex-shrink:      0     !important;
+    scroll-snap-align: start;
+  }
+
+  /* Cancel span/colspan overrides that don't apply in flex */
+  .bts-card-large { grid-column: unset !important; }
+  .gallery-span2  { grid-column: unset !important; }
+
+  /* Reduce studio-sets-grid bottom margin (was 3.5rem) */
+  .studio-sets-grid { margin-bottom: 1.5rem !important; }
+}
+
 /* ─── General image hover zoom ───────────────────────────── */
 .img-zoom-wrap { overflow: hidden; border-radius: inherit; }
 .img-zoom-wrap img {

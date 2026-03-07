@@ -72,7 +72,8 @@ export default function ProductionTypes() {
           </p>
         </div>
 
-        {/* Cards Grid — responsive via .productions-types-grid in globals.css */}
+        {/* Cards Grid — horizontal scroll on mobile */}
+        <p className="swipe-hint">swipe to explore ›</p>
         <div className="productions-types-grid">
           {PRODUCTION_TYPES.map((pt, i) => (
             <div

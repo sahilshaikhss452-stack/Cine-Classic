@@ -74,7 +74,8 @@ export default function BehindScenes() {
           </p>
         </div>
 
-        {/* Masonry-style Grid */}
+        {/* Masonry-style Grid — horizontal scroll on mobile */}
+        <p className="swipe-hint">swipe to explore ›</p>
         <div className="bts-grid">
           {BTS_ITEMS.map((item, i) => (
             <div
