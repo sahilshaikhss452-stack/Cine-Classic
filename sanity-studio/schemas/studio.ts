@@ -1,0 +1,120 @@
+import { defineField, defineType } from 'sanity';
+
+export const studioSchema = defineType({
+  name: 'studio',
+  title: 'Studio Set',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'name',
+      title: 'Studio Name',
+      type: 'string',
+      description: 'e.g. "Market 1 Set", "Court Set"',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug (URL)',
+      type: 'slug',
+      description: 'Auto-generated from name. Used in the URL: /studios/[slug]',
+      options: { source: 'name' },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'string',
+      description: 'Short description shown on cards, e.g. "Authentic Bazaar Experience"',
+    }),
+    defineField({
+      name: 'description',
+      title: 'Full Description',
+      type: 'text',
+      rows: 4,
+      description: 'Shown on the studio landing page',
+    }),
+    defineField({
+      name: 'size',
+      title: 'Size (sq ft)',
+      type: 'number',
+      description: 'Floor area in square feet',
+    }),
+    defineField({
+      name: 'height',
+      title: 'Ceiling Height (ft)',
+      type: 'number',
+    }),
+    defineField({
+      name: 'powerCapacity',
+      title: 'Power Capacity',
+      type: 'string',
+      description: 'e.g. "200A 3-phase"',
+    }),
+    defineField({
+      name: 'ratePerDay',
+      title: 'Day Rate (₹)',
+      type: 'number',
+      description: 'Price per day in Indian Rupees',
+    }),
+    defineField({
+      name: 'ratePerShift',
+      title: 'Per-Shift Rate (₹)',
+      type: 'number',
+      description: 'Price per 12-hour shift in Indian Rupees',
+    }),
+    defineField({
+      name: 'parking',
+      title: 'Parking Capacity',
+      type: 'string',
+      description: 'e.g. "50 vehicles"',
+    }),
+    defineField({
+      name: 'suitable_for',
+      title: 'Suitable For',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'e.g. ["Bollywood Films", "TV Commercials", "Web Series"]',
+    }),
+    defineField({
+      name: 'facilities',
+      title: 'Key Facilities',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'e.g. ["Air Conditioning", "Makeup Room", "Generator Backup"]',
+    }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'Main banner image (recommend 1920×1080)',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'galleryImages',
+      title: 'Gallery Images',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Up to 6 gallery photos',
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured on Homepage?',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower number appears first',
+      initialValue: 99,
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'tagline',
+      media: 'heroImage',
+    },
+  },
+});
