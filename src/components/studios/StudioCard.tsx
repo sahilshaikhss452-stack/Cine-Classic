@@ -107,29 +107,14 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           ))}
         </div>
 
-        {/* Footer: rate + CTA */}
+        {/* Footer: CTA */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           paddingTop: '0.75rem',
           borderTop: '1px solid rgba(255,255,255,0.06)',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
         }}>
-          <div>
-            <span style={{ fontSize: '0.6rem', color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>From </span>
-            <span style={{
-              fontFamily: 'var(--font-playfair), serif',
-              fontSize: '1.2rem',
-              fontWeight: 700,
-              color: 'var(--gold)',
-            }}>
-              {studio.rateFrom}
-            </span>
-            <span style={{ fontSize: '0.72rem', color: 'var(--gray)' }}>{studio.rateUnit}</span>
-          </div>
-
           <Link
             href={`/studios/${studio.slug}`}
             style={{

@@ -110,7 +110,7 @@ export default function Booking() {
             Ready to <span style={{ color: 'var(--gold)' }}>Create?</span>
           </h3>
           <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2.5rem', maxWidth: '340px' }}>
-            No payment required for an inquiry. Our team will reply within a few hours with availability and rates.
+            No payment required for an inquiry. Our team will reply within a few hours with availability and full details.
           </p>
 
           {CONTACT_ITEMS.map(item => (
@@ -243,16 +243,6 @@ export default function Booking() {
                 <option value="" disabled>Select duration…</option>
                 {PACKAGES.map(p => <option key={p} value={p}>{p}</option>)}
               </select>
-            </FormGroup>
-
-            {/* Project Brief */}
-            <FormGroup label="Project Brief & Requirements" htmlFor="brief">
-              <textarea
-                className="form-input"
-                id="brief" name="brief"
-                placeholder="Describe your project, script requirements, special set needs, equipment needs, or any questions you have…"
-                style={{ resize: 'vertical', minHeight: '110px' }}
-              />
             </FormGroup>
 
             <p style={{ fontSize: '0.78rem', color: 'var(--gray)', marginBottom: '1.2rem' }}>

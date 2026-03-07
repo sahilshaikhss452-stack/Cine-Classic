@@ -237,7 +237,7 @@ export default function AvailabilityCalendar() {
                 <option value="">All Studios</option>
                 {STUDIO_SETS.map(s => (
                   <option key={s.slug} value={s.slug}>
-                    {s.icon} {s.name} — {s.rateFrom}{s.rateUnit}
+                    {s.icon} {s.name}
                   </option>
                 ))}
               </select>

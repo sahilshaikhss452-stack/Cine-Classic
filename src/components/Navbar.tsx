@@ -10,7 +10,6 @@ const HOME_LINKS = [
   { href: '#about',        label: 'About' },
   { href: '#sets',         label: 'Our Sets' },
   { href: '#gallery',      label: 'Gallery' },
-  { href: '#pricing',      label: 'Pricing' },
   { href: '#testimonials', label: 'Reviews' },
 ];
 
@@ -168,7 +167,6 @@ export default function Navbar() {
           <a href={isHome ? '#about'        : '/#about'}        onClick={closeMenu} style={mobileLinkStyle}>About</a>
           <a href={isHome ? '#sets'         : '/#sets'}         onClick={closeMenu} style={mobileLinkStyle}>Our Sets</a>
           <a href={isHome ? '#gallery'      : '/#gallery'}      onClick={closeMenu} style={mobileLinkStyle}>Gallery</a>
-          <a href={isHome ? '#pricing'      : '/#pricing'}      onClick={closeMenu} style={mobileLinkStyle}>Pricing</a>
           <a href={isHome ? '#testimonials' : '/#testimonials'} onClick={closeMenu} style={mobileLinkStyle}>Reviews</a>
           <Link href="/studios"  onClick={closeMenu} style={{ ...mobileLinkStyle, color: 'var(--gold)' }}>Studios</Link>
           <a href={isHome ? '#booking' : '/#booking'} onClick={closeMenu} style={{ ...mobileLinkStyle, color: 'var(--gold)' }}>Book Now</a>

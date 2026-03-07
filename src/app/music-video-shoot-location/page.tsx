@@ -7,7 +7,7 @@ import RevealProvider  from '@/components/RevealProvider';
 export const metadata: Metadata = {
   title: 'Music Video Shoot Location Mumbai – Book a Studio Today',
   description:
-    'Book a music video shoot location in Mumbai. Cine Classic Studios offers 9 unique sets for Bollywood and indie music videos: market, chawl, police station, court, open ground & more. From ₹4,500/hr.',
+    'Book a music video shoot location in Mumbai. Cine Classic Studios offers 9 unique sets for Bollywood and indie music videos: market, chawl, police station, court, open ground & more.',
   keywords: [
     'music video shoot location mumbai',
     'music video studio mumbai',
@@ -22,19 +22,19 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Music Video Shoot Location Mumbai – Cine Classic Studios',
     description:
-      'Unique, visually rich sets for Bollywood, indie, and regional music videos in Mumbai. From ₹4,500/hr.',
+      'Unique, visually rich sets for Bollywood, indie, and regional music videos in Mumbai.',
     type: 'website',
     locale: 'en_IN',
   },
 };
 
 const MV_SETS = [
-  { icon: '🏪', title: 'Market 1 — Period Bazaar', desc: 'A classic Indian bazaar with aged vendor stalls, period props, and moody practical lighting — the perfect Bollywood street song set.', rate: '₹6,000/hr' },
-  { icon: '🛒', title: 'Market 2 — Urban Market', desc: 'Contemporary urban market with neon signage and modern stalls. Ideal for hip-hop, R&B, and modern Bollywood numbers.', rate: '₹5,500/hr' },
-  { icon: '🏬', title: 'Market 7 — Large Scale', desc: 'Multi-lane market set for large cast, crowd sequences, and elaborate choreography. Multiple camera angles possible.', rate: '₹7,000/hr' },
-  { icon: '🏚️', title: 'Chawl New — Mumbai Soul', desc: 'Two-storey Mumbai chawl — the classic storytelling set for emotional, nostalgic, and dramatic music videos.', rate: '₹7,500/hr' },
-  { icon: '🚔', title: 'Police Station', desc: 'Intense, gritty aesthetics for crime-themed music videos. Interrogation room, lock-up cells, and inspector\'s office.', rate: '₹5,500/hr' },
-  { icon: '🌿', title: 'Open Ground (2+ Acres)', desc: 'Expansive outdoor space for performance-style shoots, car sequences, crowd extravaganzas, and aerial shots.', rate: '₹4,500/hr' },
+  { icon: '🏪', title: 'Market 1 — Period Bazaar', desc: 'A classic Indian bazaar with aged vendor stalls, period props, and moody practical lighting — the perfect Bollywood street song set.' },
+  { icon: '🛒', title: 'Market 2 — Urban Market', desc: 'Contemporary urban market with neon signage and modern stalls. Ideal for hip-hop, R&B, and modern Bollywood numbers.' },
+  { icon: '🏬', title: 'Market 7 — Large Scale', desc: 'Multi-lane market set for large cast, crowd sequences, and elaborate choreography. Multiple camera angles possible.' },
+  { icon: '🏚️', title: 'Chawl New — Mumbai Soul', desc: 'Two-storey Mumbai chawl — the classic storytelling set for emotional, nostalgic, and dramatic music videos.' },
+  { icon: '🚔', title: 'Police Station', desc: 'Intense, gritty aesthetics for crime-themed music videos. Interrogation room, lock-up cells, and inspector\'s office.' },
+  { icon: '🌿', title: 'Open Ground (2+ Acres)', desc: 'Expansive outdoor space for performance-style shoots, car sequences, crowd extravaganzas, and aerial shots.' },
 ];
 
 const MV_REASONS = [
@@ -81,7 +81,7 @@ export default function MusicVideoShootLocationPage() {
               color: 'var(--gray)', fontSize: '1.05rem',
               lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '640px', margin: '0 auto 2.5rem',
             }}>
-              Give your music video an unforgettable production design. Nine unique, fully-dressed sets for Bollywood, indie, and regional artists. Crowd scenes, dramatic interiors, urban streets, outdoor grounds — from ₹4,500/hr.
+              Give your music video an unforgettable production design. Nine unique, fully-dressed sets for Bollywood, indie, and regional artists. Crowd scenes, dramatic interiors, urban streets, outdoor grounds — all in fully equipped production spaces.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Book a Location →</a>
@@ -137,10 +137,9 @@ export default function MusicVideoShootLocationPage() {
                   }}>
                     {set.title}
                   </h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.7, marginBottom: '1.2rem' }}>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.7 }}>
                     {set.desc}
                   </p>
-                  <div style={{ color: 'var(--gold)', fontSize: '1rem', fontWeight: 700 }}>{set.rate}</div>
                 </div>
               ))}
             </div>

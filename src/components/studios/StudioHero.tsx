@@ -157,7 +157,6 @@ export default function StudioHero({ studio }: Props) {
             { label: 'Size',     value: studio.size },
             { label: 'Height',   value: studio.ceilingHeight },
             { label: 'Capacity', value: studio.capacity },
-            { label: 'From',     value: `${studio.rateFrom}${studio.rateUnit}` },
           ].map((stat, i) => (
             <div key={stat.label} style={{ position: 'relative' }}>
               {i > 0 && (

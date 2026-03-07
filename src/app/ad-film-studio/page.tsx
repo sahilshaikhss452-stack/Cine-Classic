@@ -7,7 +7,7 @@ import RevealProvider  from '@/components/RevealProvider';
 export const metadata: Metadata = {
   title: 'Ad Film Studio Mumbai – TVC & Commercial Shoot Location',
   description:
-    'Professional ad film studio in Mumbai for TVCs, digital ads, brand films, and commercial shoots. Cine Classic Studios offers 9 dressed sets with 200A power, LED lighting rigs, and production support. Book from ₹4,500/hr.',
+    'Professional ad film studio in Mumbai for TVCs, digital ads, brand films, and commercial shoots. Cine Classic Studios offers 9 dressed sets with 200A power, LED lighting rigs, and production support.',
   keywords: [
     'ad film studio mumbai',
     'TVC shoot location mumbai',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ad Film Studio Mumbai – TVC & Commercial Shoots | Cine Classic Studios',
     description:
-      'Book a TVC or commercial ad shoot studio in Mumbai. 9 dressed sets, pro lighting, 200A power. From ₹4,500/hr.',
+      'Book a TVC or commercial ad shoot studio in Mumbai. 9 dressed sets, pro lighting, 200A power.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -84,7 +84,7 @@ export default function AdFilmStudioPage() {
                   color: 'var(--gray)', fontSize: '1.02rem',
                   lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '460px',
                 }}>
-                  Professional commercial shoot studios for TVCs, digital campaigns, brand films, and product ads. Controlled environment, pro lighting, silent sets, and complete production support — from ₹4,500/hour.
+                  Professional commercial shoot studios for TVCs, digital campaigns, brand films, and product ads. Controlled environment, pro lighting, silent sets, and complete production support.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   <a href="/#booking" className="btn-primary">Book a Studio →</a>

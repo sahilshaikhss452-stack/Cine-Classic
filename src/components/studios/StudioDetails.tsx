@@ -79,7 +79,6 @@ export default function StudioDetails({ studio }: Props) {
                   { label: 'Total Area',      value: studio.size },
                   { label: 'Ceiling Height',  value: studio.ceilingHeight },
                   { label: 'Max Capacity',    value: studio.capacity },
-                  { label: 'Starting Rate',   value: `${studio.rateFrom}${studio.rateUnit}` },
                 ].map((spec) => (
                   <div key={spec.label} style={{
                     padding: '12px 14px',

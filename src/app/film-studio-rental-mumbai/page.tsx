@@ -8,7 +8,7 @@ import { STUDIO_SETS } from '@/data/sets';
 export const metadata: Metadata = {
   title: 'Film Studio Rental Mumbai – Book a Film Set Today',
   description:
-    'Looking for a film studio on rent in Mumbai? Cine Classic Studios offers 9 fully-dressed film sets near Film City, Goregaon East. Bollywood, OTT, TV serials. Book by the hour. ₹4,500/hr onwards.',
+    'Looking for a film studio on rent in Mumbai? Cine Classic Studios offers 9 fully-dressed film sets near Film City, Goregaon East. Bollywood, OTT, TV serials. Book by the hour.',
   keywords: [
     'film studio rental mumbai',
     'film studio on rent mumbai',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Film Studio Rental Mumbai – Cine Classic Studios',
     description:
-      '9 professional film sets in Mumbai. Market, chawl, court, hospital, police station & open ground. From ₹4,500/hr.',
+      '9 professional film sets in Mumbai. Market, chawl, court, hospital, police station & open ground. Near Film City, Goregaon East.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -101,7 +101,7 @@ export default function FilmStudioRentalMumbaiPage() {
                   color: 'var(--gray)', fontSize: '1.05rem',
                   lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '480px',
                 }}>
-                  Nine fully-dressed production sets near Film City, Goregaon East. Bollywood features, OTT series, TV serials, and commercial shoots — all at professional rates starting from ₹4,500/hour.
+                  Nine fully-dressed production sets near Film City, Goregaon East. Bollywood features, OTT series, TV serials, and commercial shoots — all in professional production spaces.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   <a href="/#booking" className="btn-primary">Book a Studio →</a>
@@ -125,7 +125,7 @@ export default function FilmStudioRentalMumbaiPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 {[
                   { v: '9', l: 'Production Sets' },
-                  { v: '₹4,500', l: 'Starting Per Hour' },
+                  { v: '24/7', l: 'Availability' },
                   { v: '6,000', l: 'Sq Ft Largest Set' },
                   { v: '200A', l: 'Power Per Stage' },
                 ].map(s => (
@@ -240,7 +240,6 @@ export default function FilmStudioRentalMumbaiPage() {
                   <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.2rem', flexWrap: 'wrap' }}>
                     {[
                       { l: 'Size', v: studio.size },
-                      { l: 'Rate', v: `${studio.rateFrom}${studio.rateUnit}` },
                       { l: 'Capacity', v: studio.capacity },
                     ].map(m => (
                       <div key={m.l}>
@@ -283,7 +282,7 @@ export default function FilmStudioRentalMumbaiPage() {
             </div>
             {[
               { q: 'Where is Cine Classic Studios located?', a: 'We are located on Film City Road, Goregaon East, Mumbai – 400 065. Just minutes from Goregaon Film City on the Western Express Highway.' },
-              { q: 'What is the minimum booking duration?', a: 'The minimum booking is 4 hours (half-day). Hourly rates apply for add-on hours. Full-day (8-hour) and multi-day packages are available at discounted rates.' },
+              { q: 'What is the minimum booking duration?', a: 'The minimum booking is 4 hours (half-day). Full-day (8-hour) and multi-day packages are also available. Contact us for availability.' },
               { q: 'Can I bring my own lighting and equipment?', a: 'Yes. Our studios are designed for you to bring your own equipment. Drive-in access and dedicated power circuits are available. Our rigging team can also supplement with our in-house lighting inventory.' },
               { q: 'Do you offer set dressing and art department support?', a: 'Yes. Most of our sets come fully dressed with authentic props. We also offer art department assistance, additional prop sourcing, and custom set modifications.' },
               { q: 'Is there parking for large production vehicles?', a: 'Yes. We have a 5.2m clearance vehicle gate, 40-tonne service road, and 60+ parking spaces for crew vehicles, production vans, and equipment trucks.' },
@@ -326,7 +325,7 @@ export default function FilmStudioRentalMumbaiPage() {
               Ready to Book Your <span style={{ color: 'var(--gold)' }}>Film Set?</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2rem' }}>
-              Contact our team today. We respond within a few hours with availability and pricing.
+              Contact our team today. We respond within a few hours with availability.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Send a Booking Inquiry →</a>

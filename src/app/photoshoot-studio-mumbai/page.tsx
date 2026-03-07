@@ -7,7 +7,7 @@ import RevealProvider  from '@/components/RevealProvider';
 export const metadata: Metadata = {
   title: 'Photoshoot Studio Mumbai – Book a Professional Photography Studio',
   description:
-    'Premium photoshoot studio in Mumbai for fashion, editorial, e-commerce, catalogue, and brand shoots. Multiple backdrops, professional lighting rigs, makeup rooms. Near Film City, Goregaon East. Book from ₹4,500/hr.',
+    'Premium photoshoot studio in Mumbai for fashion, editorial, e-commerce, catalogue, and brand shoots. Multiple backdrops, professional lighting rigs, makeup rooms. Near Film City, Goregaon East.',
   keywords: [
     'photoshoot studio mumbai',
     'photography studio mumbai',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Photoshoot Studio Mumbai – Cine Classic Studios',
     description:
-      'Book a professional photoshoot studio in Mumbai. Fashion, editorial, e-commerce, and brand shoots. Multiple sets from ₹4,500/hr.',
+      'Book a professional photoshoot studio in Mumbai. Fashion, editorial, e-commerce, and brand shoots. Multiple unique sets available.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -82,7 +82,7 @@ export default function PhotoshootStudioMumbaiPage() {
               color: 'var(--gray)', fontSize: '1.05rem',
               lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '600px', margin: '0 auto 2.5rem',
             }}>
-              Professional photography studios with unique set environments, pro lighting, makeup rooms, and crew amenities. Fashion, editorial, e-commerce, brand, and personal shoots — from ₹4,500/hour.
+              Professional photography studios with unique set environments, pro lighting, makeup rooms, and crew amenities. Fashion, editorial, e-commerce, brand, and personal shoots — all in fully equipped production spaces.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Book a Studio →</a>
@@ -181,56 +181,6 @@ export default function PhotoshootStudioMumbaiPage() {
           </div>
         </section>
 
-        {/* Pricing table */}
-        <section style={{ padding: '80px 5%', background: 'var(--dark2)' }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-            <div className="reveal" style={{ marginBottom: '3rem' }}>
-              <h2 style={{
-                fontSize: 'clamp(1.6rem, 2.5vw, 2.4rem)',
-                fontWeight: 700, color: 'var(--white)',
-                letterSpacing: '-0.015em', lineHeight: 1.15,
-              }}>
-                Photoshoot <span style={{ color: 'var(--gold)' }}>Pricing</span>
-              </h2>
-              <p style={{ color: 'var(--gray)', marginTop: '1rem', lineHeight: 1.7 }}>
-                All rates are per studio, per hour. Multi-set and full-day discounts available on request.
-              </p>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-              {[
-                { label: 'Empty Floor', rate: '₹8,000/hr', size: '6,000 sq ft' },
-                { label: 'Market Sets', rate: '₹5,500–₹7,000/hr', size: '2,800–4,500 sq ft' },
-                { label: 'Chawl New', rate: '₹7,500/hr', size: '3,500 sq ft' },
-                { label: 'Court / Hospital', rate: '₹6,000–₹6,500/hr', size: '2,500–2,800 sq ft' },
-                { label: 'Open Ground', rate: '₹4,500/hr', size: '2+ acres' },
-              ].map(item => (
-                <div
-                  key={item.label}
-                  className="reveal"
-                  style={{
-                    background: 'var(--dark3)',
-                    border: '1px solid rgba(212,175,55,0.12)',
-                    borderRadius: '10px',
-                    padding: '1.5rem',
-                  }}
-                >
-                  <div style={{
-                    fontFamily: 'var(--font-playfair), serif',
-                    fontSize: '1rem', fontWeight: 700,
-                    color: 'var(--white)', marginBottom: '0.5rem',
-                  }}>
-                    {item.label}
-                  </div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--gold)', marginBottom: '0.3rem' }}>
-                    {item.rate}
-                  </div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--gray)' }}>{item.size}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* CTA */}
         <section style={{ padding: '80px 5%', background: 'var(--dark)', textAlign: 'center' }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
@@ -242,7 +192,7 @@ export default function PhotoshootStudioMumbaiPage() {
               Book Your <span style={{ color: 'var(--gold)' }}>Photoshoot</span> Today
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2rem' }}>
-              Send us your shoot brief and preferred dates. We&apos;ll confirm availability and pricing within a few hours.
+              Send us your shoot brief and preferred dates. We&apos;ll confirm availability within a few hours.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Send a Booking Inquiry →</a>

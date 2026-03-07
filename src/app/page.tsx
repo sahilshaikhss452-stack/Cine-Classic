@@ -5,7 +5,6 @@ import Sets              from '@/components/Sets';
 import ProductionTypes   from '@/components/ProductionTypes';
 import BehindScenes      from '@/components/BehindScenes';
 import Gallery           from '@/components/Gallery';
-import StudioComparison  from '@/components/StudioComparison';
 import ShootTimeline     from '@/components/ShootTimeline';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import Productions       from '@/components/Productions';
@@ -46,10 +45,7 @@ export default function HomePage() {
         {/* 6 ─── GALLERY — visual proof */}
         <Gallery />
 
-        {/* 7 ─── STUDIO COMPARISON — decision-making tool */}
-        <StudioComparison />
-
-        {/* 8 ─── HOW IT WORKS — transparent booking process */}
+        {/* 7 ─── HOW IT WORKS — transparent booking process */}
         <ShootTimeline />
 
         {/* 9 ─── AVAILABILITY CALENDAR — check dates */}

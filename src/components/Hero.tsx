@@ -1,133 +1,164 @@
-import Image from 'next/image';
+'use client';
 
-const STATS = [
-  { number: '5',    label: 'Unique Sets' },
-  { number: '4K',   label: 'Camera Ready' },
-  { number: '24/7', label: 'Availability' },
-  { number: '100%', label: 'Satisfaction' },
-];
+import { useState, useRef } from 'react';
 
 export default function Hero() {
+  const [videoFailed, setVideoFailed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   return (
     <section
       id="home"
       style={{
         minHeight: '100vh',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        position: 'relative', overflow: 'hidden',
-        padding: '140px 5% 100px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      {/* Gradient background */}
+      {/* ── Cinematic background ─────────────────────────────── */}
+
+      {/* Fallback gradient — always present underneath the video */}
       <div style={{
         position: 'absolute', inset: 0,
         background: `
-          radial-gradient(ellipse 60% 50% at 50% 30%, rgba(212,175,55,0.07) 0%, transparent 60%),
-          radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212,175,55,0.04) 0%, transparent 50%),
-          radial-gradient(ellipse 30% 30% at 80% 70%, rgba(212,175,55,0.03) 0%, transparent 50%),
-          var(--dark)
+          radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,175,55,0.12) 0%, transparent 55%),
+          radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212,175,55,0.06) 0%, transparent 50%),
+          radial-gradient(ellipse 30% 30% at 80% 70%, rgba(212,175,55,0.04) 0%, transparent 50%),
+          linear-gradient(160deg, #080808 0%, #060606 100%)
         `,
-      }}>
-        {/* Subtle grid overlay */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px',
-          maskImage: 'radial-gradient(ellipse 70% 50% at 50% 40%, black 20%, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 50% 40%, black 20%, transparent 70%)',
-        }} />
-      </div>
-
-      {/* Floating orbs */}
-      <div style={{
-        position: 'absolute', top: '10%', left: '-5%',
-        width: '400px', height: '400px', borderRadius: '50%',
-        background: 'rgba(212,175,55,0.06)',
-        filter: 'blur(80px)', pointerEvents: 'none',
-        animation: 'float 8s ease-in-out infinite',
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '10%', right: '-5%',
-        width: '300px', height: '300px', borderRadius: '50%',
-        background: 'rgba(212,175,55,0.04)',
-        filter: 'blur(80px)', pointerEvents: 'none',
-        animation: 'float 8s ease-in-out -3s infinite',
       }} />
 
-      {/* Content */}
-      <div style={{ position: 'relative', textAlign: 'center', maxWidth: '860px' }}>
-        <Image
-          src="/images/logo.jpg"
-          alt="Cine Classic Studios"
-          width={120}
-          height={120}
+      {/* Video background — place hero.mp4 in /public/videos/ */}
+      {!videoFailed && (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onError={() => setVideoFailed(true)}
           style={{
-            margin: '0 auto 2.5rem',
-            borderRadius: '8px',
-            filter: 'drop-shadow(0 4px 32px rgba(212,175,55,0.2))',
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.45,
           }}
-          priority
-        />
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src="/videos/hero.webm" type="video/webm" />
+        </video>
+      )}
 
-        {/* Badge */}
+      {/* Dark gradient overlay — ensures text legibility */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, rgba(6,6,6,0.92) 0%, rgba(6,6,6,0.55) 45%, rgba(6,6,6,0.35) 100%)',
+      }} />
+
+      {/* Subtle gold grid overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `
+          linear-gradient(rgba(212,175,55,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(212,175,55,0.025) 1px, transparent 1px)
+        `,
+        backgroundSize: '80px 80px',
+        maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Hero content ──────────────────────────────────────── */}
+      <div style={{
+        position: 'relative',
+        textAlign: 'center',
+        maxWidth: '900px',
+        padding: '140px 5% 100px',
+        width: '100%',
+        margin: '0 auto',
+      }}>
+
+        {/* Live badge */}
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '8px',
-          fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.2em',
+          fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.22em',
           textTransform: 'uppercase', color: 'var(--gold)',
           background: 'rgba(212,175,55,0.08)',
-          border: '1px solid rgba(212,175,55,0.2)',
-          padding: '8px 20px', borderRadius: '100px', marginBottom: '2rem',
+          border: '1px solid rgba(212,175,55,0.22)',
+          padding: '8px 22px', borderRadius: '100px', marginBottom: '2.2rem',
         }}>
           <span style={{
-            width: '6px', height: '6px', background: 'var(--gold)', borderRadius: '50%',
+            width: '6px', height: '6px',
+            background: 'var(--gold)', borderRadius: '50%',
             animation: 'pulse-dot 2s ease-in-out infinite',
+            flexShrink: 0,
           }} />
-          Premium Studio Rental Space
+          Mumbai's Premier Film Studio
         </div>
 
+        {/* Main headline */}
         <h1 style={{
-          fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)',
-          lineHeight: 1.08, marginBottom: '1.5rem',
-          color: 'var(--white)',
-          letterSpacing: '-0.025em',
+          fontSize: 'clamp(2.8rem, 6.5vw, 5.2rem)',
+          lineHeight: 1.05,
           fontWeight: 800,
+          letterSpacing: '-0.025em',
+          color: 'var(--white)',
+          marginBottom: '1.4rem',
         }}>
-          Where Stories<br />
-          Come to{' '}
+          Cine Classic<br />
           <em style={{
             fontStyle: 'normal',
-            background: 'linear-gradient(135deg, var(--gold), var(--gold-lt), var(--gold))',
+            background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 50%, var(--gold) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
           }}>
-            Life
+            Studios
           </em>
         </h1>
 
+        {/* Subheadline */}
         <p style={{
-          fontSize: '1.125rem', color: 'var(--gray)',
-          maxWidth: '560px', margin: '0 auto 2.5rem',
-          fontWeight: 300, lineHeight: 1.65,
+          fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+          color: 'rgba(255,255,255,0.72)',
+          maxWidth: '560px',
+          margin: '0 auto 2.8rem',
+          fontWeight: 300,
+          lineHeight: 1.65,
+          letterSpacing: '0.01em',
         }}>
-          Professional film &amp; photography studio spaces for rent.
-          Five unique sets. Fully equipped. Ready for your vision.
+          Premium Film &amp; Television Production Studios
         </p>
 
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href="#sets" className="btn-primary">Explore Our Sets →</a>
-          <a href="#booking" className="btn-outline">Book a Session</a>
+        {/* CTAs */}
+        <div style={{
+          display: 'flex', gap: '1rem',
+          justifyContent: 'center', flexWrap: 'wrap',
+        }}>
+          <a href="#sets" className="btn-primary" style={{ fontSize: '1rem', padding: '14px 32px' }}>
+            Explore Studios →
+          </a>
+          <a href="#booking" className="btn-outline" style={{ fontSize: '1rem', padding: '14px 32px' }}>
+            Book a Session
+          </a>
         </div>
 
-        {/* Stats */}
+        {/* Stats strip */}
         <div style={{
           display: 'flex', justifyContent: 'center',
-          gap: '3rem', marginTop: '5rem', flexWrap: 'wrap',
+          gap: '3rem', marginTop: '5.5rem', flexWrap: 'wrap',
         }}>
-          {STATS.map((s, i) => (
+          {[
+            { number: '9',    label: 'Unique Sets' },
+            { number: '4K',   label: 'Camera Ready' },
+            { number: '24/7', label: 'Availability' },
+            { number: '100%', label: 'Satisfaction' },
+          ].map((s, i) => (
             <div key={s.label} style={{ textAlign: 'center', position: 'relative' }}>
               {i > 0 && (
                 <span style={{
@@ -139,12 +170,12 @@ export default function Hero() {
               )}
               <div style={{
                 fontFamily: 'var(--font-inter), sans-serif',
-                fontSize: '2.6rem', fontWeight: 800,
+                fontSize: '2.4rem', fontWeight: 800,
                 color: 'var(--gold)', lineHeight: 1,
                 letterSpacing: '-0.02em',
               }}>{s.number}</div>
               <div style={{
-                fontSize: '0.75rem', letterSpacing: '0.12em',
+                fontSize: '0.72rem', letterSpacing: '0.12em',
                 textTransform: 'uppercase', color: 'var(--gray)', marginTop: '8px',
               }}>{s.label}</div>
             </div>
@@ -153,10 +184,6 @@ export default function Hero() {
       </div>
 
       <style>{`
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(20px, -20px); }
-        }
         @keyframes pulse-dot {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.5; transform: scale(0.8); }

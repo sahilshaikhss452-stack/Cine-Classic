@@ -108,8 +108,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 opens: '00:00',
                 closes: '23:59',
               },
-              priceRange: '₹₹₹',
-              currenciesAccepted: 'INR',
               paymentAccepted: 'Cash, Bank Transfer, UPI',
               image: 'https://cine-classic-nextjs.vercel.app/images/logo.jpg',
               sameAs: [
