@@ -11,7 +11,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
 
   return (
     <div
-      className={`reveal${delay > 0 ? ` reveal-delay-${delay}` : ''}`}
+      className={`reveal${delay > 0 ? ` reveal-delay-${delay}` : ''} studio-card`}
       style={{
         background: 'var(--dark2)',
         border: '1px solid rgba(255,255,255,0.06)',
@@ -23,7 +23,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
       }}
     >
       {/* Thumbnail */}
-      <div style={{
+      <div className="studio-card-thumb" style={{
         aspectRatio: '16/9',
         background: studio.gradient,
         position: 'relative',
@@ -117,6 +117,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
         }}>
           <Link
             href={`/studios/${studio.slug}`}
+            className="studio-card-cta"
             style={{
               background: 'transparent',
               border: '1px solid rgba(212,175,55,0.35)',

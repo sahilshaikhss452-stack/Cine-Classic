@@ -1240,3 +1240,116 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
     scroll-behavior:          auto   !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   PREMIUM MOBILE & TABLET UX ENHANCEMENTS
+   All rules confined to ≤ 1023 px — desktop UNCHANGED.
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1023px) {
+
+  /* ── Disable translateY card hover (clips inside overflow-x:auto) ──
+     Replace vertical lift with box-shadow depth cue instead.          */
+  .prod-card:hover {
+    transform: none !important;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.38), 0 0 0 1px rgba(212,175,55,0.15) !important;
+  }
+  .pt-card:hover  { transform: none !important; box-shadow: 0 6px 28px rgba(0,0,0,0.35) !important; }
+  .bts-card:hover { transform: none !important; box-shadow: 0 6px 28px rgba(0,0,0,0.35) !important; }
+
+  /* ── Touch-press micro-feedback ───────────────────────────────────
+     Uniform scale-down on tap gives instant "physical" tactile feel.
+     This is the #1 signal of a premium mobile product.               */
+  .prod-card:active {
+    transform: scale(0.963) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .pt-card:active {
+    transform: scale(0.963) !important;
+    transition: transform 0.08s ease !important;
+  }
+  .bts-card:active {
+    transform: scale(0.963) !important;
+    transition: transform 0.08s ease !important;
+  }
+  .studio-card:active {
+    transform: scale(0.967) !important;
+    opacity: 0.85 !important;
+    transition: transform 0.08s ease, opacity 0.08s ease !important;
+  }
+  .testimonials-grid > div:active {
+    transform: scale(0.967) !important;
+    opacity: 0.85 !important;
+    transition: transform 0.08s ease, opacity 0.08s ease !important;
+  }
+  .gallery-grid > div:active {
+    transform: scale(0.967) !important;
+    transition: transform 0.08s ease !important;
+  }
+
+  /* ── Button: 48 px minimum tap target + active press state ──────── */
+  .btn-primary, .btn-outline { min-height: 48px; }
+  .btn-primary:active {
+    transform: scale(0.95) !important;
+    box-shadow: 0 2px 8px rgba(212,175,55,0.12) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .btn-outline:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.08s ease !important;
+  }
+  .float-btn:active {
+    transform: translateY(0) scale(0.92) !important;
+    transition: transform 0.08s ease !important;
+  }
+
+  /* ── Gallery overlay — always legible label on touch screens ───────
+     :hover never fires on touch; labels would be permanently hidden.
+     Show them at partial opacity always; full opacity on active tap.  */
+  .gallery-overlay      { opacity: 0.72 !important; }
+  .gallery-grid > div:active .gallery-overlay { opacity: 1 !important; }
+
+  /* ── Swipe hint — more visible & refined ────────────────────────── */
+  .swipe-hint {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    opacity: 0.78;
+    gap: 0.65rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── Studio card: cinematic thumbnail + larger tap area ─────────── */
+  .studio-card-thumb  { aspect-ratio: 5/3 !important; }
+  .studio-card-cta    {
+    min-height: 42px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 10px 20px !important;
+  }
+
+  /* ── Card baseline elevation in carousel row ─────────────────────── */
+  .studio-card { box-shadow: 0 8px 32px rgba(0,0,0,0.32); }
+  .pt-card     { box-shadow: 0 6px 24px rgba(0,0,0,0.28); }
+  .prod-card   { box-shadow: 0 6px 24px rgba(0,0,0,0.28); }
+
+  /* ── Testimonial cards — tighter, slightly rounder corners ──────── */
+  .testimonials-grid > div {
+    padding: 1.6rem !important;
+    border-radius: 14px !important;
+  }
+
+  /* ── BTS cards — tighter padding on mobile ──────────────────────── */
+  .bts-card { padding: 1.65rem !important; }
+
+  /* ── Production card info block — compact at 68% carousel width ─── */
+  .prod-info  { padding: 0.9rem 1rem 1.1rem !important; }
+  .prod-title { font-size: 0.93rem; }
+}
+
+/* ── Very small screens (≤ 380 px) — final fine-tuning ──────────── */
+@media (max-width: 380px) {
+  .hero-stats-strip { gap: 0.75rem !important; margin-top: 3rem !important; }
+  .prod-title { font-size: 0.88rem; }
+  .prod-info  { padding: 0.75rem 0.85rem 1rem !important; }
+}
