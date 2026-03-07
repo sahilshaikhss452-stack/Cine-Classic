@@ -1075,11 +1075,11 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
    Desktop layout is UNCHANGED (grid classes still apply above 768px).
    ─────────────────────────────────────────────────────────── */
 
-/* Swipe hint label — visible only on mobile */
+/* Swipe hint label — visible on mobile + tablet, hidden on desktop */
 .swipe-hint {
   display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .swipe-hint {
     display: flex;
     align-items: center;
@@ -1094,8 +1094,11 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
   }
 }
 
-/* ── Shared horizontal-scroll behaviour ── */
-@media (max-width: 768px) {
+/* ── Shared horizontal-scroll + auto-scroll carousel behaviour ──
+   Applies on mobile AND tablet (< Tailwind lg = 1024 px).
+   Desktop layout is completely unchanged.
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
   .studio-sets-grid,
   .gallery-grid,
   .productions-types-grid,
@@ -1112,14 +1115,13 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
     -ms-overflow-style: none;
     gap:              1rem         !important;
     padding-bottom:   1.25rem      !important;
-    /* right padding exposes peek of next card */
     padding-right:    calc(5% + 0.5rem) !important;
     max-width:        100%         !important;
     margin-left:      0            !important;
     margin-right:     0            !important;
   }
 
-  /* Hide browser scrollbar */
+  /* Hide browser scrollbar on WebKit */
   .studio-sets-grid::-webkit-scrollbar,
   .gallery-grid::-webkit-scrollbar,
   .productions-types-grid::-webkit-scrollbar,
@@ -1127,47 +1129,51 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
   .testimonials-grid::-webkit-scrollbar,
   .productions-grid::-webkit-scrollbar { display: none; }
 
-  /* ── Card widths ── */
+  /* ── Card widths — tablet (768 px – 1023 px): ~60% of container ── */
   .studio-sets-grid      > *,
+  .gallery-grid          > *,
   .productions-types-grid > *,
+  .bts-grid              > *,
   .testimonials-grid     > * {
-    min-width:        260px !important;
-    max-width:        260px !important;
-    flex-shrink:      0     !important;
+    min-width:         60% !important;
+    max-width:         60% !important;
+    flex-shrink:       0   !important;
     scroll-snap-align: start;
   }
 
-  .gallery-grid > * {
-    min-width:        240px !important;
-    max-width:        240px !important;
-    flex-shrink:      0     !important;
-    scroll-snap-align: start;
-  }
-
-  .bts-grid > * {
-    min-width:        250px !important;
-    max-width:        250px !important;
-    flex-shrink:      0     !important;
-    scroll-snap-align: start;
-  }
-
-  /* Productions cards — portrait poster format (4/5 aspect ratio) */
+  /* Productions poster cards are narrower (portrait 4/5 ratio) */
   .productions-grid > * {
-    min-width:        200px !important;
-    max-width:        200px !important;
-    flex-shrink:      0     !important;
+    min-width:         45% !important;
+    max-width:         45% !important;
+    flex-shrink:       0   !important;
     scroll-snap-align: start;
   }
-
-  /* Reset the bottom margin override from inline style on mobile */
-  .productions-grid { margin-bottom: 1.5rem !important; }
 
   /* Cancel span/colspan overrides that don't apply in flex */
   .bts-card-large { grid-column: unset !important; }
   .gallery-span2  { grid-column: unset !important; }
 
-  /* Reduce studio-sets-grid bottom margin (was 3.5rem) */
-  .studio-sets-grid { margin-bottom: 1.5rem !important; }
+  /* Bottom-margin resets */
+  .studio-sets-grid  { margin-bottom: 1.5rem !important; }
+  .productions-grid  { margin-bottom: 1.5rem !important; }
+}
+
+/* ── Card widths — mobile (< 768 px): ~80% of container ──────── */
+@media (max-width: 767px) {
+  .studio-sets-grid      > *,
+  .gallery-grid          > *,
+  .productions-types-grid > *,
+  .bts-grid              > *,
+  .testimonials-grid     > * {
+    min-width: 80% !important;
+    max-width: 80% !important;
+  }
+
+  /* Portrait poster cards a little narrower so two peek at once */
+  .productions-grid > * {
+    min-width: 68% !important;
+    max-width: 68% !important;
+  }
 }
 
 /* ─── General image hover zoom ───────────────────────────── */

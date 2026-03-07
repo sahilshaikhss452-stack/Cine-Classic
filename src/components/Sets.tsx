@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import StudioCard from '@/components/studios/StudioCard';
 import { STUDIO_SETS } from '@/data/sets';
+import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
 
 export default function Sets() {
   return (
@@ -26,13 +27,13 @@ export default function Sets() {
         </p>
       </div>
 
-      {/* Studios grid — horizontal scroll on mobile */}
+      {/* Studios grid — auto-scroll carousel on mobile/tablet */}
       <p className="swipe-hint">swipe to browse ›</p>
-      <div className="studio-sets-grid">
+      <AutoScrollCarousel className="studio-sets-grid">
         {STUDIO_SETS.map((studio, i) => (
           <StudioCard key={studio.id} studio={studio} index={i} />
         ))}
-      </div>
+      </AutoScrollCarousel>
 
       {/* View all CTA */}
       <div style={{ textAlign: 'center' }}>

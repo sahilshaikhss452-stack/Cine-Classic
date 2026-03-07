@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PRODUCTIONS, TYPE_ICONS } from '@/data/productions';
 import type { Production } from '@/data/productions';
+import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
 
 // ─── Individual card ───────────────────────────────────────────────────────────
 function ProductionCard({ prod, index }: { prod: Production; index: number }) {
@@ -129,13 +130,13 @@ export default function Productions() {
           </p>
         </div>
 
-        {/* ── Productions grid ─────────────────────────── */}
+        {/* ── Productions grid — auto-scroll carousel on mobile/tablet ── */}
         <p className="swipe-hint">swipe to browse ›</p>
-        <div className="productions-grid" style={{ marginBottom: '3.5rem' }}>
+        <AutoScrollCarousel className="productions-grid" style={{ marginBottom: '3.5rem' }}>
           {PRODUCTIONS.map((prod, i) => (
             <ProductionCard key={prod.id} prod={prod} index={i} />
           ))}
-        </div>
+        </AutoScrollCarousel>
 
         {/* ── CTA ─────────────────────────────────────── */}
         <div className="reveal" style={{ textAlign: 'center' }}>

@@ -1,3 +1,5 @@
+import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
+
 const GALLERY_ITEMS = [
   { icon: '🎬', label: 'Cyclorama Fashion Shoot',        bg: 'radial-gradient(ellipse at 40% 40%, rgba(212,175,55,0.15) 0%, #111 60%), #0a0a0a', span: 2 },
   { icon: '🟩', label: 'VFX Green Screen Production',    bg: 'radial-gradient(ellipse at 60% 50%, rgba(34,197,94,0.15) 0%, #0d1209 60%), #090d09', span: 1 },
@@ -29,9 +31,9 @@ export default function Gallery() {
         </p>
       </div>
 
-      {/* Masonry-style grid — horizontal scroll on mobile */}
+      {/* Masonry-style grid — auto-scroll carousel on mobile/tablet */}
       <p className="swipe-hint">swipe to explore ›</p>
-      <div className="gallery-grid">
+      <AutoScrollCarousel className="gallery-grid">
         {GALLERY_ITEMS.map((item, i) => (
           <div
             key={item.label}
@@ -75,7 +77,7 @@ export default function Gallery() {
             </div>
           </div>
         ))}
-      </div>
+      </AutoScrollCarousel>
     </section>
   );
 }

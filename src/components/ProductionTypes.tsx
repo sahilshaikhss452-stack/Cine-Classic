@@ -1,3 +1,5 @@
+import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
+
 const PRODUCTION_TYPES = [
   {
     icon: '🎬',
@@ -72,9 +74,9 @@ export default function ProductionTypes() {
           </p>
         </div>
 
-        {/* Cards Grid — horizontal scroll on mobile */}
+        {/* Cards Grid — auto-scroll carousel on mobile/tablet */}
         <p className="swipe-hint">swipe to explore ›</p>
-        <div className="productions-types-grid">
+        <AutoScrollCarousel className="productions-types-grid">
           {PRODUCTION_TYPES.map((pt, i) => (
             <div
               key={pt.title}
@@ -155,7 +157,7 @@ export default function ProductionTypes() {
               }}>→</div>
             </div>
           ))}
-        </div>
+        </AutoScrollCarousel>
 
         {/* Bottom CTA */}
         <div className="reveal" style={{ textAlign: 'center', marginTop: '4rem' }}>

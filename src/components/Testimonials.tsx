@@ -1,4 +1,5 @@
 import { TESTIMONIALS } from '@/data/testimonials';
+import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
 
 export default function Testimonials() {
   return (
@@ -27,7 +28,7 @@ export default function Testimonials() {
 
       <p className="swipe-hint">swipe to browse ›</p>
 
-      <div className="testimonials-grid">
+      <AutoScrollCarousel className="testimonials-grid">
         {TESTIMONIALS.map((t, i) => (
           <div
             key={t.id}
@@ -78,7 +79,7 @@ export default function Testimonials() {
             </div>
           </div>
         ))}
-      </div>
+      </AutoScrollCarousel>
     </section>
   );
 }

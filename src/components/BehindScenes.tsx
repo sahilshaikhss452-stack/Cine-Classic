@@ -1,3 +1,5 @@
+import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
+
 const BTS_ITEMS = [
   {
     title: 'Lighting the Scene',
@@ -74,9 +76,9 @@ export default function BehindScenes() {
           </p>
         </div>
 
-        {/* Masonry-style Grid — horizontal scroll on mobile */}
+        {/* Masonry-style Grid — auto-scroll carousel on mobile/tablet */}
         <p className="swipe-hint">swipe to explore ›</p>
-        <div className="bts-grid">
+        <AutoScrollCarousel className="bts-grid">
           {BTS_ITEMS.map((item, i) => (
             <div
               key={item.title}
@@ -124,7 +126,7 @@ export default function BehindScenes() {
               }} />
             </div>
           ))}
-        </div>
+        </AutoScrollCarousel>
       </div>
     </section>
   );
