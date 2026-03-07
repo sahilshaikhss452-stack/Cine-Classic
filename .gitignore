@@ -23,6 +23,8 @@ dist/
 .sanity/
 sanity-studio/.next/
 sanity-studio/node_modules/
+sanity-studio/.env          # real credentials - never commit this
+sanity-studio/.env.local
 
 # ─── Claude Code (local dev tool) ────────────────────────────────────────────
 .claude/
