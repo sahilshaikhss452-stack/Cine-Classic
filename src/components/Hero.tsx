@@ -174,7 +174,7 @@ export default function Hero() {
             Explore Studios →
           </a>
           <a href="#booking" className="btn-outline" style={{ fontSize: '1rem', padding: '14px 32px' }}>
-            Book a Session
+            Reserve Studio
           </a>
         </div>
 
