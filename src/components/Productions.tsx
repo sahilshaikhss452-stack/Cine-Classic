@@ -87,6 +87,7 @@ export default function Productions() {
   return (
     <section
       id="productions"
+      className="mob-section"
       style={{
         padding: '120px 5%',
         background: 'var(--dark)',
@@ -129,6 +130,7 @@ export default function Productions() {
         </div>
 
         {/* ── Productions grid ─────────────────────────── */}
+        <p className="swipe-hint">swipe to browse ›</p>
         <div className="productions-grid" style={{ marginBottom: '3.5rem' }}>
           {PRODUCTIONS.map((prod, i) => (
             <ProductionCard key={prod.id} prod={prod} index={i} />

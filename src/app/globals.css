@@ -1100,7 +1100,8 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
   .gallery-grid,
   .productions-types-grid,
   .bts-grid,
-  .testimonials-grid {
+  .testimonials-grid,
+  .productions-grid {
     display:          flex          !important;
     flex-wrap:        nowrap        !important;
     overflow-x:       auto         !important;
@@ -1123,7 +1124,8 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
   .gallery-grid::-webkit-scrollbar,
   .productions-types-grid::-webkit-scrollbar,
   .bts-grid::-webkit-scrollbar,
-  .testimonials-grid::-webkit-scrollbar { display: none; }
+  .testimonials-grid::-webkit-scrollbar,
+  .productions-grid::-webkit-scrollbar { display: none; }
 
   /* ── Card widths ── */
   .studio-sets-grid      > *,
@@ -1148,6 +1150,17 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
     flex-shrink:      0     !important;
     scroll-snap-align: start;
   }
+
+  /* Productions cards — portrait poster format (4/5 aspect ratio) */
+  .productions-grid > * {
+    min-width:        200px !important;
+    max-width:        200px !important;
+    flex-shrink:      0     !important;
+    scroll-snap-align: start;
+  }
+
+  /* Reset the bottom margin override from inline style on mobile */
+  .productions-grid { margin-bottom: 1.5rem !important; }
 
   /* Cancel span/colspan overrides that don't apply in flex */
   .bts-card-large { grid-column: unset !important; }
