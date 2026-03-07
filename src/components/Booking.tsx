@@ -78,7 +78,7 @@ export default function Booking() {
   }
 
   return (
-    <section id="booking" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
+    <section id="booking" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
 
       <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
         <div className="section-tag">Start Your Production</div>
@@ -90,14 +90,8 @@ export default function Booking() {
         </p>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '4rem',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        alignItems: 'start',
-      }}>
+      {/* Two-column layout: contact info + form — stacks on mobile via .booking-layout */}
+      <div className="booking-layout">
 
         {/* Contact Info */}
         <div className="reveal">
@@ -183,8 +177,8 @@ export default function Booking() {
 
           <form ref={formRef} onSubmit={handleSubmit}>
 
-            {/* Name Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            {/* Name Row — stacks to 1 col on mobile via .form-row-2 */}
+            <div className="form-row-2">
               <FormGroup label="First Name" htmlFor="fname">
                 <input className="form-input" type="text" id="fname" name="firstName" placeholder="Rahul" required />
               </FormGroup>
@@ -199,7 +193,7 @@ export default function Booking() {
             </FormGroup>
 
             {/* Contact Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-row-2">
               <FormGroup label="Email Address" htmlFor="email">
                 <input className="form-input" type="email" id="email" name="email" placeholder="rahul@production.com" required />
               </FormGroup>
@@ -209,7 +203,7 @@ export default function Booking() {
             </div>
 
             {/* Shoot Type + Studio */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-row-2">
               <FormGroup label="Shoot Type" htmlFor="shootType">
                 <select className="form-input" id="shootType" name="shootType" required defaultValue="">
                   <option value="" disabled>Select type…</option>
@@ -225,7 +219,7 @@ export default function Booking() {
             </div>
 
             {/* Date + Crew Size */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-row-2">
               <FormGroup label="Shoot Date (From)" htmlFor="dateFrom">
                 <input className="form-input" type="date" id="dateFrom" name="dateFrom" min={today} required />
               </FormGroup>

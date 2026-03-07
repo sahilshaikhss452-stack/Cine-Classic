@@ -51,7 +51,7 @@ const BTS_ITEMS = [
 
 export default function BehindScenes() {
   return (
-    <section style={{ background: 'var(--dark)', padding: '120px 5%' }}>
+    <section className="mob-section" style={{ background: 'var(--dark)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Header */}

@@ -4,7 +4,7 @@ import { STUDIO_SETS } from '@/data/sets';
 
 export default function Sets() {
   return (
-    <section id="sets" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
+    <section id="sets" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
 
       <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
         <div className="section-tag">Our Studio Spaces</div>
@@ -27,13 +27,7 @@ export default function Sets() {
       </div>
 
       {/* Studios grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-        gap: '1.5rem',
-        maxWidth: '1200px',
-        margin: '0 auto 3.5rem',
-      }}>
+      <div className="studio-sets-grid">
         {STUDIO_SETS.map((studio, i) => (
           <StudioCard key={studio.id} studio={studio} index={i} />
         ))}

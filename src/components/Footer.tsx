@@ -45,15 +45,8 @@ export default function Footer() {
         opacity: 0.25,
       }} />
 
-      {/* Main grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1.4fr 1fr 1fr 1.1fr',
-        gap: '3rem',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        paddingBottom: '4rem',
-      }}>
+      {/* Main grid — responsive via .footer-grid-mob in globals.css */}
+      <div className="footer-grid-mob">
 
         {/* Column 1 — Brand */}
         <div>
@@ -277,27 +270,15 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div style={{
-        borderTop: '1px solid rgba(255,255,255,0.06)',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '1.8rem 0',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '0.75rem',
-        fontSize: '0.76rem',
-        color: 'var(--gray)',
-      }}>
+      {/* Bottom Bar — responsive via .footer-bottom-mob in globals.css */}
+      <div className="footer-bottom-mob">
         <span>© 2025 Cine Classic Studios. All rights reserved. Mumbai, India.</span>
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <a href="/film-studio-rental-mumbai" style={{ color: 'var(--gray)', transition: 'color 0.3s' }}>Film Studio Mumbai</a>
           <a href="/photoshoot-studio-mumbai" style={{ color: 'var(--gray)', transition: 'color 0.3s' }}>Photoshoot Studio</a>
           <a href="/music-video-shoot-location" style={{ color: 'var(--gray)', transition: 'color 0.3s' }}>Music Video Location</a>
         </div>
-        <span style={{ color: 'rgba(212,175,55,0.6)' }}>Built for the Mumbai film industry.</span>
+        <span className="footer-tagline" style={{ color: 'rgba(212,175,55,0.6)' }}>Built for the Mumbai film industry.</span>
       </div>
     </footer>
   );

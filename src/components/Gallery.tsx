@@ -10,6 +10,7 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
+      className="mob-section"
       style={{ padding: '120px 5%', background: 'var(--dark2)', position: 'relative' }}
     >
       <div style={{
@@ -28,20 +29,13 @@ export default function Gallery() {
         </p>
       </div>
 
-      {/* Masonry-style grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '16px',
-        maxWidth: '1200px',
-        margin: '0 auto',
-      }}>
+      {/* Masonry-style grid — responsive via CSS class in globals.css */}
+      <div className="gallery-grid">
         {GALLERY_ITEMS.map((item, i) => (
           <div
             key={item.label}
-            className={`reveal${i > 0 ? ` reveal-delay-${Math.min(i, 4)}` : ''}`}
+            className={`reveal${i > 0 ? ` reveal-delay-${Math.min(i, 4)}` : ''}${item.span === 2 ? ' gallery-span2' : ''}`}
             style={{
-              gridColumn: `span ${item.span}`,
               border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: '16px',
               overflow: 'hidden',
@@ -61,14 +55,15 @@ export default function Gallery() {
               {item.icon}
             </div>
 
-            {/* Hover overlay */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)',
-              display: 'flex', alignItems: 'flex-end', padding: '1.5rem',
-              opacity: 0, transition: 'opacity 0.4s cubic-bezier(0.22,1,0.36,1)',
-            }}
+            {/* Hover overlay — opacity controlled via globals.css .gallery-overlay */}
+            <div
               className="gallery-overlay"
+              style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)',
+                display: 'flex', alignItems: 'flex-end', padding: '1.5rem',
+                transition: 'opacity 0.4s cubic-bezier(0.22,1,0.36,1)',
+              }}
             >
               <span style={{
                 fontSize: '0.82rem', letterSpacing: '0.08em',
@@ -80,19 +75,6 @@ export default function Gallery() {
           </div>
         ))}
       </div>
-
-      <style>{`
-        .gallery-overlay { opacity: 0 !important; }
-        div:hover > .gallery-overlay { opacity: 1 !important; }
-
-        @media (max-width: 900px) {
-          #gallery .gallery-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 640px) {
-          #gallery [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
-          #gallery [style*="span 2"] { grid-column: span 1 !important; }
-        }
-      `}</style>
     </section>
   );
 }

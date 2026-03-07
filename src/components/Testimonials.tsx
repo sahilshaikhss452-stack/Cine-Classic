@@ -4,6 +4,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
+      className="mob-section"
       style={{ padding: '120px 5%', background: 'var(--dark2)', position: 'relative' }}
     >
       <div style={{

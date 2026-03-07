@@ -187,7 +187,13 @@ select.form-input option { background: var(--dark3); }
 
 /* ─── Responsive nav helpers ─────────────────────────────── */
 .nav-desktop   { display: flex; }
-.nav-hamburger { display: none; }
+.nav-hamburger {
+  display: none;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
 
 @media (max-width: 768px) {
   .nav-desktop   { display: none; }
@@ -842,30 +848,217 @@ select.form-input option { background: var(--dark3); }
   .sc-pill { padding: 6px 14px; font-size: 0.75rem; }
 }
 
-/* ─── Footer responsive grid ─────────────────────────────── */
-@media (max-width: 1100px) {
-  footer > div:first-of-type,
-  footer > div[style] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (max-width: 640px) {
-  footer > div:first-of-type,
-  footer > div[style] {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ─── Availability Calendar responsive ───────────────────── */
-@media (max-width: 860px) {
-  /* Stack calendar sidebar below calendar */
-}
-
 /* ─── Hero film-studio page responsive ───────────────────── */
 @media (max-width: 860px) {
   .seo-hero > div > div[style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* ══════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE SYSTEM
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── Section padding (overrides inline 120px 5%) ────────── */
+@media (max-width: 768px) {
+  .mob-section {
+    padding-top:    72px !important;
+    padding-bottom: 72px !important;
+  }
+  .mob-header-mb { margin-bottom: 2.5rem !important; }
+}
+@media (max-width: 480px) {
+  .mob-section {
+    padding-top:    60px !important;
+    padding-bottom: 60px !important;
+  }
+}
+
+/* ─── Hero content wrap ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-content-wrap {
+    padding-top:    100px !important;
+    padding-bottom:  60px !important;
+  }
+}
+@media (max-width: 480px) {
+  .hero-content-wrap {
+    padding-top:    80px !important;
+    padding-bottom: 48px !important;
+  }
+}
+
+/* ─── Hero stats strip ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-stats-strip {
+    gap:        1.5rem !important;
+    margin-top: 3.5rem !important;
+  }
+}
+@media (max-width: 400px) {
+  .hero-stats-strip { gap: 1rem !important; }
+}
+
+/* ─── Hero CTA group ─────────────────────────────────────── */
+@media (max-width: 380px) {
+  .hero-cta-group {
+    flex-direction: column !important;
+    align-items:    stretch   !important;
+  }
+  .hero-cta-group a {
+    text-align:      center !important;
+    justify-content: center !important;
+    width:           100%   !important;
+  }
+}
+
+/* ─── About grid ─────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 5rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) { .about-grid { gap: 2.5rem; } }
+
+/* ─── About features list ────────────────────────────────── */
+.about-features-list {
+  list-style: none;
+  margin:  2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem 1.5rem;
+  padding: 0;
+}
+@media (max-width: 480px) {
+  .about-features-list { grid-template-columns: 1fr; }
+}
+
+/* ─── Studio sets grid ───────────────────────────────────── */
+.studio-sets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto 3.5rem;
+}
+@media (max-width: 360px) {
+  .studio-sets-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Gallery grid (replaces fragile inline <style> tag) ─── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.gallery-span2 { grid-column: span 2; }
+
+@media (max-width: 860px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .gallery-grid  { grid-template-columns: 1fr; }
+  .gallery-span2 { grid-column: span 1; }
+}
+
+/* ─── Gallery overlay hover (moved from <style> tag) ──────── */
+.gallery-overlay              { opacity: 0 !important; }
+div:hover > .gallery-overlay  { opacity: 1 !important; }
+
+/* ─── Form rows (2-col → 1-col on mobile) ────────────────── */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 560px) {
+  .form-row-2 { grid-template-columns: 1fr; }
+}
+
+/* ─── Booking layout ─────────────────────────────────────── */
+.booking-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+@media (max-width: 768px) { .booking-layout { gap: 2.5rem; } }
+
+/* ─── Availability Calendar layout ──────────────────────── */
+.cal-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 3rem;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .cal-layout { grid-template-columns: 1fr; }
+}
+
+/* ─── Footer grid ────────────────────────────────────────── */
+.footer-grid-mob {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+@media (max-width: 1100px) {
+  .footer-grid-mob { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .footer-grid-mob { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ─── Footer bottom bar ──────────────────────────────────── */
+.footer-bottom-mob {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  max-width:  1200px;
+  margin:     0 auto;
+  padding:    1.8rem 0;
+  display:    flex;
+  justify-content: space-between;
+  align-items:     center;
+  flex-wrap:  wrap;
+  gap:        0.75rem;
+  font-size:  0.76rem;
+  color:      var(--gray);
+}
+@media (max-width: 640px) {
+  .footer-bottom-mob {
+    flex-direction: column    !important;
+    align-items:    flex-start !important;
+    gap:  0.5rem;
+    padding: 1.5rem 0;
+  }
+}
+
+/* ─── Footer tagline (hide on very small screens) ────────── */
+@media (max-width: 480px) {
+  .footer-tagline { display: none; }
+}
+
+/* ─── Productions types grid ─────────────────────────────── */
+.productions-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+@media (max-width: 360px) {
+  .productions-types-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── iOS Safari zoom fix (prevents auto-zoom on input focus) */
+@media (max-width: 768px) {
+  .form-input { font-size: 16px !important; }
 }
 
 /* ─── General image hover zoom ───────────────────────────── */

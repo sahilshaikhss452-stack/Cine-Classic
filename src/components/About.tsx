@@ -11,6 +11,7 @@ export default function About() {
   return (
     <section
       id="about"
+      className="mob-section"
       style={{
         padding: '120px 5%',
         background: 'var(--dark2)',
@@ -24,14 +25,7 @@ export default function About() {
         opacity: 0.2,
       }} />
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '5rem',
-        alignItems: 'center',
-        maxWidth: '1200px',
-        margin: '0 auto',
-      }}>
+      <div className="about-grid">
         {/* Visual placeholder */}
         <div
           className="reveal"
@@ -90,11 +84,7 @@ export default function About() {
             hospital ward, and 2-acre open ground — we give your creative vision the perfect stage.
           </p>
 
-          <ul style={{
-            listStyle: 'none', margin: '2rem 0',
-            display: 'grid', gridTemplateColumns: '1fr 1fr',
-            gap: '0.7rem 1.5rem', padding: 0,
-          }}>
+          <ul className="about-features-list">
             {FEATURES.map((f) => (
               <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', fontSize: '0.88rem', color: 'var(--white)' }}>
                 <span style={{

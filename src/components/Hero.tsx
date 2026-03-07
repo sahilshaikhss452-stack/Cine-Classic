@@ -74,14 +74,16 @@ export default function Hero() {
       }} />
 
       {/* ── Hero content ──────────────────────────────────────── */}
-      <div style={{
-        position: 'relative',
-        textAlign: 'center',
-        maxWidth: '900px',
-        padding: '140px 5% 100px',
-        width: '100%',
-        margin: '0 auto',
-      }}>
+      <div
+        className="hero-content-wrap"
+        style={{
+          position: 'relative',
+          textAlign: 'center',
+          maxWidth: '900px',
+          padding: '140px 5% 100px',
+          width: '100%',
+          margin: '0 auto',
+        }}>
 
         {/* Live badge */}
         <div style={{
@@ -136,10 +138,12 @@ export default function Hero() {
         </p>
 
         {/* CTAs */}
-        <div style={{
-          display: 'flex', gap: '1rem',
-          justifyContent: 'center', flexWrap: 'wrap',
-        }}>
+        <div
+          className="hero-cta-group"
+          style={{
+            display: 'flex', gap: '1rem',
+            justifyContent: 'center', flexWrap: 'wrap',
+          }}>
           <a href="#sets" className="btn-primary" style={{ fontSize: '1rem', padding: '14px 32px' }}>
             Explore Studios →
           </a>
@@ -149,10 +153,12 @@ export default function Hero() {
         </div>
 
         {/* Stats strip */}
-        <div style={{
-          display: 'flex', justifyContent: 'center',
-          gap: '3rem', marginTop: '5.5rem', flexWrap: 'wrap',
-        }}>
+        <div
+          className="hero-stats-strip"
+          style={{
+            display: 'flex', justifyContent: 'center',
+            gap: '3rem', marginTop: '5.5rem', flexWrap: 'wrap',
+          }}>
           {[
             { number: '9',    label: 'Unique Sets' },
             { number: '4K',   label: 'Camera Ready' },

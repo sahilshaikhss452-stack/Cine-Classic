@@ -39,7 +39,7 @@ const STEPS = [
 
 export default function ShootTimeline() {
   return (
-    <section style={{ background: 'var(--dark3)', padding: '120px 5%', overflow: 'hidden' }}>
+    <section className="mob-section" style={{ background: 'var(--dark3)', padding: '120px 5%', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Header */}

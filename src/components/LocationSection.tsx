@@ -40,7 +40,7 @@ const INFO_BLOCKS = [
 
 export default function LocationSection() {
   return (
-    <section style={{ background: 'var(--dark)', padding: '120px 5%' }}>
+    <section className="mob-section" style={{ background: 'var(--dark)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Header */}

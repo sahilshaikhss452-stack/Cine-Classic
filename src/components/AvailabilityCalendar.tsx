@@ -75,7 +75,7 @@ export default function AvailabilityCalendar() {
   const canGoPrev = !(viewMonth.year === today.getFullYear() && viewMonth.month === today.getMonth());
 
   return (
-    <section style={{ background: 'var(--dark2)', padding: '120px 5%' }}>
+    <section className="mob-section" style={{ background: 'var(--dark2)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
         {/* Header */}
@@ -95,12 +95,7 @@ export default function AvailabilityCalendar() {
           </p>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 340px',
-          gap: '3rem',
-          alignItems: 'start',
-        }}>
+        <div className="cal-layout">
 
           {/* Calendar */}
           <div className="reveal" style={{

@@ -51,7 +51,7 @@ const PRODUCTION_TYPES = [
 
 export default function ProductionTypes() {
   return (
-    <section style={{ background: 'var(--dark2)', padding: '120px 5%' }}>
+    <section className="mob-section" style={{ background: 'var(--dark2)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Header */}
@@ -72,12 +72,8 @@ export default function ProductionTypes() {
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '1.5rem',
-        }}>
+        {/* Cards Grid — responsive via .productions-types-grid in globals.css */}
+        <div className="productions-types-grid">
           {PRODUCTION_TYPES.map((pt, i) => (
             <div
               key={pt.title}
