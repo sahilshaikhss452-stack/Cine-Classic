@@ -72,10 +72,10 @@ export default function AdFilmStudioPage() {
               <div>
                 <div className="section-tag">Mumbai's TVC Studio</div>
                 <h1 style={{
-                  fontFamily: 'var(--font-playfair), serif',
-                  fontSize: 'clamp(2.2rem, 4vw, 3.6rem)',
+                  fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)',
                   fontWeight: 800, color: 'var(--white)',
-                  margin: '1.2rem 0 1.2rem', lineHeight: 1.1,
+                  margin: '1.2rem 0 1.2rem', lineHeight: 1.08,
+                  letterSpacing: '-0.025em',
                 }}>
                   Ad Film Studio{' '}
                   <span style={{ color: 'var(--gold)' }}>Mumbai</span>
@@ -140,10 +140,10 @@ export default function AdFilmStudioPage() {
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <span className="section-tag">Commercial Production Types</span>
               <h2 style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+                fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0 1rem',
+                letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
                 Every Format of <span style={{ color: 'var(--gold)' }}>Commercial Production</span>
               </h2>
@@ -157,13 +157,13 @@ export default function AdFilmStudioPage() {
                 >
                   <div style={{ fontSize: '2rem', marginBottom: '0.8rem' }}>{item.icon}</div>
                   <h3 style={{
-                    fontFamily: 'var(--font-playfair), serif',
                     fontSize: '1.1rem', fontWeight: 700,
                     color: 'var(--white)', marginBottom: '0.7rem',
+                    letterSpacing: '-0.01em',
                   }}>
                     {item.title}
                   </h3>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--gray)', lineHeight: 1.75 }}>{item.desc}</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.7 }}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -176,10 +176,10 @@ export default function AdFilmStudioPage() {
             <div className="reveal" style={{ marginBottom: '3rem' }}>
               <span className="section-tag">Client Trust</span>
               <h2 style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+                fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0 1rem',
+                letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
                 Trusted by Leading <span style={{ color: 'var(--gold)' }}>Ad Agencies & Brands</span>
               </h2>
@@ -227,9 +227,9 @@ export default function AdFilmStudioPage() {
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{
-                fontFamily: 'var(--font-playfair), serif',
                 fontSize: 'clamp(1.6rem, 2.5vw, 2.4rem)',
                 fontWeight: 700, color: 'var(--white)',
+                letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
                 Why Ad Agencies Choose <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
               </h2>
@@ -269,9 +269,9 @@ export default function AdFilmStudioPage() {
         <section style={{ padding: '80px 5%', background: 'var(--dark)', textAlign: 'center' }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{
-              fontFamily: 'var(--font-playfair), serif',
-              fontSize: 'clamp(1.8rem, 3vw, 2.6rem)',
+              fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
               fontWeight: 700, color: 'var(--white)', marginBottom: '1rem',
+              letterSpacing: '-0.015em', lineHeight: 1.15,
             }}>
               Book Your <span style={{ color: 'var(--gold)' }}>Ad Film Shoot</span>
             </h2>

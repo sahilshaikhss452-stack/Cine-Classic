@@ -69,10 +69,10 @@ export default function MusicVideoShootLocationPage() {
           <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
             <div className="section-tag">Mumbai's Best Music Video Locations</div>
             <h1 style={{
-              fontFamily: 'var(--font-playfair), serif',
-              fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
+              fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)',
               fontWeight: 800, color: 'var(--white)',
-              margin: '1.2rem 0 1.2rem', lineHeight: 1.1,
+              margin: '1.2rem 0 1.2rem', lineHeight: 1.08,
+              letterSpacing: '-0.025em',
             }}>
               Music Video Shoot{' '}
               <span style={{ color: 'var(--gold)' }}>Mumbai</span>
@@ -108,10 +108,10 @@ export default function MusicVideoShootLocationPage() {
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <span className="section-tag">Locations for Music Videos</span>
               <h2 style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+                fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0 1rem',
+                letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
                 Sets That Tell Your <span style={{ color: 'var(--gold)' }}>Song&apos;s Story</span>
               </h2>
@@ -131,13 +131,13 @@ export default function MusicVideoShootLocationPage() {
                 >
                   <div style={{ fontSize: '2rem', marginBottom: '0.8rem' }}>{set.icon}</div>
                   <h3 style={{
-                    fontFamily: 'var(--font-playfair), serif',
                     fontSize: '1.1rem', fontWeight: 700,
                     color: 'var(--white)', marginBottom: '0.7rem',
+                    letterSpacing: '-0.01em',
                   }}>
                     {set.title}
                   </h3>
-                  <p style={{ fontSize: '0.87rem', color: 'var(--gray)', lineHeight: 1.75, marginBottom: '1.2rem' }}>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.7, marginBottom: '1.2rem' }}>
                     {set.desc}
                   </p>
                   <div style={{ color: 'var(--gold)', fontSize: '1rem', fontWeight: 700 }}>{set.rate}</div>
@@ -153,10 +153,10 @@ export default function MusicVideoShootLocationPage() {
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <span className="section-tag">Why Book With Us</span>
               <h2 style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+                fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0',
+                letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
                 Built for <span style={{ color: 'var(--gold)' }}>Music Video Productions</span>
               </h2>
@@ -170,11 +170,11 @@ export default function MusicVideoShootLocationPage() {
                 >
                   <div style={{ fontSize: '1.8rem', marginBottom: '0.8rem' }}>{item.icon}</div>
                   <h3 style={{
-                    fontFamily: 'var(--font-playfair), serif',
                     fontSize: '1.05rem', fontWeight: 700,
                     color: 'var(--white)', marginBottom: '0.6rem',
+                    letterSpacing: '-0.01em',
                   }}>{item.title}</h3>
-                  <p style={{ fontSize: '0.86rem', color: 'var(--gray)', lineHeight: 1.75 }}>{item.desc}</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--gray)', lineHeight: 1.7 }}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -185,9 +185,9 @@ export default function MusicVideoShootLocationPage() {
         <section style={{ padding: '80px 5%', background: 'var(--dark2)', textAlign: 'center' }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{
-              fontFamily: 'var(--font-playfair), serif',
-              fontSize: 'clamp(1.8rem, 3vw, 2.6rem)',
+              fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
               fontWeight: 700, color: 'var(--white)', marginBottom: '1rem',
+              letterSpacing: '-0.015em', lineHeight: 1.15,
             }}>
               Book Your <span style={{ color: 'var(--gold)' }}>Music Video</span> Location
             </h2>

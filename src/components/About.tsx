@@ -71,18 +71,23 @@ export default function About() {
         <div className="reveal reveal-delay-2">
           <div className="section-tag">About Cine Classic Studios</div>
 
-          <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', marginBottom: '1.2rem' }}>
+          <h2 style={{
+            fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
+            marginBottom: '1.4rem',
+            letterSpacing: '-0.015em',
+            lineHeight: 1.15,
+          }}>
             A Studio Built for{' '}
             <span style={{ color: 'var(--gold)' }}>Creators</span>
           </h2>
 
-          <p style={{ color: 'var(--gray)', fontWeight: 300, marginBottom: '1rem', lineHeight: 1.8 }}>
+          <p style={{ color: 'var(--gray)', fontWeight: 300, marginBottom: '1.1rem', lineHeight: 1.7, fontSize: '1.05rem' }}>
             Cine Classic Studios is a premium rental studio space designed for filmmakers,
             photographers, content creators, and production teams who demand the very best.
           </p>
-          <p style={{ color: 'var(--gray)', fontWeight: 300, marginBottom: '1rem', lineHeight: 1.8 }}>
-            With five distinct sets — from a seamless infinity wall to an authentic industrial
-            brick backdrop — we give your creative vision the perfect stage.
+          <p style={{ color: 'var(--gray)', fontWeight: 300, marginBottom: '1.1rem', lineHeight: 1.7, fontSize: '1.05rem' }}>
+            With nine distinct sets — from period bazaars and chawls to a full courtroom,
+            hospital ward, and 2-acre open ground — we give your creative vision the perfect stage.
           </p>
 
           <ul style={{

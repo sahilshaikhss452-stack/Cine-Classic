@@ -266,8 +266,8 @@ export default function Footer() {
               padding: '12px 22px',
               background: 'var(--gold)', color: 'var(--dark)',
               borderRadius: '100px',
-              fontSize: '0.78rem', fontWeight: 700,
-              letterSpacing: '0.06em', textTransform: 'uppercase',
+              fontSize: '0.9rem', fontWeight: 500,
+              letterSpacing: '0.01em',
               textDecoration: 'none',
               transition: 'all 0.35s ease',
             }}

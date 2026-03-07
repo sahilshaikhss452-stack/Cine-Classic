@@ -58,17 +58,18 @@ export default function BehindScenes() {
         <div className="reveal" style={{ marginBottom: '4rem' }}>
           <span className="section-tag">Studio Life</span>
           <h2 style={{
-            fontFamily: 'var(--font-playfair), serif',
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
             fontWeight: 700,
             color: 'var(--white)',
-            margin: '1.2rem 0 1rem',
+            margin: '1.2rem 0 1.1rem',
             maxWidth: '600px',
+            letterSpacing: '-0.015em',
+            lineHeight: 1.15,
           }}>
             Behind the Scenes at{' '}
             <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
           </h2>
-          <p style={{ color: 'var(--gray)', maxWidth: '520px', lineHeight: 1.8 }}>
+          <p style={{ color: 'var(--gray)', maxWidth: '560px', lineHeight: 1.7, fontSize: '1.05rem' }}>
             A look inside what happens before the camera rolls — the meticulous preparation that makes every production a success.
           </p>
         </div>
@@ -96,11 +97,11 @@ export default function BehindScenes() {
 
               {/* Text */}
               <h3 style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: '1.2rem',
+                fontSize: '1.15rem',
                 fontWeight: 700,
                 color: 'var(--white)',
                 marginBottom: '0.8rem',
+                letterSpacing: '-0.01em',
               }}>{item.title}</h3>
 
               <p style={{

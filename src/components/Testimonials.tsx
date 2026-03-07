@@ -14,7 +14,12 @@ export default function Testimonials() {
 
       <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
         <div className="section-tag">Client Reviews</div>
-        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
+        <h2 style={{
+          fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
+          letterSpacing: '-0.015em',
+          lineHeight: 1.15,
+          marginTop: '0.5rem',
+        }}>
           What Creators <span style={{ color: 'var(--gold)' }}>Say</span>
         </h2>
       </div>

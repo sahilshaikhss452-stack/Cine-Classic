@@ -43,10 +43,9 @@ export default function Navbar() {
   const closeMenu = () => setMobileOpen(false);
 
   const linkStyle = (active: boolean): React.CSSProperties => ({
-    fontSize: '0.8rem',
+    fontSize: '0.88rem',
     fontWeight: 500,
-    letterSpacing: '0.06em',
-    textTransform: 'uppercase',
+    letterSpacing: '0.01em',
     color: active ? 'var(--white)' : 'var(--gray)',
     transition: 'color 0.4s cubic-bezier(0.22,1,0.36,1)',
     position: 'relative',
@@ -122,9 +121,8 @@ export default function Navbar() {
               href={isHome ? '#booking' : '/#booking'}
               style={{
                 background: 'var(--gold)', color: 'var(--dark)',
-                padding: '10px 24px', borderRadius: '100px',
-                fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.06em',
-                textTransform: 'uppercase',
+                padding: '10px 22px', borderRadius: '100px',
+                fontSize: '0.9rem', fontWeight: 500, letterSpacing: '0.01em',
                 boxShadow: '0 2px 12px rgba(212,175,55,0.25)',
                 transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                 display: 'inline-block',

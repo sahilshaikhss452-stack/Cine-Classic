@@ -46,15 +46,16 @@ export default function ShootTimeline() {
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '5rem' }}>
           <span className="section-tag">The Process</span>
           <h2 style={{
-            fontFamily: 'var(--font-playfair), serif',
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
             fontWeight: 700,
             color: 'var(--white)',
-            margin: '1.2rem 0 1rem',
+            margin: '1.2rem 0 1.1rem',
+            letterSpacing: '-0.015em',
+            lineHeight: 1.15,
           }}>
             How Your Shoot <span style={{ color: 'var(--gold)' }}>Happens Here</span>
           </h2>
-          <p style={{ color: 'var(--gray)', maxWidth: '540px', margin: '0 auto', lineHeight: 1.8 }}>
+          <p style={{ color: 'var(--gray)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7, fontSize: '1.05rem' }}>
             A transparent, professionally managed production journey from first inquiry to final wrap.
           </p>
         </div>
@@ -76,22 +77,23 @@ export default function ShootTimeline() {
                 {/* Content */}
                 <div className="tl-content">
                   <span style={{
-                    fontFamily: 'var(--font-playfair), serif',
+                    fontFamily: 'var(--font-inter), sans-serif',
                     fontSize: '2rem',
                     fontWeight: 800,
                     color: 'var(--dark4)',
                     display: 'block',
                     lineHeight: 1,
                     marginBottom: '0.5rem',
+                    letterSpacing: '-0.04em',
                     WebkitTextStroke: '1px rgba(212,175,55,0.2)',
                   }}>{step.number}</span>
 
                   <h3 style={{
-                    fontFamily: 'var(--font-playfair), serif',
-                    fontSize: '1.1rem',
+                    fontSize: '1.05rem',
                     fontWeight: 700,
                     color: 'var(--white)',
                     marginBottom: '0.6rem',
+                    letterSpacing: '-0.01em',
                   }}>{step.title}</h3>
 
                   <p style={{

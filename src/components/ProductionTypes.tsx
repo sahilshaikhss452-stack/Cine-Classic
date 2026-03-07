@@ -58,15 +58,16 @@ export default function ProductionTypes() {
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '5rem' }}>
           <span className="section-tag">What We Do</span>
           <h2 style={{
-            fontFamily: 'var(--font-playfair), serif',
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
             fontWeight: 700,
             color: 'var(--white)',
-            margin: '1.2rem 0 1rem',
+            margin: '1.2rem 0 1.1rem',
+            letterSpacing: '-0.015em',
+            lineHeight: 1.15,
           }}>
             Productions We <span style={{ color: 'var(--gold)' }}>Power</span>
           </h2>
-          <p style={{ color: 'var(--gray)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.8 }}>
+          <p style={{ color: 'var(--gray)', maxWidth: '580px', margin: '0 auto', lineHeight: 1.7, fontSize: '1.05rem' }}>
             From intimate indie films to large-scale OTT productions — our studio infrastructure supports every format, budget, and vision.
           </p>
         </div>
@@ -110,11 +111,11 @@ export default function ProductionTypes() {
 
               {/* Title */}
               <h3 style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: '1.3rem',
+                fontSize: '1.2rem',
                 fontWeight: 700,
                 color: 'var(--white)',
                 marginBottom: '0.8rem',
+                letterSpacing: '-0.01em',
               }}>{pt.title}</h3>
 
               {/* Description */}

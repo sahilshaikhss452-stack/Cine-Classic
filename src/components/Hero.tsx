@@ -89,9 +89,11 @@ export default function Hero() {
         </div>
 
         <h1 style={{
-          fontSize: 'clamp(2.8rem, 6.5vw, 5rem)',
+          fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)',
           lineHeight: 1.08, marginBottom: '1.5rem',
           color: 'var(--white)',
+          letterSpacing: '-0.025em',
+          fontWeight: 800,
         }}>
           Where Stories<br />
           Come to{' '}
@@ -107,9 +109,9 @@ export default function Hero() {
         </h1>
 
         <p style={{
-          fontSize: '1.1rem', color: 'var(--gray)',
-          maxWidth: '520px', margin: '0 auto 2.5rem',
-          fontWeight: 300, lineHeight: 1.8,
+          fontSize: '1.125rem', color: 'var(--gray)',
+          maxWidth: '560px', margin: '0 auto 2.5rem',
+          fontWeight: 300, lineHeight: 1.65,
         }}>
           Professional film &amp; photography studio spaces for rent.
           Five unique sets. Fully equipped. Ready for your vision.
@@ -136,13 +138,14 @@ export default function Hero() {
                 }} />
               )}
               <div style={{
-                fontFamily: 'var(--font-playfair), serif',
-                fontSize: '2.8rem', fontWeight: 700,
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '2.6rem', fontWeight: 800,
                 color: 'var(--gold)', lineHeight: 1,
+                letterSpacing: '-0.02em',
               }}>{s.number}</div>
               <div style={{
-                fontSize: '0.72rem', letterSpacing: '0.15em',
-                textTransform: 'uppercase', color: 'var(--gray)', marginTop: '6px',
+                fontSize: '0.75rem', letterSpacing: '0.12em',
+                textTransform: 'uppercase', color: 'var(--gray)', marginTop: '8px',
               }}>{s.label}</div>
             </div>
           ))}
