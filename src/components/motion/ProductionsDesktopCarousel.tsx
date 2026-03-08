@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { PRODUCTIONS, TYPE_ICONS } from '@/data/productions';
 
 /* ── Layout constants ─────────────────────────────────────────────── */
-const CARD_W       = 355;   // center card width px
-const SIDE_SCALE   = 0.83;  // side card scale factor
+const CARD_W       = 440;   // center card width px
+const SIDE_SCALE   = 0.90;  // side card scale factor
 const SIDE_OPACITY = 0.55;  // side card opacity
-const SIDE_OFFSET  = 455;   // px from center to each side card center
-const VIEWPORT_H   = 535;   // px – card track height
+const SIDE_OFFSET  = 500;   // px from center to each side card center
+const VIEWPORT_H   = 665;   // px – card track height (440 × 3/2 = 660 + 5 breathing)
 
 export default function ProductionsDesktopCarousel() {
   const [active, setActive]     = useState(0);
@@ -193,7 +193,7 @@ export default function ProductionsDesktopCarousel() {
         style={{
           position: 'absolute',
           top: `${VIEWPORT_H / 2}px`,
-          left: 'calc(50% - 248px)',
+          left: 'calc(50% - 268px)',
           transform: `translate(-50%, -50%) scale(${lHover ? 1.1 : 1})`,
           zIndex: 20,
           width: '46px', height: '46px',
@@ -224,7 +224,7 @@ export default function ProductionsDesktopCarousel() {
         style={{
           position: 'absolute',
           top: `${VIEWPORT_H / 2}px`,
-          left: 'calc(50% + 248px)',
+          left: 'calc(50% + 268px)',
           transform: `translate(-50%, -50%) scale(${rHover ? 1.1 : 1})`,
           zIndex: 20,
           width: '46px', height: '46px',
