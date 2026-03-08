@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { PRODUCTIONS, TYPE_ICONS } from '@/data/productions';
 
@@ -20,6 +20,13 @@ export default function ProductionsDesktopCarousel() {
 
   const goPrev = useCallback(() => setActive(i => (i - 1 + total) % total), [total]);
   const goNext = useCallback(() => setActive(i => (i + 1) % total), [total]);
+
+  /* ── Autoplay: advance every 2 s, pause while hovered ─────────── */
+  useEffect(() => {
+    if (hovered) return;
+    const id = setInterval(goNext, 2000);
+    return () => clearInterval(id);
+  }, [hovered, goNext]);
 
   return (
     <div
