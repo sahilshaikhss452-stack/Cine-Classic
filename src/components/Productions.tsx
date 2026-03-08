@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PRODUCTIONS, TYPE_ICONS } from '@/data/productions';
 import type { Production } from '@/data/productions';
 import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
+import ProductionsDesktopCarousel from '@/components/motion/ProductionsDesktopCarousel';
 
 // ─── Individual card ───────────────────────────────────────────────────────────
 function ProductionCard({ prod, index }: { prod: Production; index: number }) {
@@ -130,13 +131,20 @@ export default function Productions() {
           </p>
         </div>
 
-        {/* ── Productions grid — auto-scroll carousel on mobile/tablet ── */}
-        <p className="swipe-hint">swipe to browse ›</p>
-        <AutoScrollCarousel className="productions-grid" style={{ marginBottom: '3.5rem' }}>
-          {PRODUCTIONS.map((prod, i) => (
-            <ProductionCard key={prod.id} prod={prod} index={i} />
-          ))}
-        </AutoScrollCarousel>
+        {/* ── Mobile / tablet: auto-scroll horizontal carousel ───────── */}
+        <div className="lg:hidden">
+          <p className="swipe-hint">swipe to browse ›</p>
+          <AutoScrollCarousel className="productions-grid" style={{ marginBottom: '3.5rem' }}>
+            {PRODUCTIONS.map((prod, i) => (
+              <ProductionCard key={prod.id} prod={prod} index={i} />
+            ))}
+          </AutoScrollCarousel>
+        </div>
+
+        {/* ── Desktop: Apple-style centered carousel ──────────────────── */}
+        <div className="hidden lg:block" style={{ marginBottom: '3rem' }}>
+          <ProductionsDesktopCarousel />
+        </div>
 
         {/* ── CTA ─────────────────────────────────────── */}
         <div className="reveal" style={{ textAlign: 'center' }}>
