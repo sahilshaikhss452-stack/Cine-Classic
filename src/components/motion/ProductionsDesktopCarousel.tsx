@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { PRODUCTIONS, TYPE_ICONS } from '@/data/productions';
 
@@ -21,12 +21,19 @@ export default function ProductionsDesktopCarousel() {
   const goPrev = useCallback(() => setActive(i => (i - 1 + total) % total), [total]);
   const goNext = useCallback(() => setActive(i => (i + 1) % total), [total]);
 
-  /* ── Autoplay: advance every 2 s, pause while hovered ─────────── */
+  /* ── Keep a ref in sync with hovered so the interval callback
+     can read the latest value without being a dependency ────────── */
+  const hoveredRef = useRef(false);
+  useEffect(() => { hoveredRef.current = hovered; }, [hovered]);
+
+  /* ── Autoplay: created ONCE, never torn down by scroll/re-renders  */
   useEffect(() => {
-    if (hovered) return;
-    const id = setInterval(goNext, 2000);
+    const id = setInterval(() => {
+      if (!hoveredRef.current)
+        setActive(i => (i + 1) % PRODUCTIONS.length);
+    }, 2000);
     return () => clearInterval(id);
-  }, [hovered, goNext]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
