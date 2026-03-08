@@ -69,12 +69,43 @@ export default function Testimonials() {
               }}>
                 {t.initial}
               </div>
-              <div>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--white)' }}>{t.name}</div>
                 <div style={{
-                  fontSize: '0.73rem', color: 'var(--gold)',
-                  letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: '2px',
+                  fontSize: '0.73rem', color: 'var(--gray)',
+                  letterSpacing: '0.04em', marginTop: '2px',
                 }}>{t.role}</div>
+                {(t.production || t.network) && (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '5px',
+                    marginTop: '5px', flexWrap: 'wrap',
+                  }}>
+                    {t.production && (
+                      <span style={{
+                        fontSize: '0.65rem', fontWeight: 600,
+                        letterSpacing: '0.06em',
+                        color: 'var(--gold)',
+                        background: 'rgba(212,175,55,0.08)',
+                        border: '1px solid rgba(212,175,55,0.2)',
+                        borderRadius: '100px',
+                        padding: '2px 8px',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {t.production}
+                      </span>
+                    )}
+                    {t.network && (
+                      <span style={{
+                        fontSize: '0.65rem', fontWeight: 500,
+                        letterSpacing: '0.04em',
+                        color: 'rgba(255,255,255,0.4)',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {t.network}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

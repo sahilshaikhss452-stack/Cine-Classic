@@ -170,26 +170,45 @@ export default function Hero() {
             display: 'flex', gap: '1rem',
             justifyContent: 'center', flexWrap: 'wrap',
           }}>
-          <a href="#sets" className="btn-primary" style={{ fontSize: '1rem', padding: '14px 32px' }}>
-            Explore Studios →
+          <a href="#booking" className="btn-primary" style={{ fontSize: '1rem', padding: '14px 32px' }}>
+            Reserve Studio →
           </a>
-          <a href="#booking" className="btn-outline" style={{ fontSize: '1rem', padding: '14px 32px' }}>
-            Reserve Studio
+          <a href="#sets" className="btn-outline" style={{ fontSize: '1rem', padding: '14px 32px' }}>
+            Explore Studios
           </a>
         </div>
+
+        {/* Network credibility line */}
+        <p style={{
+          marginTop: '1.8rem',
+          fontSize: '0.75rem',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.32)',
+          fontWeight: 400,
+        }}>
+          Trusted by&nbsp;
+          <span style={{ color: 'rgba(212,175,55,0.7)' }}>Netflix</span>
+          &nbsp;·&nbsp;
+          <span style={{ color: 'rgba(212,175,55,0.7)' }}>Amazon Prime Video</span>
+          &nbsp;·&nbsp;
+          <span style={{ color: 'rgba(212,175,55,0.7)' }}>SonyLIV</span>
+          &nbsp;·&nbsp;
+          <span style={{ color: 'rgba(212,175,55,0.7)' }}>Star Sports</span>
+        </p>
 
         {/* Stats strip */}
         <div
           className="hero-stats-strip"
           style={{
             display: 'flex', justifyContent: 'center',
-            gap: '3rem', marginTop: '5.5rem', flexWrap: 'wrap',
+            gap: '3rem', marginTop: '4rem', flexWrap: 'wrap',
           }}>
           {[
             { number: '9',    label: 'Unique Sets' },
             { number: '4K',   label: 'Camera Ready' },
-            { number: '24/7', label: 'Availability' },
-            { number: '100%', label: 'Satisfaction' },
+            { number: '200+', label: 'Productions' },
+            { number: '25',   label: 'Years Running' },
           ].map((s, i) => (
             <div key={s.label} style={{ textAlign: 'center', position: 'relative' }}>
               {i > 0 && (
