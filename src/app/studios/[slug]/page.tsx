@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import RevealProvider from '@/components/RevealProvider';
 import StudioHero from '@/components/studios/StudioHero';
 import StudioGallery from '@/components/studios/StudioGallery';
+import SetLayout from '@/components/studios/SetLayout';
 import StudioDetails from '@/components/studios/StudioDetails';
 import StudioBooking from '@/components/studios/StudioBooking';
 import StudioCard from '@/components/studios/StudioCard';
@@ -55,6 +56,8 @@ export default async function StudioPage({ params }: Props) {
       <main>
         <StudioHero    studio={studio} />
         <StudioGallery studio={studio} />
+        {/* Set Layout — floor plan + zone reference, between gallery and full details */}
+        <SetLayout     studio={studio} />
         <StudioDetails studio={studio} />
         <StudioBooking studio={studio} />
 

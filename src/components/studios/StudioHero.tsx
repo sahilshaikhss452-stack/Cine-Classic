@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import type { StudioSet } from '@/data/sets';
 import { studioHeroPath } from '@/data/sets';
+import DownloadSetDeckButton from '@/components/studios/DownloadSetDeckButton';
 
 interface Props {
   studio: StudioSet;
@@ -187,9 +188,11 @@ export default function StudioHero({ studio }: Props) {
         </div>
 
         {/* CTAs */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <a href="#booking" className="btn-primary">Book This Studio →</a>
           <a href="#details" className="btn-outline">View Details</a>
+          {/* Download Set Deck — generates branded PDF or links to CMS-uploaded file */}
+          <DownloadSetDeckButton studio={studio} variant="outline" size="md" />
         </div>
       </div>
     </section>

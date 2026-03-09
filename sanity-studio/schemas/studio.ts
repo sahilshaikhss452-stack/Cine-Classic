@@ -109,6 +109,34 @@ export const studioSchema = defineType({
       description: 'Lower number appears first',
       initialValue: 99,
     }),
+
+    // ── Set Deck ──────────────────────────────────────────────────────────────
+    defineField({
+      name: 'setPDF',
+      title: 'Set Deck PDF',
+      type: 'file',
+      description:
+        'Upload a pre-made PDF brochure for this studio. When uploaded, the "Download Set Deck" button links directly to this file. If left empty, a PDF is auto-generated from the set data.',
+      options: { accept: '.pdf' },
+    }),
+
+    // ── Set Layout ────────────────────────────────────────────────────────────
+    defineField({
+      name: 'setLayoutImage',
+      title: 'Set Layout / Floor Plan Image',
+      type: 'image',
+      description:
+        'Upload a floor plan, annotated layout diagram, or overhead sketch of the set. Shown in the "Set Layout" section on the landing page. Recommended: 1600×900.',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'setLayoutDescription',
+      title: 'Set Layout Description',
+      type: 'text',
+      rows: 3,
+      description:
+        'Brief description of the set layout — shooting zones, key areas, recommended camera positions. 2–4 sentences. Displayed below the layout image on the landing page.',
+    }),
   ],
   preview: {
     select: {

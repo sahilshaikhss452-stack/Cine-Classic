@@ -20,6 +20,16 @@ export interface StudioSet {
   // Any slot left undefined falls back to the gradient placeholder.
   heroImage?: string;       // e.g. '/images/studios/empty-floor/hero.jpg'
   galleryImages?: string[]; // up to 6: ['/images/studios/empty-floor/1.jpg', ...]
+  // ── Set Deck (Production Reference Document) ──────────────────────────────
+  // Upload a pre-made PDF via Sanity CMS. When set, the Download Set Deck
+  // button links directly to this URL. When unset, a PDF is auto-generated
+  // from the set data at download time.
+  setPdfUrl?: string;       // Sanity CDN URL for pre-made set deck PDF
+  // ── Set Layout section ────────────────────────────────────────────────────
+  // Upload a floor plan or annotated layout image + a short description.
+  // Both are optional: the section renders a styled placeholder when omitted.
+  setLayoutImage?: string;       // e.g. '/images/studios/empty-floor/layout.jpg'
+  setLayoutDescription?: string; // 1-3 sentences describing zones / shooting angles
 }
 
 /**
