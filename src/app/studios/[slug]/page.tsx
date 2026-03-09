@@ -57,11 +57,18 @@ export default async function StudioPage({ params }: Props) {
       <StudioSubNav />
 
       <main>
+        {/*
+          Section order (conversion-optimised for film directors / OTT / agencies):
+          1. Hero     — Cinematic first impression + glass stats bar
+          2. Gallery  — Visual proof, or premium walkthrough CTA if no photos yet
+          3. Details  — Specs + about + facilities + use-cases (answers every question)
+          4. Layout   — Floor plan reference for pre-production planning
+          5. Booking  — Streamlined enquiry (close the loop)
+        */}
         <StudioHero    studio={studio} />
         <StudioGallery studio={studio} />
-        {/* Set Layout — floor plan + zone reference, between gallery and full details */}
-        <SetLayout     studio={studio} />
         <StudioDetails studio={studio} />
+        <SetLayout     studio={studio} />
         <StudioBooking studio={studio} />
 
         {/* More Studios section */}

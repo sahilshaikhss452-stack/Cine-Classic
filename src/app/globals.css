@@ -1353,3 +1353,151 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
   .prod-title { font-size: 0.88rem; }
   .prod-info  { padding: 0.75rem 0.85rem 1rem !important; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   STUDIO SET LANDING PAGE — GLOBAL UTILITY STYLES
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Pulse dot keyframe (used in hero badge + subnav tags) ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* ── Studio hero: stats bar hover states ──────────────────── */
+.studio-hero__statsbar > div {
+  transition: background 0.3s ease;
+  cursor: default;
+}
+.studio-hero__statsbar > div:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+/* ── Spec strip: hide scrollbar + hover ───────────────────── */
+.spec-strip-outer { overflow: hidden; }
+.spec-strip::-webkit-scrollbar { display: none; }
+
+/* ── StudioSubNav link hover ──────────────────────────────── */
+nav[aria-label="Page sections"] a:not([style*="var(--gold)"]):hover {
+  color: rgba(255,255,255,0.85) !important;
+  background: rgba(255,255,255,0.05) !important;
+}
+
+/* ── CTA hover effects (studio pages) ────────────────────── */
+.studio-hero__ctas a:first-child:hover {
+  background: var(--gold-lt) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(212,175,55,0.4) !important;
+}
+.studio-hero__ctas a:nth-child(2):hover {
+  border-color: rgba(255,255,255,0.4) !important;
+  background: rgba(255,255,255,0.12) !important;
+}
+
+/* ── Gallery slot zoom on hover ───────────────────────────── */
+.gallery-slot img {
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1) !important;
+}
+.gallery-slot:hover img { transform: scale(1.05) !important; }
+
+/* ── Studio detail: spec card hover ──────────────────────── */
+.spec-strip > div:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+/* ── Booking: WhatsApp button hover ──────────────────────── */
+a[href*="wa.me"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ── Mobile: studio hero adjustments ─────────────────────── */
+@media (max-width: 768px) {
+  .studio-hero { min-height: 100svh; }
+
+  .studio-hero__title {
+    font-size: clamp(2.4rem, 10vw, 4rem) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .studio-hero__desc {
+    font-size: 0.9rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .studio-hero__productions {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .studio-hero__ctas {
+    margin-bottom: 1.75rem !important;
+    gap: 0.625rem !important;
+  }
+
+  .studio-hero__ctas a:first-child {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Stats: 2×2 grid on mobile */
+  .studio-hero__statsbar {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .studio-hero__statsbar > div:nth-child(2) {
+    border-right: none !important;
+  }
+  .studio-hero__statsbar > div:nth-child(1),
+  .studio-hero__statsbar > div:nth-child(2) {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .studio-hero__statsbar > div {
+    padding: 14px 16px !important;
+  }
+}
+
+/* ── Mobile: studio details grid ─────────────────────────── */
+@media (max-width: 900px) {
+  .details-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Mobile: use-case chips scroll ───────────────────────── */
+@media (max-width: 640px) {
+  .use-case-scroll {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+  }
+  .use-case-scroll::-webkit-scrollbar { display: none; }
+}
+
+/* ── Mobile: gallery editorial collapses ─────────────────── */
+@media (max-width: 768px) {
+  .gallery-editorial {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .gallery-editorial > div:first-child {
+    grid-area: auto !important;
+    grid-column: 1 / -1 !important;
+  }
+}
+@media (max-width: 480px) {
+  .gallery-editorial {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Photo Tour CTA: stack on mobile ─────────────────────── */
+@media (max-width: 680px) {
+  .photo-tour-cta {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── StudioSubNav: font + spacing tweaks ─────────────────── */
+@media (max-width: 480px) {
+  nav[aria-label="Page sections"] a {
+    font-size: 0.65rem !important;
+    padding: 5px 10px !important;
+  }
+}
