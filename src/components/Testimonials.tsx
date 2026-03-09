@@ -1,7 +1,13 @@
 import { TESTIMONIALS } from '@/data/testimonials';
+import type { Testimonial } from '@/data/testimonials';
 import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
 
-export default function Testimonials() {
+interface Props {
+  /** Testimonials from Sanity CMS. Falls back to hardcoded TESTIMONIALS if omitted. */
+  testimonials?: Testimonial[];
+}
+
+export default function Testimonials({ testimonials = TESTIMONIALS }: Props) {
   return (
     <section
       id="testimonials"
@@ -29,7 +35,7 @@ export default function Testimonials() {
       <p className="swipe-hint">swipe to browse ›</p>
 
       <AutoScrollCarousel className="testimonials-grid">
-        {TESTIMONIALS.map((t, i) => (
+        {testimonials.map((t, i) => (
           <div
             key={t.id}
             className={`reveal${i % 3 !== 0 ? ` reveal-delay-${(i % 3)}` : ''}`}

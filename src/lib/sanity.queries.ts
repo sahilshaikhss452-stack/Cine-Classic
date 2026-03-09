@@ -136,6 +136,8 @@ export const TESTIMONIALS_QUERY = `
     clientName,
     role,
     productionHouse,
+    production,
+    network,
     quote,
     rating,
     "image": image.asset->url,

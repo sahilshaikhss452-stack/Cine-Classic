@@ -67,7 +67,9 @@ export interface SanityTestimonial {
   _id            : string;
   clientName     : string;
   role           : string;
-  productionHouse: string;
+  productionHouse: string | null;
+  production     : string | null;  // show / film / campaign name
+  network        : string | null;  // platform (Netflix, SonyLIV…)
   quote          : string;
   rating         : number;
   image          : string | null;

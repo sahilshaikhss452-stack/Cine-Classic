@@ -85,7 +85,12 @@ function ProductionCard({ prod, index }: { prod: Production; index: number }) {
 }
 
 // ─── Section ───────────────────────────────────────────────────────────────────
-export default function Productions() {
+interface Props {
+  /** Productions from Sanity CMS. Falls back to hardcoded PRODUCTIONS if omitted. */
+  productions?: Production[];
+}
+
+export default function Productions({ productions = PRODUCTIONS }: Props) {
   return (
     <section
       id="productions"
@@ -135,7 +140,7 @@ export default function Productions() {
         <div className="lg:hidden">
           <p className="swipe-hint">swipe to browse ›</p>
           <AutoScrollCarousel className="productions-grid" style={{ marginBottom: '3.5rem' }}>
-            {PRODUCTIONS.map((prod, i) => (
+            {productions.map((prod, i) => (
               <ProductionCard key={prod.id} prod={prod} index={i} />
             ))}
           </AutoScrollCarousel>
@@ -143,7 +148,7 @@ export default function Productions() {
 
         {/* ── Desktop: Apple-style centered carousel ──────────────────── */}
         <div className="hidden lg:block" style={{ marginBottom: '3rem' }}>
-          <ProductionsDesktopCarousel />
+          <ProductionsDesktopCarousel productions={productions} />
         </div>
 
         {/* ── CTA ─────────────────────────────────────── */}

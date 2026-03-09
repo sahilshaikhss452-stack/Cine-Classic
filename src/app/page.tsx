@@ -17,25 +17,46 @@ import FloatingButtons   from '@/components/FloatingButtons';
 import RevealProvider    from '@/components/RevealProvider';
 import MotionSection     from '@/components/motion/MotionSection';
 
-// Data sources
-import { STUDIO_SETS }         from '@/data/sets';
-import { sanityFetch }         from '@/lib/sanity';
-import { STUDIOS_QUERY }       from '@/lib/sanity.queries';
-import type { SanityStudio }   from '@/lib/sanity.types';
-import { mergeStudiosWithFallback } from '@/lib/sanity.adapter';
+// Data sources — Sanity-first, hardcoded emergency fallback
+import { STUDIO_SETS }               from '@/data/sets';
+import { PRODUCTIONS }               from '@/data/productions';
+import type { Production }           from '@/data/productions';
+import { TESTIMONIALS }              from '@/data/testimonials';
+import type { Testimonial }          from '@/data/testimonials';
+import { sanityFetch }               from '@/lib/sanity';
+import { STUDIOS_QUERY, PRODUCTIONS_QUERY, TESTIMONIALS_QUERY } from '@/lib/sanity.queries';
+import type { SanityStudio, SanityProduction, SanityTestimonial } from '@/lib/sanity.types';
+import {
+  mergeStudiosWithFallback,
+  sanityProductionsToProductions,
+  sanityTestimonialsToTestimonials,
+} from '@/lib/sanity.adapter';
 
 export default async function HomePage() {
-  // ── Fetch studio sets from Sanity (Sanity-first, hardcoded fallback) ─────────
-  // Uses mergeStudiosWithFallback so partial CMS migrations are safe:
-  // CMS docs override matching hardcoded sets; unpublished sets stay hardcoded.
-  // Productions and Testimonials still use their hardcoded datasets.
+  // ── Fetch all CMS content in parallel ────────────────────────────────────────
+  // All three fetches run concurrently. Each has its own try/catch so a single
+  // Sanity failure doesn't take down the entire page.
+
+  // Studios: merge strategy — CMS overrides matching hardcoded; rest stays hardcoded
   let studios = STUDIO_SETS;
-  try {
-    const docs = await sanityFetch<SanityStudio[]>(STUDIOS_QUERY);
-    studios = mergeStudiosWithFallback(docs);
-  } catch {
-    // Sanity unavailable — use hardcoded fallback silently
-  }
+
+  // Productions: Sanity-first, full hardcoded array as emergency fallback
+  let productions: Production[] = PRODUCTIONS;
+
+  // Testimonials: Sanity-first, full hardcoded array as emergency fallback
+  let testimonials: Testimonial[] = TESTIMONIALS;
+
+  const [studioDocs, productionDocs, testimonialDocs] = await Promise.allSettled([
+    sanityFetch<SanityStudio[]>(STUDIOS_QUERY),
+    sanityFetch<SanityProduction[]>(PRODUCTIONS_QUERY),
+    sanityFetch<SanityTestimonial[]>(TESTIMONIALS_QUERY),
+  ]);
+
+  if (studioDocs.status    === 'fulfilled') studios     = mergeStudiosWithFallback(studioDocs.value);
+  if (productionDocs.status === 'fulfilled' && productionDocs.value.length > 0)
+    productions  = sanityProductionsToProductions(productionDocs.value);
+  if (testimonialDocs.status === 'fulfilled' && testimonialDocs.value.length > 0)
+    testimonials = sanityTestimonialsToTestimonials(testimonialDocs.value);
 
   return (
     <>
@@ -64,7 +85,7 @@ export default async function HomePage() {
         {/* 4 ─── PRODUCTIONS — powerful social proof before asking for commitment.
             Sacred Games, Scam 1992, Gully Boy — shown early to build desire. */}
         <MotionSection>
-          <Productions />
+          <Productions productions={productions} />
         </MotionSection>
 
         {/* 5 ─── BEHIND THE SCENES — show the real facility, build trust */}
@@ -79,7 +100,7 @@ export default async function HomePage() {
 
         {/* 7 ─── TESTIMONIALS — peer validation before the process & booking ask */}
         <MotionSection>
-          <Testimonials />
+          <Testimonials testimonials={testimonials} />
         </MotionSection>
 
         {/* 8 ─── PRODUCTION TYPES — supporting context (film, web, ad, music video) */}

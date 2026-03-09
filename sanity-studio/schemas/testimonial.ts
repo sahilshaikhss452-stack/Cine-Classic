@@ -20,9 +20,21 @@ export const testimonialSchema = defineType({
     }),
     defineField({
       name: 'productionHouse',
-      title: 'Production House',
+      title: 'Production / Film Company',
       type: 'string',
-      description: 'e.g. "Dharma Productions", "Netflix India"',
+      description: 'e.g. "Dharma Productions", "Netflix India", "Sacred Games"',
+    }),
+    defineField({
+      name: 'production',
+      title: 'Show / Film / Campaign Name',
+      type: 'string',
+      description: 'Name of the specific production they shot at Cine Classic, e.g. "Scam 1992", "Tata Motors Campaign"',
+    }),
+    defineField({
+      name: 'network',
+      title: 'Network / Platform',
+      type: 'string',
+      description: 'e.g. "SonyLIV", "Amazon Prime Video", "Netflix"',
     }),
     defineField({
       name: 'quote',

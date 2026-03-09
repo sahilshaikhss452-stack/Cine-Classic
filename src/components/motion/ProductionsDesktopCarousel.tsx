@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { PRODUCTIONS, TYPE_ICONS } from '@/data/productions';
+import type { Production } from '@/data/productions';
 
 /* ── Layout constants ─────────────────────────────────────────────── */
 const CARD_W       = 440;   // center card width px
@@ -11,12 +12,17 @@ const SIDE_OPACITY = 0.55;  // side card opacity
 const SIDE_OFFSET  = 500;   // px from center to each side card center
 const VIEWPORT_H   = 665;   // px – card track height (440 × 3/2 = 660 + 5 breathing)
 
-export default function ProductionsDesktopCarousel() {
+interface Props {
+  /** Productions to display. Falls back to hardcoded PRODUCTIONS if omitted. */
+  productions?: Production[];
+}
+
+export default function ProductionsDesktopCarousel({ productions = PRODUCTIONS }: Props) {
   const [active, setActive]     = useState(0);
   const [hovered, setHovered]   = useState(false);
   const [lHover, setLHover]     = useState(false);
   const [rHover, setRHover]     = useState(false);
-  const total = PRODUCTIONS.length;
+  const total = productions.length;
 
   const goPrev = useCallback(() => setActive(i => (i - 1 + total) % total), [total]);
   const goNext = useCallback(() => setActive(i => (i + 1) % total), [total]);
@@ -30,10 +36,10 @@ export default function ProductionsDesktopCarousel() {
   useEffect(() => {
     const id = setInterval(() => {
       if (!hoveredRef.current)
-        setActive(i => (i + 1) % PRODUCTIONS.length);
+        setActive(i => (i + 1) % total);
     }, 2000);
     return () => clearInterval(id);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [total]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
@@ -66,7 +72,7 @@ export default function ProductionsDesktopCarousel() {
         }} />
 
         {/* ── Cards ──────────────────────────────────────────────── */}
-        {PRODUCTIONS.map((prod, i) => {
+        {productions.map((prod, i) => {
           let offset = i - active;
           if (offset >  total / 2) offset -= total;
           if (offset < -total / 2) offset += total;
@@ -258,7 +264,7 @@ export default function ProductionsDesktopCarousel() {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         gap: '7px', marginTop: '1.8rem',
       }}>
-        {PRODUCTIONS.map((_, i) => (
+        {productions.map((_, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
