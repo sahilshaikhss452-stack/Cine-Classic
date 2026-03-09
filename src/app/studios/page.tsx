@@ -11,7 +11,7 @@ import type { StudioSet }        from '@/data/sets';
 import { sanityFetch }           from '@/lib/sanity';
 import { STUDIOS_QUERY }         from '@/lib/sanity.queries';
 import type { SanityStudio }     from '@/lib/sanity.types';
-import { sanityStudiosToSets }   from '@/lib/sanity.adapter';
+import { mergeStudiosWithFallback } from '@/lib/sanity.adapter';
 
 export const metadata: Metadata = {
   title: 'Our Studios – Cine Classic Studios',
@@ -19,11 +19,15 @@ export const metadata: Metadata = {
     'Explore all studio spaces at Cine Classic Studios — from empty floors to fully dressed market sets, chawl, court, hospital, and police station sets.',
 };
 
-/** Fetch all studios — Sanity-first, hardcoded fallback */
+/**
+ * Fetch all studios — Sanity-first, hardcoded fallback.
+ * Uses mergeStudiosWithFallback so partial CMS migrations are safe:
+ * CMS docs override matching hardcoded sets; unpublished sets stay hardcoded.
+ */
 async function getStudios(): Promise<StudioSet[]> {
   try {
     const docs = await sanityFetch<SanityStudio[]>(STUDIOS_QUERY);
-    if (docs.length > 0) return sanityStudiosToSets(docs);
+    return mergeStudiosWithFallback(docs);
   } catch {
     // Sanity unavailable — fall through
   }

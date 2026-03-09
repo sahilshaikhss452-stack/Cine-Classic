@@ -22,17 +22,17 @@ import { STUDIO_SETS }         from '@/data/sets';
 import { sanityFetch }         from '@/lib/sanity';
 import { STUDIOS_QUERY }       from '@/lib/sanity.queries';
 import type { SanityStudio }   from '@/lib/sanity.types';
-import { sanityStudiosToSets } from '@/lib/sanity.adapter';
+import { mergeStudiosWithFallback } from '@/lib/sanity.adapter';
 
 export default async function HomePage() {
   // ── Fetch studio sets from Sanity (Sanity-first, hardcoded fallback) ─────────
+  // Uses mergeStudiosWithFallback so partial CMS migrations are safe:
+  // CMS docs override matching hardcoded sets; unpublished sets stay hardcoded.
   // Productions and Testimonials still use their hardcoded datasets.
-  // PRODUCTIONS_QUERY / TESTIMONIALS_QUERY are ready in src/lib/sanity.queries.ts
-  // whenever those sections are migrated to Sanity too.
   let studios = STUDIO_SETS;
   try {
     const docs = await sanityFetch<SanityStudio[]>(STUDIOS_QUERY);
-    if (docs.length > 0) studios = sanityStudiosToSets(docs);
+    studios = mergeStudiosWithFallback(docs);
   } catch {
     // Sanity unavailable — use hardcoded fallback silently
   }

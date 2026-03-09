@@ -18,7 +18,7 @@ import type { StudioSet }             from '@/data/sets';
 import { sanityFetch }                from '@/lib/sanity';
 import { STUDIO_BY_SLUG_QUERY, STUDIO_SLUGS_QUERY, STUDIOS_QUERY } from '@/lib/sanity.queries';
 import type { SanityStudio }          from '@/lib/sanity.types';
-import { sanityStudioToSet, sanityStudiosToSets } from '@/lib/sanity.adapter';
+import { sanityStudioToSet, mergeStudiosWithFallback } from '@/lib/sanity.adapter';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -42,14 +42,15 @@ async function getStudio(slug: string): Promise<StudioSet | null> {
 
 /**
  * Fetch all studios (for "More Spaces" section).
- * Strategy: Sanity-first → hardcoded fallback.
+ * Uses mergeStudiosWithFallback so partial CMS migrations are safe:
+ * CMS docs override matching hardcoded sets; unpublished sets stay hardcoded.
  */
 async function getAllStudios(): Promise<StudioSet[]> {
   try {
     const docs = await sanityFetch<SanityStudio[]>(STUDIOS_QUERY);
-    if (docs.length > 0) return sanityStudiosToSets(docs);
+    return mergeStudiosWithFallback(docs);
   } catch {
-    // Sanity unavailable — fall through
+    // Sanity unavailable — use hardcoded fallback
   }
   return STUDIO_SETS;
 }

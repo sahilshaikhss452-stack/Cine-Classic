@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity:dev": "npm --prefix sanity-studio run dev",
+    "sanity:build": "npm --prefix sanity-studio run build",
+    "sanity:deploy": "npm --prefix sanity-studio run deploy"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.2",

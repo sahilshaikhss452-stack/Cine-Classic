@@ -9,6 +9,7 @@
 
 import type { SanityStudio } from './sanity.types';
 import type { StudioSet }    from '@/data/sets';
+import { STUDIO_SETS }       from '@/data/sets';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -82,4 +83,35 @@ export function sanityStudioToSet(s: SanityStudio): StudioSet {
 /** Convert an array of SanityStudio documents to StudioSets */
 export function sanityStudiosToSets(studios: SanityStudio[]): StudioSet[] {
   return studios.map(sanityStudioToSet);
+}
+
+/**
+ * Merge Sanity documents with the hardcoded STUDIO_SETS fallback.
+ *
+ * Strategy (gradual migration — safe to call at any stage):
+ *  1. Hardcoded sets are the baseline — always shown.
+ *  2. Any Sanity doc whose slug matches a hardcoded set overrides it with CMS data.
+ *  3. Any Sanity doc with a slug not in hardcoded is appended as a brand-new set.
+ *
+ * Result:
+ *  - 0 Sanity docs  → all 9 hardcoded sets (unchanged behaviour)
+ *  - 1 Sanity doc   → 8 hardcoded + 1 CMS-powered (gradual migration)
+ *  - 9 Sanity docs  → all 9 CMS-powered (full migration)
+ *  - 10+ Sanity docs → 9 overridden + extra new sets appended
+ */
+export function mergeStudiosWithFallback(sanityDocs: SanityStudio[]): StudioSet[] {
+  if (!sanityDocs.length) return STUDIO_SETS;
+
+  const sanityMap = new Map(sanityStudiosToSets(sanityDocs).map(s => [s.slug, s]));
+  const hardcodedSlugs = new Set(STUDIO_SETS.map(s => s.slug));
+
+  // Step 1 — hardcoded baseline, override with CMS where slug matches
+  const merged: StudioSet[] = STUDIO_SETS.map(s => sanityMap.get(s.slug) ?? s);
+
+  // Step 2 — append any brand-new CMS sets not present in hardcoded list
+  for (const [slug, set] of sanityMap) {
+    if (!hardcodedSlugs.has(slug)) merged.push(set);
+  }
+
+  return merged;
 }
