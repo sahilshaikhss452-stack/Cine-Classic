@@ -10,6 +10,14 @@
 
 // ─── Studio Sets ─────────────────────────────────────────────────────────────
 
+/** All studio slugs — used in generateStaticParams */
+export const STUDIO_SLUGS_QUERY = `
+  *[_type == "studio"] | order(order asc) {
+    "slug": slug.current
+  }
+`;
+
+/** Full studio list — used on /studios listing page + homepage Sets section */
 export const STUDIOS_QUERY = `
   *[_type == "studio"] | order(order asc) {
     _id,
@@ -19,19 +27,32 @@ export const STUDIOS_QUERY = `
     description,
     size,
     height,
+    capacity,
     powerCapacity,
     ratePerDay,
     ratePerShift,
+    rateHourly,
+    rateUnit,
+    minBookingHours,
     parking,
+    icon,
+    accentColor,
+    gradient,
     suitable_for,
     facilities,
+    productions,
+    layoutZones,
     "heroImage": heroImage.asset->url,
     "galleryImages": galleryImages[].asset->url,
+    "setPdfUrl": setPDF.asset->url,
+    "setLayoutImage": setLayoutImage.asset->url,
+    setLayoutDescription,
     featured,
     order
   }
 `;
 
+/** Single studio by slug — used on /studios/[slug] landing page */
 export const STUDIO_BY_SLUG_QUERY = `
   *[_type == "studio" && slug.current == $slug][0] {
     _id,
@@ -41,14 +62,26 @@ export const STUDIO_BY_SLUG_QUERY = `
     description,
     size,
     height,
+    capacity,
     powerCapacity,
     ratePerDay,
     ratePerShift,
+    rateHourly,
+    rateUnit,
+    minBookingHours,
     parking,
+    icon,
+    accentColor,
+    gradient,
     suitable_for,
     facilities,
+    productions,
+    layoutZones,
     "heroImage": heroImage.asset->url,
     "galleryImages": galleryImages[].asset->url,
+    "setPdfUrl": setPDF.asset->url,
+    "setLayoutImage": setLayoutImage.asset->url,
+    setLayoutDescription,
     featured,
     order
   }

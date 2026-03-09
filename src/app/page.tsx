@@ -17,7 +17,26 @@ import FloatingButtons   from '@/components/FloatingButtons';
 import RevealProvider    from '@/components/RevealProvider';
 import MotionSection     from '@/components/motion/MotionSection';
 
-export default function HomePage() {
+// Data sources
+import { STUDIO_SETS }         from '@/data/sets';
+import { sanityFetch }         from '@/lib/sanity';
+import { STUDIOS_QUERY }       from '@/lib/sanity.queries';
+import type { SanityStudio }   from '@/lib/sanity.types';
+import { sanityStudiosToSets } from '@/lib/sanity.adapter';
+
+export default async function HomePage() {
+  // ── Fetch studio sets from Sanity (Sanity-first, hardcoded fallback) ─────────
+  // Productions and Testimonials still use their hardcoded datasets.
+  // PRODUCTIONS_QUERY / TESTIMONIALS_QUERY are ready in src/lib/sanity.queries.ts
+  // whenever those sections are migrated to Sanity too.
+  let studios = STUDIO_SETS;
+  try {
+    const docs = await sanityFetch<SanityStudio[]>(STUDIOS_QUERY);
+    if (docs.length > 0) studios = sanityStudiosToSets(docs);
+  } catch {
+    // Sanity unavailable — use hardcoded fallback silently
+  }
+
   return (
     <>
       {/* Mounts the IntersectionObserver for card-level scroll-reveal animations */}
@@ -37,9 +56,9 @@ export default function HomePage() {
             No motion wrapper — renders immediately below hero fold. */}
         <NetworkLogoStrip />
 
-        {/* 3 ─── STUDIO SETS — browse all 9 production-ready spaces */}
+        {/* 3 ─── STUDIO SETS — browse all production-ready spaces (Sanity-powered) */}
         <MotionSection>
-          <Sets />
+          <Sets studios={studios} />
         </MotionSection>
 
         {/* 4 ─── PRODUCTIONS — powerful social proof before asking for commitment.
