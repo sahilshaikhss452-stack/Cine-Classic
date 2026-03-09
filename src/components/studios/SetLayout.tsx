@@ -21,8 +21,8 @@ interface Props {
   studio: StudioSet;
 }
 
-/* ── Zone labels shown on the placeholder diagram ── */
-const PLACEHOLDER_ZONES = [
+/* ── Fallback zone labels when the set has no custom layoutZones ── */
+const DEFAULT_ZONES = [
   { label: 'Main Shooting Zone', x: '18%', y: '30%' },
   { label: 'Lighting Rig Area',  x: '65%', y: '18%' },
   { label: 'Crew / Catering',    x: '72%', y: '68%' },
@@ -53,7 +53,7 @@ export default function SetLayout({ studio }: Props) {
 
         {/* Section header */}
         <div className="reveal" style={{ marginBottom: '3rem' }}>
-          <div className="section-tag">Reference</div>
+          <div className="section-tag">Floor Plan &amp; Zones</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', lineHeight: 1.15 }}>
             Set{' '}
             <span style={{ color: 'var(--gold)' }}>Layout</span>
@@ -314,6 +314,7 @@ export default function SetLayout({ studio }: Props) {
 
 /* ── Placeholder diagram (rendered when no layout image is uploaded) ────────── */
 function PlaceholderDiagram({ studio }: { studio: StudioSet }) {
+  const zones = studio.layoutZones ?? DEFAULT_ZONES;
   return (
     <div style={{
       aspectRatio: '16/9',
@@ -363,7 +364,7 @@ function PlaceholderDiagram({ studio }: { studio: StudioSet }) {
         ))}
 
         {/* Zone dots */}
-        {PLACEHOLDER_ZONES.map((zone) => (
+        {zones.map((zone) => (
           <div key={zone.label} style={{
             position: 'absolute',
             left: zone.x,

@@ -9,6 +9,7 @@ import SetLayout from '@/components/studios/SetLayout';
 import StudioDetails from '@/components/studios/StudioDetails';
 import StudioBooking from '@/components/studios/StudioBooking';
 import StudioCard from '@/components/studios/StudioCard';
+import StudioSubNav from '@/components/studios/StudioSubNav';
 import { STUDIO_SETS, getSetBySlug } from '@/data/sets';
 import Link from 'next/link';
 
@@ -52,6 +53,8 @@ export default async function StudioPage({ params }: Props) {
     <>
       <RevealProvider />
       <Navbar />
+
+      <StudioSubNav />
 
       <main>
         <StudioHero    studio={studio} />

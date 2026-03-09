@@ -19,12 +19,12 @@ export default function StudioHero({ studio }: Props) {
 
   return (
     <section style={{
-      minHeight: '70vh',
+      minHeight: '78vh',
       display: 'flex',
       alignItems: 'flex-end',
       position: 'relative',
       overflow: 'hidden',
-      padding: '120px 5% 60px',
+      padding: '120px 5% 64px',
     }}>
       {/* Gradient layer — always present, acts as fallback when no photo is uploaded */}
       <div style={{
@@ -50,7 +50,7 @@ export default function StudioHero({ studio }: Props) {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to top, rgba(6,6,6,0.95) 0%, rgba(6,6,6,0.4) 60%, rgba(6,6,6,0.2) 100%)',
+        background: 'linear-gradient(to top, rgba(6,6,6,0.95) 0%, rgba(6,6,6,0.45) 55%, rgba(6,6,6,0.15) 100%)',
       }} />
 
       {/* Subtle grid */}
@@ -66,16 +66,17 @@ export default function StudioHero({ studio }: Props) {
         WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 80%, black 20%, transparent 80%)',
       }} />
 
-      {/* Large icon watermark */}
+      {/* Large icon watermark — subtle background decoration */}
       <div style={{
         position: 'absolute',
         top: '50%',
         right: '8%',
         transform: 'translateY(-60%)',
         fontSize: 'clamp(6rem, 16vw, 14rem)',
-        opacity: 0.06,
+        opacity: 0.05,
         userSelect: 'none',
         pointerEvents: 'none',
+        filter: 'grayscale(1)',
       }}>
         {studio.icon}
       </div>
@@ -147,7 +148,7 @@ export default function StudioHero({ studio }: Props) {
           {studio.shortDescription}
         </p>
 
-        {/* Quick stats strip */}
+        {/* Quick stats strip — now includes rate */}
         <div style={{
           display: 'flex',
           gap: '2.5rem',
@@ -158,6 +159,7 @@ export default function StudioHero({ studio }: Props) {
             { label: 'Size',     value: studio.size },
             { label: 'Height',   value: studio.ceilingHeight },
             { label: 'Capacity', value: studio.capacity },
+            { label: 'Rate From', value: `${studio.rateFrom}${studio.rateUnit}` },
           ].map((stat, i) => (
             <div key={stat.label} style={{ position: 'relative' }}>
               {i > 0 && (
@@ -181,18 +183,56 @@ export default function StudioHero({ studio }: Props) {
                 fontFamily: 'var(--font-playfair), serif',
                 fontSize: '1.1rem',
                 fontWeight: 700,
-                color: 'var(--white)',
+                color: stat.label === 'Rate From' ? 'var(--gold)' : 'var(--white)',
               }}>{stat.value}</div>
             </div>
           ))}
         </div>
 
-        {/* CTAs */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        {/* Productions shot here — social proof trust line */}
+        {studio.productions && studio.productions.length > 0 && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.625rem',
+            flexWrap: 'wrap',
+            marginBottom: '2rem',
+          }}>
+            <span style={{
+              fontSize: '0.62rem',
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'var(--gray)',
+              whiteSpace: 'nowrap',
+            }}>
+              Shot here:
+            </span>
+            {studio.productions.map((prod) => (
+              <span key={prod} style={{
+                fontSize: '0.72rem',
+                fontWeight: 500,
+                color: 'var(--gray-lt)',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.09)',
+                borderRadius: '100px',
+                padding: '3px 10px',
+                whiteSpace: 'nowrap',
+              }}>
+                {prod}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* CTAs — clear 3-tier hierarchy */}
+        <div style={{ display: 'flex', gap: '0.875rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          {/* Primary */}
           <a href="#booking" className="btn-primary">Book This Studio →</a>
-          <a href="#details" className="btn-outline">View Details</a>
-          {/* Download Set Deck — generates branded PDF or links to CMS-uploaded file */}
-          <DownloadSetDeckButton studio={studio} variant="outline" size="md" />
+          {/* Secondary */}
+          <a href="#details" className="btn-outline">View Specs</a>
+          {/* Tertiary ghost — Download Set Deck */}
+          <DownloadSetDeckButton studio={studio} variant="ghost" size="md" />
         </div>
       </div>
     </section>

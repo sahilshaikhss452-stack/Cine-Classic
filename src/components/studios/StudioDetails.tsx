@@ -5,6 +5,17 @@ interface Props {
 }
 
 export default function StudioDetails({ studio }: Props) {
+  // Build the specs grid dynamically so optional fields only appear when present
+  const specs = [
+    { label: 'Total Area',      value: studio.size },
+    { label: 'Ceiling Height',  value: studio.ceilingHeight },
+    { label: 'Max Capacity',    value: studio.capacity },
+    { label: 'Rate From',       value: `${studio.rateFrom}${studio.rateUnit}`, highlight: true },
+    ...(studio.parking    ? [{ label: 'Parking',      value: studio.parking }] : []),
+    ...(studio.power      ? [{ label: 'Power Supply',  value: studio.power }] : []),
+    ...(studio.minBooking ? [{ label: 'Min Booking',   value: studio.minBooking }] : []),
+  ];
+
   return (
     <section
       id="details"
@@ -75,27 +86,64 @@ export default function StudioDetails({ studio }: Props) {
                 gridTemplateColumns: '1fr 1fr',
                 gap: '0.75rem',
               }}>
-                {[
-                  { label: 'Total Area',      value: studio.size },
-                  { label: 'Ceiling Height',  value: studio.ceilingHeight },
-                  { label: 'Max Capacity',    value: studio.capacity },
-                ].map((spec) => (
+                {specs.map((spec) => (
                   <div key={spec.label} style={{
                     padding: '12px 14px',
-                    background: 'var(--dark3)',
+                    background: spec.highlight ? 'rgba(212,175,55,0.06)' : 'var(--dark3)',
                     borderRadius: '8px',
-                    border: '1px solid rgba(255,255,255,0.06)',
+                    border: spec.highlight
+                      ? '1px solid rgba(212,175,55,0.2)'
+                      : '1px solid rgba(255,255,255,0.06)',
                   }}>
-                    <div style={{ fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 600, marginBottom: '3px' }}>
+                    <div style={{
+                      fontSize: '0.6rem', letterSpacing: '0.15em',
+                      textTransform: 'uppercase',
+                      color: spec.highlight ? 'var(--gold)' : 'var(--gold)',
+                      fontWeight: 600, marginBottom: '3px',
+                    }}>
                       {spec.label}
                     </div>
-                    <div style={{ fontSize: '0.9rem', color: 'var(--white)', fontWeight: 500 }}>
+                    <div style={{
+                      fontSize: '0.9rem',
+                      color: spec.highlight ? 'var(--gold)' : 'var(--white)',
+                      fontWeight: spec.highlight ? 600 : 500,
+                    }}>
                       {spec.value}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* Notable productions — social proof block */}
+            {studio.productions && studio.productions.length > 0 && (
+              <div>
+                <h3 style={{
+                  fontSize: '1rem',
+                  fontFamily: 'var(--font-playfair), serif',
+                  color: 'var(--gold)',
+                  marginBottom: '1rem',
+                  fontWeight: 600,
+                }}>
+                  Filmed Here
+                </h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {studio.productions.map((prod) => (
+                    <span key={prod} style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--gray-lt)',
+                      background: 'var(--dark3)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      borderRadius: '100px',
+                      padding: '5px 14px',
+                      fontWeight: 400,
+                    }}>
+                      {prod}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Facilities */}
@@ -168,6 +216,37 @@ export default function StudioDetails({ studio }: Props) {
                   </span>
                 </div>
               ))}
+            </div>
+
+            {/* Booking CTA inline */}
+            <div style={{
+              marginTop: '1.5rem',
+              padding: '1.25rem',
+              background: 'rgba(212,175,55,0.06)',
+              border: '1px solid rgba(212,175,55,0.15)',
+              borderRadius: '12px',
+              textAlign: 'center',
+            }}>
+              <div style={{
+                fontSize: '0.68rem', fontWeight: 600,
+                letterSpacing: '0.14em', textTransform: 'uppercase',
+                color: 'var(--gold)', marginBottom: '4px',
+              }}>
+                Ready to Book?
+              </div>
+              <p style={{ fontSize: '0.82rem', color: 'var(--gray-lt)', fontWeight: 300, marginBottom: '1rem' }}>
+                Min booking {studio.minBooking ?? '4 hours'} · Rates from {studio.rateFrom}{studio.rateUnit}
+              </p>
+              <a href="#booking" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '10px 24px',
+                background: 'var(--gold)', border: 'none',
+                borderRadius: '100px', color: 'var(--dark)',
+                fontSize: '0.8rem', fontWeight: 600,
+                textDecoration: 'none', transition: 'all 0.3s',
+              }}>
+                Check Availability →
+              </a>
             </div>
           </div>
         </div>

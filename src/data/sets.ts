@@ -30,6 +30,12 @@ export interface StudioSet {
   // Both are optional: the section renders a styled placeholder when omitted.
   setLayoutImage?: string;       // e.g. '/images/studios/empty-floor/layout.jpg'
   setLayoutDescription?: string; // 1-3 sentences describing zones / shooting angles
+  // ── Additional production data ────────────────────────────────────────────
+  productions?: string[];   // Notable productions shot here (for social proof)
+  layoutZones?: { label: string; x: string; y: string }[]; // Per-set zone markers
+  parking?: string;         // e.g. '40+ vehicles'
+  power?: string;           // e.g. '200A 3-phase'
+  minBooking?: string;      // e.g. '4 hours'
 }
 
 /**
@@ -63,6 +69,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 60 people',
     rateFrom: '₹8,000',
     rateUnit: '/hour',
+    parking: '40+ vehicles',
+    power: '200A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'Full overhead LED lighting grid',
       'Polished concrete floor',
@@ -74,6 +83,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'On-site art direction support',
     ],
     suitableFor: ['Feature Films', 'OTT Series', 'TV Commercials', 'Music Videos', 'Product Launches', 'Fashion Shows'],
+    productions: ['Sacred Games (Netflix)', 'Scam 1992 (SonyLIV)', 'Mirzapur S3 (Amazon)', 'Honda City Campaign'],
+    layoutZones: [
+      { label: 'Primary Shooting Zone',  x: '30%', y: '35%' },
+      { label: 'LED Grid / Lighting Rig', x: '68%', y: '20%' },
+      { label: 'Art Dept & Props Store',  x: '72%', y: '68%' },
+      { label: 'Crew Room / Catering',    x: '20%', y: '72%' },
+    ],
     icon: '🏗️',
     gradient: 'radial-gradient(ellipse at 50% 30%, rgba(200,200,210,0.18) 0%, #111 70%)',
     accentColor: '#a0a0b4',
@@ -92,6 +108,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 35 people',
     rateFrom: '₹6,000',
     rateUnit: '/hour',
+    parking: '25+ vehicles',
+    power: '100A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'Fully dressed stalls with period props',
       'Adjustable practicals & moody LED lighting',
@@ -102,6 +121,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'Generator hookup',
     ],
     suitableFor: ['Bollywood & Regional Films', 'Period Drama Series', 'TV Commercials', 'Music Videos', 'Documentary'],
+    productions: ['Panchayat S2 (Amazon)', 'Dahaad (Amazon)', 'Tata Salt TVC', 'Zee5 Original Series'],
+    layoutZones: [
+      { label: 'Main Bazaar Lane',     x: '28%', y: '35%' },
+      { label: 'Vendor Stall Row A',   x: '62%', y: '28%' },
+      { label: 'Vendor Stall Row B',   x: '65%', y: '62%' },
+      { label: 'Hero Shooting Spot',   x: '22%', y: '68%' },
+    ],
     icon: '🏪',
     gradient: 'radial-gradient(ellipse at 40% 50%, rgba(210,130,40,0.25) 0%, #1a0f05 70%)',
     accentColor: '#d2821f',
@@ -120,6 +146,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 30 people',
     rateFrom: '₹5,500',
     rateUnit: '/hour',
+    parking: '20+ vehicles',
+    power: '100A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'Modular stall units (reconfigurable)',
       'Neon & LED signage package',
@@ -130,6 +159,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'Changing rooms × 2',
     ],
     suitableFor: ['Contemporary Films', 'Web Series', 'TV Commercials', 'Reality Shows', 'Music Videos'],
+    productions: ['Kota Factory S3 (Netflix)', 'Shark Tank India S2 (Sony)', 'Haldirams Campaign', 'Swiggy TVC'],
+    layoutZones: [
+      { label: 'Modern Stall Zone',      x: '30%', y: '30%' },
+      { label: 'Neon Signage Corridor',  x: '66%', y: '22%' },
+      { label: 'Hero Position',          x: '24%', y: '68%' },
+      { label: 'Overflow / B-Roll Area', x: '68%', y: '66%' },
+    ],
     icon: '🛒',
     gradient: 'radial-gradient(ellipse at 60% 40%, rgba(220,180,50,0.2) 0%, #120f00 70%)',
     accentColor: '#dcb432',
@@ -148,6 +184,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 50 people',
     rateFrom: '₹7,000',
     rateUnit: '/hour',
+    parking: '40+ vehicles',
+    power: '200A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'Multi-lane market layout',
       'Perspective-painted depth backdrops',
@@ -158,6 +197,13 @@ export const STUDIO_SETS: StudioSet[] = [
       '3-phase power, 200A',
     ],
     suitableFor: ['Feature Films (Crowd Scenes)', 'Action Sequences', 'Period Drama & OTT', 'Large-Scale Commercials', 'Music Videos'],
+    productions: ['Mirzapur S2 (Amazon)', 'Article 370 (Film)', 'Star Sports Campaign', 'Kapil Sharma Show'],
+    layoutZones: [
+      { label: 'Lane A — Lead Action',   x: '20%', y: '30%' },
+      { label: 'Lane B — Supporting',    x: '50%', y: '30%' },
+      { label: 'Depth Backdrop Wall',    x: '75%', y: '20%' },
+      { label: 'Crowd Staging Area',     x: '35%', y: '70%' },
+    ],
     icon: '🏬',
     gradient: 'radial-gradient(ellipse at 35% 55%, rgba(200,80,30,0.22) 0%, #1a0800 70%)',
     accentColor: '#c8501e',
@@ -176,6 +222,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 40 people',
     rateFrom: '₹7,500',
     rateUnit: '/hour',
+    parking: '30+ vehicles',
+    power: '100A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'Two-storey structural build',
       'Central courtyard with hand-pump prop',
@@ -186,6 +235,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'Changing rooms × 3',
     ],
     suitableFor: ['Bollywood Films', 'Mumbai-based OTT Series', 'Period Drama', 'Social Advertising', 'Music Videos'],
+    productions: ['Scam 1992 (SonyLIV)', 'Gullak S4 (SonyLIV)', 'Dhamaka (Netflix)', 'Fevicol Campaign'],
+    layoutZones: [
+      { label: 'Central Courtyard',      x: '45%', y: '50%' },
+      { label: 'Upper Corridor Level 2', x: '72%', y: '22%' },
+      { label: 'Ground Floor Facade',    x: '20%', y: '35%' },
+      { label: 'Entry Gate / Lane',      x: '25%', y: '72%' },
+    ],
     icon: '🏚️',
     gradient: 'radial-gradient(ellipse at 45% 40%, rgba(160,100,50,0.25) 0%, #150d05 70%)',
     accentColor: '#a06432',
@@ -204,6 +260,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 40 people',
     rateFrom: '₹6,500',
     rateUnit: '/hour',
+    parking: '25+ vehicles',
+    power: '100A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       "Full judge's bench with national emblem",
       'Witness box & defendant dock',
@@ -214,6 +273,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'Props & dressing included',
     ],
     suitableFor: ['Legal Drama Films & Series', 'Crime Thrillers', 'TV Serials', 'Docudramas', 'Courtroom Commercials'],
+    productions: ['Criminal Justice S3 (Disney+)', 'Jai Bhim (Amazon)', 'Rocket Boys S2 (SonyLIV)', 'LIC Campaign'],
+    layoutZones: [
+      { label: "Judge's Bench",          x: '50%', y: '20%' },
+      { label: 'Witness Box',            x: '72%', y: '38%' },
+      { label: 'Counsel Tables',         x: '40%', y: '52%' },
+      { label: 'Public Gallery',         x: '22%', y: '70%' },
+    ],
     icon: '⚖️',
     gradient: 'radial-gradient(ellipse at 50% 35%, rgba(60,80,160,0.2) 0%, #05050f 70%)',
     accentColor: '#3c50a0',
@@ -232,6 +298,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 30 people',
     rateFrom: '₹6,000',
     rateUnit: '/hour',
+    parking: '20+ vehicles',
+    power: '100A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'General ward (4-bed configuration)',
       'ICU bay with prop monitors & equipment',
@@ -242,6 +311,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'Full medical props & dressing',
     ],
     suitableFor: ['Medical Drama Films & Series', 'Pharma Commercials', 'Public Health PSAs', 'OTT Medical Dramas', 'Social Advertising'],
+    productions: ['Sanjivani (Star Plus)', 'Human (Disney+ Hotstar)', 'Apollo Hospitals TVC', 'Cipla Campaign'],
+    layoutZones: [
+      { label: 'General Ward (4 beds)',  x: '25%', y: '30%' },
+      { label: 'ICU Bay',               x: '68%', y: '28%' },
+      { label: "Nurse's Station",        x: '65%', y: '65%' },
+      { label: 'Corridor / Entry',       x: '22%', y: '68%' },
+    ],
     icon: '🏥',
     gradient: 'radial-gradient(ellipse at 50% 30%, rgba(100,180,220,0.18) 0%, #050810 70%)',
     accentColor: '#64b4dc',
@@ -260,6 +336,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Up to 25 people',
     rateFrom: '₹5,500',
     rateUnit: '/hour',
+    parking: '15+ vehicles',
+    power: '100A 3-phase',
+    minBooking: '4 hours',
     facilities: [
       'Front reception desk & noticeboard',
       "Inspector's office with full prop dressing",
@@ -270,6 +349,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'Police props & dressing included',
     ],
     suitableFor: ['Crime Thrillers', 'Bollywood Action Films', 'Police Drama Series', 'OTT Crime Content', 'TV Serials'],
+    productions: ['Delhi Crime S2 (Netflix)', 'Mirzapur S3 (Amazon)', 'Paatal Lok S2 (Amazon)', 'Arjun Reddy (remake)'],
+    layoutZones: [
+      { label: 'Front Desk & Entry',     x: '22%', y: '30%' },
+      { label: "Inspector's Office",     x: '68%', y: '28%' },
+      { label: 'Interrogation Room',     x: '68%', y: '65%' },
+      { label: 'Lock-Up Cells',          x: '25%', y: '70%' },
+    ],
     icon: '🚔',
     gradient: 'radial-gradient(ellipse at 40% 60%, rgba(40,60,100,0.25) 0%, #03050d 70%)',
     accentColor: '#283c64',
@@ -288,6 +374,9 @@ export const STUDIO_SETS: StudioSet[] = [
     capacity: 'Unlimited',
     rateFrom: '₹4,500',
     rateUnit: '/hour',
+    parking: '50+ vehicles',
+    power: 'Generator hookup (20–200A)',
+    minBooking: '8 hours',
     facilities: [
       'Paved central zone (vehicle-ready)',
       'Natural grass surrounding areas',
@@ -298,6 +387,13 @@ export const STUDIO_SETS: StudioSet[] = [
       'On-site security',
     ],
     suitableFor: ['Action & Stunt Sequences', 'Automotive Campaigns', 'Outdoor Concert Shoots', 'Large Crowd Scenes', 'Sports Commercials', 'Reality Shows'],
+    productions: ['War (Bollywood film)', 'Tata Motors Campaign', 'MTV Roadies', 'IPL Promos (Star Sports)'],
+    layoutZones: [
+      { label: 'Paved Action Zone',      x: '45%', y: '45%' },
+      { label: 'Vehicle Staging',        x: '72%', y: '28%' },
+      { label: 'Crowd Area (Grass)',     x: '22%', y: '65%' },
+      { label: 'Generator / Equipment',  x: '72%', y: '68%' },
+    ],
     icon: '🌿',
     gradient: 'radial-gradient(ellipse at 50% 20%, rgba(60,140,80,0.2) 0%, #030a05 70%)',
     accentColor: '#3c8c50',

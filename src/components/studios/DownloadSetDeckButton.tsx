@@ -26,7 +26,7 @@ import type { StudioSet } from '@/data/sets';
 
 interface Props {
   studio: StudioSet;
-  variant?: 'primary' | 'outline';
+  variant?: 'primary' | 'outline' | 'ghost';
   size?: 'sm' | 'md';
 }
 
@@ -35,7 +35,10 @@ export default function DownloadSetDeckButton({
   variant = 'outline',
   size = 'md',
 }: Props) {
+  // ghost label is shorter for tertiary placement
   const [status, setStatus] = useState<'idle' | 'generating' | 'error'>('idle');
+
+  const label = variant === 'ghost' ? 'Set Deck PDF' : 'Download Set Deck';
 
   /* ── If a CMS-uploaded PDF exists, render a plain <a download> ──────────── */
   if (studio.setPdfUrl) {
@@ -46,7 +49,7 @@ export default function DownloadSetDeckButton({
         style={buttonStyle(variant, size)}
       >
         <DownloadIcon size={size} />
-        Download Set Deck
+        {label}
       </a>
     );
   }
@@ -115,7 +118,7 @@ export default function DownloadSetDeckButton({
       ) : (
         <>
           <DownloadIcon size={size} />
-          Download Set Deck
+          {label}
         </>
       )}
     </button>
@@ -123,24 +126,30 @@ export default function DownloadSetDeckButton({
 }
 
 /* ── Shared button base styles ─────────────────────────────────────────────── */
-function buttonStyle(variant: 'primary' | 'outline', size: 'sm' | 'md'): React.CSSProperties {
-  const pad = size === 'sm' ? '9px 18px' : '13px 26px';
-  const fs  = size === 'sm' ? '0.78rem'  : '0.92rem';
+function buttonStyle(variant: 'primary' | 'outline' | 'ghost', size: 'sm' | 'md'): React.CSSProperties {
+  const pad = size === 'sm' ? '9px 18px' : variant === 'ghost' ? '10px 18px' : '13px 26px';
+  const fs  = size === 'sm' ? '0.78rem'  : variant === 'ghost' ? '0.8rem' : '0.92rem';
 
   return {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: '7px',
     padding: pad,
     borderRadius: '100px',
     border: variant === 'primary'
       ? 'none'
+      : variant === 'ghost'
+      ? '1px solid rgba(255,255,255,0.1)'
       : '1px solid rgba(255,255,255,0.18)',
     background: variant === 'primary' ? 'var(--gold)' : 'transparent',
-    color: variant === 'primary' ? 'var(--dark)' : 'var(--white)',
+    color: variant === 'primary'
+      ? 'var(--dark)'
+      : variant === 'ghost'
+      ? 'rgba(255,255,255,0.45)'
+      : 'var(--white)',
     fontFamily: 'var(--font-inter), sans-serif',
     fontSize: fs,
-    fontWeight: 500,
+    fontWeight: variant === 'ghost' ? 400 : 500,
     letterSpacing: '0.01em',
     textDecoration: 'none',
     transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
