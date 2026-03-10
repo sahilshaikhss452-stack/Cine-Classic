@@ -116,6 +116,17 @@ export const STUDIO_DETAIL_QUERY = `
     "productions": coalesce(productions, []),
     "heroImage": heroImage.asset->url,
     "galleryImages": coalesce(galleryImages[].asset->url, []),
+    "studioAreas": coalesce(studioAreas[]{
+      _key,
+      areaName,
+      shortDescription,
+      "images": coalesce(images[]{
+        _key,
+        alt,
+        caption,
+        "imageUrl": image.asset->url
+      }, [])
+    }, []),
     "setPdfUrl": setPDF.asset->url,
     "setLayoutImage": setLayoutImage.asset->url,
     setLayoutDescription,

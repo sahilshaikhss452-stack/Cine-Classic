@@ -10,6 +10,8 @@ import { ctaLinkSchema } from './objects/ctaLink';
 import { heroStatSchema } from './objects/heroStat';
 import { seoSchema } from './objects/seo';
 import { socialLinkSchema } from './objects/socialLink';
+import { studioAreaSchema } from './objects/studioArea';
+import { studioAreaImageSchema } from './objects/studioAreaImage';
 
 export const schemaTypes = [
   siteSettingsSchema,
@@ -24,4 +26,6 @@ export const schemaTypes = [
   heroStatSchema,
   seoSchema,
   socialLinkSchema,
+  studioAreaSchema,
+  studioAreaImageSchema,
 ];

@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
-import SetLayout from '@/components/studios/SetLayout';
 import StudioBooking from '@/components/studios/StudioBooking';
 import StudioCard from '@/components/studios/StudioCard';
 import StudioDetails from '@/components/studios/StudioDetails';
@@ -34,10 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: studio.seo?.title ?? `${studio.title} – Cine Classic Studios`,
+    title: studio.seo?.title ?? `${studio.title} - Cine Classic Studios`,
     description: studio.seo?.description ?? studio.tagline ?? undefined,
     openGraph: {
-      title: studio.seo?.title ?? `${studio.title} – Cine Classic Studios`,
+      title: studio.seo?.title ?? `${studio.title} - Cine Classic Studios`,
       description: studio.seo?.description ?? studio.tagline ?? undefined,
       type: 'website',
     },
@@ -64,7 +63,6 @@ export default async function StudioPage({ params }: Props) {
         <StudioHero studio={studio} />
         <StudioGallery studio={studio} />
         <StudioDetails studio={studio} />
-        <SetLayout studio={studio} />
         <StudioBooking studio={studio} />
 
         {otherStudios.length > 0 && (
@@ -79,7 +77,7 @@ export default async function StudioPage({ params }: Props) {
                   </h2>
                 </div>
                 <Link href="/studios" style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(212,175,55,0.3)', padding: '10px 22px', borderRadius: '100px', transition: 'all 0.4s', textDecoration: 'none' }}>
-                  View All Studios ?
+                  View All Studios
                 </Link>
               </div>
 

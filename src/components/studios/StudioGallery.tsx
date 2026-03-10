@@ -1,389 +1,657 @@
 'use client';
 
-/**
- * StudioGallery — Immersive photo gallery for studio set pages.
- *
- * Two modes:
- *  1. Real photos (studio.galleryImages set) → Editorial masonry layout
- *     Row 1: Large hero (col-span 2) + 2 stacked right
- *     Row 2: 3 equal images
- *
- *  2. No photos yet → Premium "See It In Person" CTA
- *     Positions the lack of photography as an invitation, not a gap.
- *     Includes stat chips + dual CTAs (WhatsApp walkthrough + Book).
- */
-
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
-import type { SanityStudio } from '@/lib/sanity';
-import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
+import type { SanityStudio, StudioArea, StudioAreaImage } from '@/lib/sanity';
+import { fmtHeight, fmtRate, fmtRateUnit, fmtSize } from '@/lib/studio-utils';
 
 interface Props {
   studio: SanityStudio;
 }
 
-// ─── Individual gallery slot ──────────────────────────────────────────────────
-interface SlotProps {
-  src: string | undefined;
+interface DisplayAreaImage {
+  id: string;
+  imageUrl: string;
   alt: string;
-  label: string;
-  aspectRatio: string;
-  gradient: string;
-  icon: string;
-  revealClass: string;
-  gridArea?: string;
+  caption: string | null;
 }
 
-function GallerySlot({ src, alt, label, aspectRatio, gradient, icon, revealClass, gridArea }: SlotProps) {
-  const [imgFailed, setImgFailed] = useState(false);
-  const showImage = !!src && !imgFailed;
+interface DisplayArea {
+  id: string;
+  name: string;
+  description: string | null;
+  images: DisplayAreaImage[];
+  isLegacy: boolean;
+}
 
+function mapStructuredAreaImages(studio: SanityStudio, area: StudioArea): DisplayAreaImage[] {
+  return area.images
+    .filter((image): image is StudioAreaImage & { imageUrl: string } => typeof image.imageUrl === 'string')
+    .map((image, index) => ({
+      id: image._key || `${area._key}-${index}`,
+      imageUrl: image.imageUrl,
+      alt: image.alt || `${studio.title} ${area.areaName} view ${index + 1}`,
+      caption: image.caption,
+    }));
+}
+
+function buildDisplayAreas(studio: SanityStudio): DisplayArea[] {
+  const structuredAreas = studio.studioAreas
+    .map((area) => ({
+      id: area._key,
+      name: area.areaName,
+      description: area.shortDescription,
+      images: mapStructuredAreaImages(studio, area),
+      isLegacy: false,
+    }))
+    .filter((area) => area.name && area.images.length > 0);
+
+  if (structuredAreas.length > 0) {
+    return structuredAreas;
+  }
+
+  if (studio.galleryImages.length === 0) {
+    return [];
+  }
+
+  return [
+    {
+      id: 'overview',
+      name: 'Overview',
+      description: studio.setLayoutDescription,
+      isLegacy: true,
+      images: studio.galleryImages.map((imageUrl, index) => ({
+        id: `legacy-${index}`,
+        imageUrl,
+        alt: `${studio.title} overview image ${index + 1}`,
+        caption: null,
+      })),
+    },
+  ];
+}
+
+function getImageVariant(index: number): 'hero' | 'support' | 'tile' {
+  if (index === 0) {
+    return 'hero';
+  }
+
+  if (index === 1 || index === 2) {
+    return 'support';
+  }
+
+  return 'tile';
+}
+
+function AreaImageCard({
+  image,
+  studioTitle,
+  areaName,
+  variant,
+}: {
+  image: DisplayAreaImage;
+  studioTitle: string;
+  areaName: string;
+  variant: 'hero' | 'support' | 'tile';
+}) {
   return (
-    <div
-      className={`gallery-slot ${revealClass}`}
-      style={{
-        borderRadius: '12px',
-        overflow: 'hidden',
-        border: '1px solid rgba(255,255,255,0.06)',
-        position: 'relative',
-        cursor: 'pointer',
-        gridArea: gridArea,
-      }}
-    >
-      <div style={{
-        aspectRatio,
-        background: gradient,
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '0.5rem',
-      }}>
-        {!showImage && (
-          <>
-            <span style={{ fontSize: '2.2rem', opacity: 0.5 }}>{icon}</span>
-            <span style={{
-              fontSize: '0.6rem', letterSpacing: '0.16em',
-              textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)',
-            }}>
-              {label}
-            </span>
-          </>
-        )}
-
-        {showImage && (
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-            style={{ objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)' }}
-            onError={() => setImgFailed(true)}
-          />
-        )}
-      </div>
-
-      {/* Hover caption overlay */}
-      <div className="gallery-slot__overlay" style={{
-        position: 'absolute', inset: 0,
-        background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%)',
-        display: 'flex', alignItems: 'flex-end',
-        padding: '1rem 1.125rem',
-        opacity: 0, transition: 'opacity 0.3s',
-      }}>
-        <span style={{
-          fontSize: '0.72rem', letterSpacing: '0.1em',
-          textTransform: 'uppercase', color: 'var(--white)', fontWeight: 500,
-        }}>
-          {label}
+    <figure className={`studio-area-card studio-area-card--${variant}`}>
+      <Image
+        src={image.imageUrl}
+        alt={image.alt || `${studioTitle} ${areaName}`}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
+        style={{ objectFit: 'cover' }}
+      />
+      <figcaption className="studio-area-card__caption">
+        <span className="studio-area-card__eyebrow">{areaName}</span>
+        <span className="studio-area-card__text">
+          {image.caption || `${studioTitle} - ${areaName}`}
         </span>
-      </div>
-    </div>
+      </figcaption>
+    </figure>
   );
 }
 
-// ─── Premium "See It In Person" CTA ──────────────────────────────────────────
-function PhotoTourCTA({ studio }: { studio: SanityStudio }) {
+function WalkthroughCard({ studio }: { studio: SanityStudio }) {
   const settings = useSiteSettings();
   const whatsappText = encodeURIComponent(
-    `Hi, I'd like to schedule a walkthrough of the ${studio.title} at Cine Classic Studios.`
+    `Hi, I would like a walkthrough of the ${studio.title} at Cine Classic Studios.`,
   );
-
-  const rateDisplay = `${fmtRate(studio.rateHourly, studio.ratePerDay)}${fmtRateUnit(studio.rateUnit, studio.rateHourly)}`;
+  const rateDisplay = `${fmtRate(studio.rateHourly, studio.ratePerDay)}${fmtRateUnit(
+    studio.rateUnit,
+    studio.rateHourly,
+  )}`;
 
   return (
     <div
-      className="reveal"
       style={{
-        borderRadius: '20px',
-        border: '1px solid rgba(255,255,255,0.07)',
-        background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)',
-        position: 'relative',
-        overflow: 'hidden',
-        padding: 'clamp(48px, 8vw, 80px) clamp(24px, 6%, 60px)',
+        borderRadius: '18px',
+        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))',
+        padding: '1.5rem',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '3rem',
-        alignItems: 'center',
-        minHeight: '360px',
+        gap: '1rem',
       }}
     >
-      {/* Grid background */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        backgroundImage: `
-          linear-gradient(rgba(212,175,55,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(212,175,55,0.04) 1px, transparent 1px)
-        `,
-        backgroundSize: '52px 52px',
-      }} />
-
-      {/* Corner accent */}
-      <div style={{
-        position: 'absolute', top: 0, right: 0,
-        width: '220px', height: '220px',
-        background: 'radial-gradient(circle at 100% 0%, rgba(212,175,55,0.08) 0%, transparent 65%)',
-        pointerEvents: 'none',
-      }} />
-
-      {/* Left: heading + description */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: '7px',
-          fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.18em',
-          textTransform: 'uppercase', color: 'var(--gold)',
-          background: 'rgba(212,175,55,0.1)',
-          border: '1px solid rgba(212,175,55,0.2)',
-          padding: '5px 14px', borderRadius: '100px',
-          marginBottom: '1.25rem',
-        }}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-            <circle cx="12" cy="13" r="4" />
-          </svg>
-          Photography Coming Soon
+      <div>
+        <div className="section-tag" style={{ marginBottom: '0.85rem' }}>
+          Guided Recce
         </div>
-
-        <h3 style={{
-          fontFamily: 'var(--font-playfair), serif',
-          fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
-          fontWeight: 700, color: 'var(--white)',
-          lineHeight: 1.15, marginBottom: '1rem',
-          letterSpacing: '-0.01em',
-        }}>
-          Experience {studio.title}<br />
-          <span style={{ color: 'var(--gold)' }}>In Person</span>
+        <h3
+          style={{
+            fontFamily: 'var(--font-playfair), serif',
+            fontSize: 'clamp(1.2rem, 2.5vw, 1.7rem)',
+            lineHeight: 1.15,
+            marginBottom: '0.75rem',
+          }}
+        >
+          Need a closer look before booking?
         </h3>
-
-        <p style={{
-          fontSize: '0.9rem', color: 'rgba(255,255,255,0.55)',
-          fontWeight: 300, lineHeight: 1.8, marginBottom: '1.75rem',
-          maxWidth: '380px',
-        }}>
-          Our team will walk you through every zone, camera angle, and lighting position.
-          Complimentary site visits available 7 days a week.
+        <p style={{ fontSize: '0.92rem', color: 'var(--gray-lt)', lineHeight: 1.8 }}>
+          Schedule a walkthrough and our team will guide you through the set, angles, access,
+          and production logistics in person.
         </p>
-
-        <div style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap' }}>
-          <a
-            href={`https://wa.me/${settings.whatsappNumber}?text=${whatsappText}`}
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '7px',
-              padding: '11px 22px',
-              background: 'rgba(37,211,102,0.12)',
-              border: '1px solid rgba(37,211,102,0.3)',
-              borderRadius: '100px', color: '#4ade80',
-              fontSize: '0.82rem', fontWeight: 600,
-              textDecoration: 'none', transition: 'all 0.3s', whiteSpace: 'nowrap',
-            }}
-          >
-            💬 Schedule Walkthrough
-          </a>
-          <a
-            href="#booking"
-            style={{
-              display: 'inline-flex', alignItems: 'center',
-              padding: '11px 22px',
-              background: 'var(--gold)', border: 'none', borderRadius: '100px',
-              color: 'var(--dark)', fontSize: '0.82rem', fontWeight: 700,
-              textDecoration: 'none', transition: 'all 0.3s', whiteSpace: 'nowrap',
-            }}
-          >
-            Book This Studio →
-          </a>
-        </div>
       </div>
 
-      {/* Right: stat cards */}
-      <div style={{
-        position: 'relative', zIndex: 1,
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem',
-      }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+          gap: '0.75rem',
+        }}
+      >
         {[
-          { label: 'Floor Area', value: fmtSize(studio.size), icon: '📐' },
-          { label: 'Ceiling Height', value: fmtHeight(studio.height), icon: '↕️' },
-          { label: 'Max Crew', value: studio.capacity ?? '—', icon: '👥' },
-          { label: 'Rate From', value: rateDisplay, icon: '💰', gold: true },
-        ].map((chip) => (
-          <div key={chip.label} style={{
-            padding: '16px',
-            background: 'rgba(255,255,255,0.05)',
-            border: chip.gold ? '1px solid rgba(212,175,55,0.2)' : '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '12px',
-            backdropFilter: 'blur(8px)',
-          }}>
-            <div style={{ fontSize: '1.1rem', marginBottom: '6px' }}>{chip.icon}</div>
-            <div style={{
-              fontFamily: 'var(--font-playfair), serif',
-              fontSize: '0.95rem', fontWeight: 700,
-              color: chip.gold ? 'var(--gold)' : 'var(--white)',
-              marginBottom: '2px',
-            }}>
-              {chip.value}
+          { label: 'Floor area', value: fmtSize(studio.size) },
+          { label: 'Ceiling height', value: fmtHeight(studio.height) },
+          { label: 'Rate from', value: rateDisplay },
+        ].map((item) => (
+          <div
+            key={item.label}
+            style={{
+              borderRadius: '14px',
+              border: '1px solid rgba(255,255,255,0.07)',
+              background: 'rgba(255,255,255,0.03)',
+              padding: '0.9rem 1rem',
+            }}
+          >
+            <div
+              style={{
+                fontSize: '0.65rem',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: 'var(--gray)',
+                marginBottom: '0.35rem',
+              }}
+            >
+              {item.label}
             </div>
-            <div style={{
-              fontSize: '0.56rem', fontWeight: 600, letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: chip.gold ? 'rgba(212,175,55,0.55)' : 'rgba(255,255,255,0.35)',
-            }}>
-              {chip.label}
+            <div style={{ fontSize: '0.95rem', color: 'var(--white)', fontWeight: 600 }}>
+              {item.value}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Responsive: stack columns on mobile */}
-      <style>{`
-        @media (max-width: 680px) {
-          .photo-tour-cta { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <a
+          href={`https://wa.me/${settings.whatsappNumber}?text=${whatsappText}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0.8rem 1.2rem',
+            borderRadius: '999px',
+            border: '1px solid rgba(37,211,102,0.3)',
+            background: 'rgba(37,211,102,0.12)',
+            color: '#4ade80',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            textDecoration: 'none',
+          }}
+        >
+          WhatsApp walkthrough
+        </a>
+        <a
+          href="#booking"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0.8rem 1.2rem',
+            borderRadius: '999px',
+            background: 'var(--gold)',
+            color: 'var(--dark)',
+            fontSize: '0.85rem',
+            fontWeight: 700,
+            textDecoration: 'none',
+          }}
+        >
+          Book this studio
+        </a>
+      </div>
     </div>
   );
 }
 
-// ─── Gallery section ──────────────────────────────────────────────────────────
 export default function StudioGallery({ studio }: Props) {
-  const hasRealImages = !!(studio.galleryImages && studio.galleryImages.length > 0);
+  const displayAreas = useMemo(() => buildDisplayAreas(studio), [studio]);
+  const [selectedAreaId, setSelectedAreaId] = useState(displayAreas[0]?.id ?? '');
 
-  // ── No photos uploaded yet ────────────────────────────────────────────────
-  if (!hasRealImages) {
-    return (
-      <section id="gallery" style={{ padding: '80px 5%', background: 'var(--dark)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="reveal" style={{ marginBottom: '3rem' }}>
-            <div className="section-tag">The Space</div>
-            <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-              See It{' '}
-              <span style={{ color: 'var(--gold)' }}>for Yourself</span>
-            </h2>
-            <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, marginTop: '0.5rem', maxWidth: '480px' }}>
-              Photography coming soon. Book a complimentary on-site walkthrough with our production team.
-            </p>
-          </div>
-          <PhotoTourCTA studio={studio} />
-        </div>
-      </section>
-    );
+  useEffect(() => {
+    if (displayAreas.length === 0) {
+      if (selectedAreaId) {
+        setSelectedAreaId('');
+      }
+      return;
+    }
+
+    if (!displayAreas.some((area) => area.id === selectedAreaId)) {
+      setSelectedAreaId(displayAreas[0].id);
+    }
+  }, [displayAreas, selectedAreaId]);
+
+  const selectedArea =
+    displayAreas.find((area) => area.id === selectedAreaId) ?? displayAreas[0] ?? null;
+  const layoutImageUrl = studio.setLayoutImage;
+  const hasLayoutImage = !!layoutImageUrl;
+  const hasGalleryAreas = displayAreas.length > 0 && !!selectedArea;
+
+  if (!hasLayoutImage && !hasGalleryAreas) {
+    return null;
   }
-
-  // ── Real photos: editorial masonry layout ─────────────────────────────────
-  // Row 1: Large image (spans 2) + 2 stacked right (spans 1)
-  // Row 2: 3 equal images
-  const SLOT_LABELS = ['Wide Shot', 'Detail', 'Lighting Setup', 'Full Floor', 'Dressed Set', 'Production Ready'];
-  const imagePaths: (string | undefined)[] = Array.from({ length: 6 }, (_, i) => studio.galleryImages![i]);
 
   return (
     <section id="gallery" style={{ padding: '80px 5%', background: 'var(--dark)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-
-        <div className="reveal" style={{ marginBottom: '3rem' }}>
-          <div className="section-tag">Photo Gallery</div>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            The Studio{' '}
-            <span style={{ color: 'var(--gold)' }}>in Action</span>
+        <div className="reveal" style={{ marginBottom: '2.75rem' }}>
+          <div className="section-tag">Location Scout</div>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', lineHeight: 1.1 }}>
+            Walk the set <span style={{ color: 'var(--gold)' }}>by area</span>
           </h2>
-          <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, marginTop: '0.5rem' }}>
-            A look inside {studio.title}.
+          <p
+            style={{
+              fontSize: '0.95rem',
+              color: 'var(--gray)',
+              fontWeight: 300,
+              marginTop: '0.75rem',
+              maxWidth: '640px',
+            }}
+          >
+            Start with the layout reference, then switch between production zones to review the
+            photos that matter to your shoot.
           </p>
         </div>
 
-        {/* Editorial layout: 3 cols × 2 rows */}
         <div
-          className="gallery-editorial"
+          className="studio-scout-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gridTemplateRows: 'auto auto',
-            gap: '10px',
+            gridTemplateColumns: hasLayoutImage ? 'minmax(0, 0.92fr) minmax(0, 1.08fr)' : '1fr',
+            gap: '1.5rem',
+            alignItems: 'start',
           }}
         >
-          {/* Slot 0: hero — spans 2 cols */}
-          <GallerySlot
-            src={imagePaths[0]}
-            alt={`${studio.title} · ${SLOT_LABELS[0]}`}
-            label={SLOT_LABELS[0]}
-            aspectRatio="16/9"
-            gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
-            icon={studio.icon ?? '🎬'}
-            revealClass="reveal"
-            gridArea="1 / 1 / 2 / 3"
-          />
-          {/* Slot 1: top right */}
-          <GallerySlot
-            src={imagePaths[1]}
-            alt={`${studio.title} · ${SLOT_LABELS[1]}`}
-            label={SLOT_LABELS[1]}
-            aspectRatio="4/3"
-            gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
-            icon={studio.icon ?? '🎬'}
-            revealClass="reveal reveal-delay-1"
-          />
-          {/* Slot 2: stacked right — fills next row right col naturally */}
-          <GallerySlot
-            src={imagePaths[2]}
-            alt={`${studio.title} · ${SLOT_LABELS[2]}`}
-            label={SLOT_LABELS[2]}
-            aspectRatio="4/3"
-            gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
-            icon={studio.icon ?? '🎬'}
-            revealClass="reveal reveal-delay-2"
-          />
-          {/* Slots 3–5: bottom row of 3 equal */}
-          {[3, 4, 5].map((idx) => (
-            <GallerySlot
-              key={idx}
-              src={imagePaths[idx]}
-              alt={`${studio.title} · ${SLOT_LABELS[idx]}`}
-              label={SLOT_LABELS[idx]}
-              aspectRatio="4/3"
-              gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
-              icon={studio.icon ?? '🎬'}
-              revealClass={`reveal reveal-delay-${idx - 2}`}
-            />
-          ))}
+          {hasLayoutImage && layoutImageUrl && (
+            <div
+              className="reveal studio-scout-layout"
+              style={{
+                display: 'grid',
+                gap: '1rem',
+                position: 'sticky',
+                top: '108px',
+              }}
+            >
+              <div
+                style={{
+                  borderRadius: '18px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'var(--dark2)',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    padding: '1rem 1.1rem',
+                    borderBottom: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        fontSize: '0.68rem',
+                        letterSpacing: '0.16em',
+                        textTransform: 'uppercase',
+                        color: 'var(--gold)',
+                        marginBottom: '0.3rem',
+                      }}
+                    >
+                      Layout reference
+                    </div>
+                    <div style={{ fontSize: '0.95rem', color: 'var(--white)', fontWeight: 600 }}>
+                      {studio.title}
+                    </div>
+                  </div>
+                  {displayAreas.length > 0 && (
+                    <div
+                      style={{
+                        fontSize: '0.72rem',
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        color: 'var(--gray)',
+                      }}
+                    >
+                      {displayAreas.length} area{displayAreas.length === 1 ? '' : 's'}
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ position: 'relative', aspectRatio: '4 / 3' }}>
+                  <Image
+                    src={layoutImageUrl}
+                    alt={`${studio.title} layout reference`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    style={{ objectFit: 'contain', background: 'rgba(255,255,255,0.02)' }}
+                  />
+                </div>
+              </div>
+
+              {studio.setLayoutDescription && (
+                <div
+                  style={{
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    background: 'rgba(255,255,255,0.03)',
+                    padding: '1rem 1.15rem',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: '0.68rem',
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      color: 'var(--gold)',
+                      marginBottom: '0.55rem',
+                    }}
+                  >
+                    Scout note
+                  </div>
+                  <p style={{ fontSize: '0.92rem', color: 'var(--gray-lt)', lineHeight: 1.75 }}>
+                    {studio.setLayoutDescription}
+                  </p>
+                </div>
+              )}
+
+              {!hasGalleryAreas && <WalkthroughCard studio={studio} />}
+            </div>
+          )}
+
+          {hasGalleryAreas && selectedArea && (
+            <div className="reveal reveal-delay-1" style={{ display: 'grid', gap: '1rem' }}>
+              <div
+                style={{
+                  borderRadius: '18px',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  background: 'rgba(255,255,255,0.03)',
+                  padding: '1.1rem',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    flexWrap: 'wrap',
+                    marginBottom: '0.9rem',
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        fontSize: '0.68rem',
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        color: 'var(--gold)',
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      Browse by area
+                    </div>
+                    <div style={{ fontSize: '0.95rem', color: 'var(--gray-lt)' }}>
+                      Select a zone to review its scouting images.
+                    </div>
+                  </div>
+
+                  {selectedArea.isLegacy && (
+                    <div
+                      style={{
+                        fontSize: '0.68rem',
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        color: 'var(--gray)',
+                      }}
+                    >
+                      Legacy gallery view
+                    </div>
+                  )}
+                </div>
+
+                <div className="studio-area-chip-strip">
+                  {displayAreas.map((area) => {
+                    const isActive = area.id === selectedArea.id;
+
+                    return (
+                      <button
+                        key={area.id}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() => setSelectedAreaId(area.id)}
+                        style={{
+                          borderRadius: '999px',
+                          border: isActive
+                            ? '1px solid rgba(212,175,55,0.45)'
+                            : '1px solid rgba(255,255,255,0.08)',
+                          background: isActive
+                            ? 'rgba(212,175,55,0.14)'
+                            : 'rgba(255,255,255,0.03)',
+                          color: isActive ? 'var(--gold)' : 'var(--gray-lt)',
+                          fontSize: '0.84rem',
+                          fontWeight: 600,
+                          padding: '0.82rem 1rem',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.25s ease',
+                        }}
+                      >
+                        {area.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div
+                key={selectedArea.id}
+                className="studio-area-panel"
+                style={{
+                  display: 'grid',
+                  gap: '1rem',
+                  animation: 'studioAreaFade 260ms ease',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  <div>
+                    <h3
+                      style={{
+                        fontFamily: 'var(--font-playfair), serif',
+                        fontSize: 'clamp(1.35rem, 2.4vw, 1.9rem)',
+                        lineHeight: 1.15,
+                        marginBottom: '0.45rem',
+                      }}
+                    >
+                      {selectedArea.name}
+                    </h3>
+                    {selectedArea.description && (
+                      <p
+                        style={{
+                          maxWidth: '640px',
+                          fontSize: '0.92rem',
+                          color: 'var(--gray-lt)',
+                          lineHeight: 1.75,
+                        }}
+                      >
+                        {selectedArea.description}
+                      </p>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      color: 'var(--gray)',
+                    }}
+                  >
+                    {selectedArea.images.length} photo{selectedArea.images.length === 1 ? '' : 's'}
+                  </div>
+                </div>
+
+                <div className="studio-area-grid">
+                  {selectedArea.images.map((image, index) => (
+                    <AreaImageCard
+                      key={image.id}
+                      image={image}
+                      studioTitle={studio.title}
+                      areaName={selectedArea.name}
+                      variant={getImageVariant(index)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Hover + responsive styles */}
       <style>{`
-        .gallery-slot { transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s; }
-        .gallery-slot:hover { transform: scale(1.012); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
-        .gallery-slot:hover .gallery-slot__overlay { opacity: 1 !important; }
-        .gallery-slot:hover img { transform: scale(1.04); }
-
-        @media (max-width: 768px) {
-          .gallery-editorial { grid-template-columns: 1fr 1fr !important; }
-          .gallery-editorial > div:first-child { grid-area: auto !important; }
+        .studio-area-chip-strip {
+          display: flex;
+          gap: 0.75rem;
+          overflow-x: auto;
+          padding-bottom: 0.15rem;
+          scrollbar-width: none;
         }
-        @media (max-width: 480px) {
-          .gallery-editorial { grid-template-columns: 1fr !important; }
+
+        .studio-area-chip-strip::-webkit-scrollbar {
+          display: none;
+        }
+
+        .studio-area-grid {
+          display: grid;
+          grid-template-columns: repeat(12, minmax(0, 1fr));
+          gap: 12px;
+        }
+
+        .studio-area-card {
+          position: relative;
+          overflow: hidden;
+          border-radius: 18px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: var(--dark2);
+          min-height: 0;
+        }
+
+        .studio-area-card--hero {
+          grid-column: span 7;
+          grid-row: span 2;
+          aspect-ratio: 16 / 11;
+        }
+
+        .studio-area-card--support {
+          grid-column: span 5;
+          aspect-ratio: 5 / 4;
+        }
+
+        .studio-area-card--tile {
+          grid-column: span 4;
+          aspect-ratio: 4 / 3;
+        }
+
+        .studio-area-card__caption {
+          position: absolute;
+          inset: auto 0 0 0;
+          display: grid;
+          gap: 0.15rem;
+          padding: 1rem 1rem 0.95rem;
+          background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.78) 100%);
+        }
+
+        .studio-area-card__eyebrow {
+          font-size: 0.68rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: rgba(212,175,55,0.9);
+        }
+
+        .studio-area-card__text {
+          font-size: 0.86rem;
+          color: var(--white);
+          line-height: 1.5;
+        }
+
+        @keyframes studioAreaFade {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 900px) {
+          .studio-scout-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .studio-area-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .studio-area-card--hero,
+          .studio-area-card--support,
+          .studio-area-card--tile {
+            grid-column: span 1;
+            grid-row: span 1;
+            aspect-ratio: 4 / 3;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .studio-area-grid {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </section>
   );
 }
+
+

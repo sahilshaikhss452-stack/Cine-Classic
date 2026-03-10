@@ -64,6 +64,20 @@ export interface LayoutZone {
   y: string;
 }
 
+export interface StudioAreaImage {
+  _key: string;
+  imageUrl: string | null;
+  alt: string | null;
+  caption: string | null;
+}
+
+export interface StudioArea {
+  _key: string;
+  areaName: string;
+  shortDescription: string | null;
+  images: StudioAreaImage[];
+}
+
 export interface StudioNavItem {
   _id: string;
   title: string;
@@ -98,6 +112,7 @@ export interface Studio extends StudioCard {
   facilities: string[];
   productions: string[];
   galleryImages: string[];
+  studioAreas: StudioArea[];
   setPdfUrl: string | null;
   setLayoutImage: string | null;
   setLayoutDescription: string | null;

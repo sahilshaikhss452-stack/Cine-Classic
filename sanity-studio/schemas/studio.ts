@@ -37,9 +37,10 @@ export const studioSchema = defineType({
     }),
     defineField({
       name: 'galleryImages',
-      title: 'Gallery images',
+      title: 'Legacy gallery images',
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Optional legacy fallback. Use Studio areas below for new uploads.',
     }),
     defineField({
       name: 'size',
@@ -145,33 +146,22 @@ export const studioSchema = defineType({
       title: 'Layout image',
       type: 'image',
       options: { hotspot: true },
+      description: 'Upload the layout or floor-plan reference used above the area gallery.',
     }),
     defineField({
       name: 'setLayoutDescription',
       title: 'Layout description',
       type: 'text',
       rows: 3,
+      description: 'Optional note that helps clients orient themselves before browsing the areas.',
     }),
     defineField({
-      name: 'layoutZones',
-      title: 'Layout zones',
+      name: 'studioAreas',
+      title: 'Studio areas',
       type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({ name: 'label', title: 'Label', type: 'string' }),
-            defineField({ name: 'x', title: 'X position (%)', type: 'string' }),
-            defineField({ name: 'y', title: 'Y position (%)', type: 'string' }),
-          ],
-          preview: {
-            select: {
-              title: 'label',
-              subtitle: 'x',
-            },
-          },
-        },
-      ],
+      of: [{ type: 'studioArea' }],
+      description:
+        'Create named parts of the set and upload the scouting images for each area.',
     }),
     defineField({
       name: 'featured',
