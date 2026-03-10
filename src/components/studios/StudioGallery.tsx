@@ -264,9 +264,9 @@ export default function StudioGallery({ studio }: Props) {
   }
 
   return (
-    <section id="gallery" style={{ padding: '80px 5%', background: 'var(--dark)' }}>
+    <section id="gallery" className="studio-scout-section" style={{ padding: '80px 5%', background: 'var(--dark)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div className="reveal" style={{ marginBottom: '2.75rem' }}>
+        <div className="reveal studio-scout-header" style={{ marginBottom: '2.75rem' }}>
           <div className="section-tag">Location Scout</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', lineHeight: 1.1 }}>
             Walk the set <span style={{ color: 'var(--gold)' }}>by area</span>
@@ -305,6 +305,7 @@ export default function StudioGallery({ studio }: Props) {
               }}
             >
               <div
+                className="studio-layout-card"
                 style={{
                   borderRadius: '18px',
                   overflow: 'hidden',
@@ -394,7 +395,7 @@ export default function StudioGallery({ studio }: Props) {
           )}
 
           {hasGalleryAreas && selectedArea && (
-            <div className="reveal reveal-delay-1" style={{ display: 'grid', gap: '1rem' }}>
+            <div className="reveal reveal-delay-1 studio-scout-gallery" style={{ display: 'grid', gap: '1rem' }}>
               <div
                 style={{
                   borderRadius: '18px',
@@ -487,6 +488,7 @@ export default function StudioGallery({ studio }: Props) {
                 }}
               >
                 <div
+                  className="studio-area-panel-header"
                   style={{
                     display: 'flex',
                     alignItems: 'flex-end',
@@ -627,8 +629,41 @@ export default function StudioGallery({ studio }: Props) {
         }
 
         @media (max-width: 900px) {
+          .studio-scout-section {
+            padding-top: 64px !important;
+            padding-bottom: 64px !important;
+          }
+
+          .studio-scout-section .reveal,
+          .studio-scout-section .reveal.visible {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+          }
+
           .studio-scout-grid {
             grid-template-columns: 1fr !important;
+            gap: 1.25rem !important;
+          }
+
+          .studio-scout-layout {
+            position: static !important;
+            top: auto !important;
+            z-index: auto !important;
+            gap: 1.25rem !important;
+          }
+
+          .studio-layout-card {
+            isolation: isolate;
+          }
+
+          .studio-scout-gallery,
+          .studio-area-panel {
+            gap: 1.25rem !important;
+          }
+
+          .studio-area-panel-header {
+            align-items: flex-start !important;
           }
 
           .studio-area-grid {
@@ -645,6 +680,19 @@ export default function StudioGallery({ studio }: Props) {
         }
 
         @media (max-width: 640px) {
+          .studio-scout-section {
+            padding-top: 56px !important;
+            padding-bottom: 56px !important;
+          }
+
+          .studio-scout-header {
+            margin-bottom: 2rem !important;
+          }
+
+          .studio-area-chip-strip {
+            gap: 0.6rem;
+          }
+
           .studio-area-grid {
             grid-template-columns: 1fr;
           }
@@ -653,5 +701,3 @@ export default function StudioGallery({ studio }: Props) {
     </section>
   );
 }
-
-
