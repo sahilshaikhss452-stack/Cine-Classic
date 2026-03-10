@@ -258,6 +258,9 @@ export default function StudioGallery({ studio }: Props) {
   const layoutImageUrl = studio.setLayoutImage;
   const hasLayoutImage = !!layoutImageUrl;
   const hasGalleryAreas = displayAreas.length > 0 && !!selectedArea;
+  const mobileHeroImage = selectedArea?.images[0] ?? null;
+  const mobileSecondaryImages = selectedArea?.images.slice(1) ?? [];
+  const mobileCaption = mobileHeroImage?.caption ?? selectedArea?.description ?? null;
 
   if (!hasLayoutImage && !hasGalleryAreas) {
     return null;
@@ -272,6 +275,7 @@ export default function StudioGallery({ studio }: Props) {
             Walk the set <span style={{ color: 'var(--gold)' }}>by area</span>
           </h2>
           <p
+            className="studio-scout-helper"
             style={{
               fontSize: '0.95rem',
               color: 'var(--gray)',
@@ -314,6 +318,7 @@ export default function StudioGallery({ studio }: Props) {
                 }}
               >
                 <div
+                  className="studio-layout-card__meta"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -341,6 +346,7 @@ export default function StudioGallery({ studio }: Props) {
                   </div>
                   {displayAreas.length > 0 && (
                     <div
+                      className="studio-layout-card__stats"
                       style={{
                         fontSize: '0.72rem',
                         letterSpacing: '0.12em',
@@ -366,6 +372,7 @@ export default function StudioGallery({ studio }: Props) {
 
               {studio.setLayoutDescription && (
                 <div
+                  className="studio-layout-note"
                   style={{
                     borderRadius: '16px',
                     border: '1px solid rgba(255,255,255,0.06)',
@@ -397,6 +404,7 @@ export default function StudioGallery({ studio }: Props) {
           {hasGalleryAreas && selectedArea && (
             <div className="reveal reveal-delay-1 studio-scout-gallery" style={{ display: 'grid', gap: '1rem' }}>
               <div
+                className="studio-area-controls"
                 style={{
                   borderRadius: '18px',
                   border: '1px solid rgba(255,255,255,0.07)',
@@ -405,6 +413,7 @@ export default function StudioGallery({ studio }: Props) {
                 }}
               >
                 <div
+                  className="studio-area-controls__intro"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -433,6 +442,7 @@ export default function StudioGallery({ studio }: Props) {
 
                   {selectedArea.isLegacy && (
                     <div
+                      className="studio-area-controls__badge"
                       style={{
                         fontSize: '0.68rem',
                         letterSpacing: '0.14em',
@@ -487,6 +497,36 @@ export default function StudioGallery({ studio }: Props) {
                   animation: 'studioAreaFade 260ms ease',
                 }}
               >
+                <div className="studio-area-mobile-flow">
+                  {mobileHeroImage && (
+                    <AreaImageCard
+                      image={mobileHeroImage}
+                      studioTitle={studio.title}
+                      areaName={selectedArea.name}
+                      variant="hero"
+                    />
+                  )}
+
+                  <div className="studio-area-mobile-copy">
+                    <div className="studio-area-mobile-title">{selectedArea.name}</div>
+                    {mobileCaption && <p>{mobileCaption}</p>}
+                  </div>
+
+                  {mobileSecondaryImages.length > 0 && (
+                    <div className="studio-area-mobile-thumbs">
+                      {mobileSecondaryImages.map((image) => (
+                        <AreaImageCard
+                          key={image.id}
+                          image={image}
+                          studioTitle={studio.title}
+                          areaName={selectedArea.name}
+                          variant="tile"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
                 <div
                   className="studio-area-panel-header"
                   style={{
@@ -497,7 +537,7 @@ export default function StudioGallery({ studio }: Props) {
                     flexWrap: 'wrap',
                   }}
                 >
-                  <div>
+                  <div className="studio-area-copy">
                     <h3
                       style={{
                         fontFamily: 'var(--font-playfair), serif',
@@ -522,6 +562,7 @@ export default function StudioGallery({ studio }: Props) {
                     )}
                   </div>
                   <div
+                    className="studio-area-count"
                     style={{
                       fontSize: '0.72rem',
                       letterSpacing: '0.14em',
@@ -533,7 +574,7 @@ export default function StudioGallery({ studio }: Props) {
                   </div>
                 </div>
 
-                <div className="studio-area-grid">
+                <div className="studio-area-grid studio-area-grid--desktop">
                   {selectedArea.images.map((image, index) => (
                     <AreaImageCard
                       key={image.id}
@@ -561,6 +602,34 @@ export default function StudioGallery({ studio }: Props) {
 
         .studio-area-chip-strip::-webkit-scrollbar {
           display: none;
+        }
+
+        .studio-area-mobile-flow {
+          display: none;
+        }
+
+        .studio-area-mobile-thumbs {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        .studio-area-mobile-copy {
+          display: grid;
+          gap: 0.35rem;
+        }
+
+        .studio-area-mobile-title {
+          font-family: var(--font-playfair), serif;
+          font-size: 1.2rem;
+          line-height: 1.15;
+          color: var(--white);
+        }
+
+        .studio-area-mobile-copy p {
+          font-size: 0.88rem;
+          color: var(--gray-lt);
+          line-height: 1.7;
         }
 
         .studio-area-grid {
@@ -630,8 +699,8 @@ export default function StudioGallery({ studio }: Props) {
 
         @media (max-width: 900px) {
           .studio-scout-section {
-            padding-top: 64px !important;
-            padding-bottom: 64px !important;
+            padding-top: 60px !important;
+            padding-bottom: 60px !important;
           }
 
           .studio-scout-section .reveal,
@@ -643,14 +712,14 @@ export default function StudioGallery({ studio }: Props) {
 
           .studio-scout-grid {
             grid-template-columns: 1fr !important;
-            gap: 1.25rem !important;
+            gap: 1.2rem !important;
           }
 
           .studio-scout-layout {
             position: static !important;
             top: auto !important;
             z-index: auto !important;
-            gap: 1.25rem !important;
+            gap: 1rem !important;
           }
 
           .studio-layout-card {
@@ -659,7 +728,7 @@ export default function StudioGallery({ studio }: Props) {
 
           .studio-scout-gallery,
           .studio-area-panel {
-            gap: 1.25rem !important;
+            gap: 1rem !important;
           }
 
           .studio-area-panel-header {
@@ -681,20 +750,115 @@ export default function StudioGallery({ studio }: Props) {
 
         @media (max-width: 640px) {
           .studio-scout-section {
-            padding-top: 56px !important;
-            padding-bottom: 56px !important;
+            padding-top: 48px !important;
+            padding-bottom: 48px !important;
           }
 
           .studio-scout-header {
-            margin-bottom: 2rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+
+          .studio-scout-helper {
+            font-size: 0.88rem !important;
+            line-height: 1.7 !important;
+            margin-top: 0.55rem !important;
+          }
+
+          .studio-layout-card {
+            border-radius: 16px;
+          }
+
+          .studio-layout-card__meta {
+            padding: 0.85rem 0.95rem !important;
+            align-items: flex-start !important;
+          }
+
+          .studio-layout-card__stats {
+            display: none;
+          }
+
+          .studio-layout-note {
+            padding: 0.9rem 1rem !important;
+          }
+
+          .studio-layout-note p {
+            font-size: 0.84rem !important;
+            line-height: 1.65 !important;
+          }
+
+          .studio-area-controls {
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+          }
+
+          .studio-area-controls__intro,
+          .studio-area-controls__badge {
+            display: none !important;
           }
 
           .studio-area-chip-strip {
-            gap: 0.6rem;
+            gap: 0.65rem;
+            padding-bottom: 0.25rem;
+            scroll-snap-type: x proximity;
           }
 
-          .studio-area-grid {
-            grid-template-columns: 1fr;
+          .studio-area-chip-strip button {
+            padding: 0.8rem 1rem !important;
+            scroll-snap-align: start;
+          }
+
+          .studio-area-chip-strip button[aria-pressed='true'] {
+            background: var(--gold) !important;
+            color: var(--dark) !important;
+            border-color: var(--gold) !important;
+            box-shadow: 0 10px 24px rgba(212,175,55,0.2);
+          }
+
+          .studio-area-chip-strip button[aria-pressed='false'] {
+            background: rgba(255,255,255,0.04) !important;
+            color: var(--white2) !important;
+          }
+
+          .studio-area-panel {
+            gap: 0.85rem !important;
+          }
+
+          .studio-area-panel-header,
+          .studio-area-grid--desktop {
+            display: none !important;
+          }
+
+          .studio-area-mobile-flow {
+            display: grid;
+            gap: 0.85rem;
+          }
+
+          .studio-area-mobile-flow .studio-area-card--hero {
+            aspect-ratio: 5 / 4;
+            grid-column: auto;
+            grid-row: auto;
+          }
+
+          .studio-area-mobile-thumbs .studio-area-card {
+            border-radius: 14px;
+          }
+
+          .studio-area-mobile-thumbs .studio-area-card__caption {
+            padding: 0.75rem 0.8rem 0.72rem;
+          }
+
+          .studio-area-mobile-thumbs .studio-area-card__eyebrow {
+            font-size: 0.58rem;
+          }
+
+          .studio-area-mobile-thumbs .studio-area-card__text {
+            font-size: 0.74rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
           }
         }
       `}</style>
