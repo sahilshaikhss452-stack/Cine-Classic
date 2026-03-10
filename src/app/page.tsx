@@ -1,4 +1,4 @@
-import Navbar from '@/components/Navbar';
+﻿import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import NetworkLogoStrip from '@/components/NetworkLogoStrip';
 import Sets from '@/components/Sets';
@@ -33,11 +33,11 @@ import {
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  // ── Fetch all CMS content in parallel ────────────────────────────────────────
+  // â”€â”€ Fetch all CMS content in parallel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // All three fetches run concurrently. Each has its own try/catch so a single
   // Sanity failure doesn't take down the entire page.
 
-  // Studios: direct SanityStudioCard[] — no adapter or merge needed
+  // Studios: direct SanityStudioCard[] â€” no adapter or merge needed
   let studios: SanityStudioCard[] = [];
 
   // Productions: Sanity-first, full hardcoded array as emergency fallback
@@ -53,9 +53,9 @@ export default async function HomePage() {
   ]);
 
   if (studioDocs.status === 'fulfilled') studios = studioDocs.value;
-  if (productionDocs.status === 'fulfilled' && productionDocs.value.length > 0)
+  if (productionDocs.status === 'fulfilled')
     productions = sanityProductionsToProductions(productionDocs.value);
-  if (testimonialDocs.status === 'fulfilled' && testimonialDocs.value.length > 0)
+  if (testimonialDocs.status === 'fulfilled')
     testimonials = sanityTestimonialsToTestimonials(testimonialDocs.value);
 
   return (
@@ -63,72 +63,72 @@ export default async function HomePage() {
       {/* Mounts the IntersectionObserver for card-level scroll-reveal animations */}
       <RevealProvider />
 
-      {/* Floating CTA Buttons (WhatsApp + Book Studio) — appear after 400px scroll */}
+      {/* Floating CTA Buttons (WhatsApp + Book Studio) â€” appear after 400px scroll */}
       <FloatingButtons />
 
       <Navbar />
 
       <main>
-        {/* 1 ─── HERO — cinematic first impression + primary CTA
+        {/* 1 â”€â”€â”€ HERO â€” cinematic first impression + primary CTA
             Hero handles its own parallax internally; no MotionSection wrapper. */}
         <Hero />
 
-        {/* 2 ─── NETWORK STRIP — instant credibility: Netflix, Amazon, SonyLIV…
-            No motion wrapper — renders immediately below hero fold. */}
+        {/* 2 â”€â”€â”€ NETWORK STRIP â€” instant credibility: Netflix, Amazon, SonyLIVâ€¦
+            No motion wrapper â€” renders immediately below hero fold. */}
         <NetworkLogoStrip />
 
-        {/* 3 ─── STUDIO SETS — browse all production-ready spaces (Sanity-powered) */}
+        {/* 3 â”€â”€â”€ STUDIO SETS â€” browse all production-ready spaces (Sanity-powered) */}
         <MotionSection>
           <Sets studios={studios} />
         </MotionSection>
 
-        {/* 4 ─── PRODUCTIONS — powerful social proof before asking for commitment.
-            Sacred Games, Scam 1992, Gully Boy — shown early to build desire. */}
+        {/* 4 â”€â”€â”€ PRODUCTIONS â€” powerful social proof before asking for commitment.
+            Sacred Games, Scam 1992, Gully Boy â€” shown early to build desire. */}
         <MotionSection>
           <Productions productions={productions} />
         </MotionSection>
 
-        {/* 5 ─── BEHIND THE SCENES — show the real facility, build trust */}
+        {/* 5 â”€â”€â”€ BEHIND THE SCENES â€” show the real facility, build trust */}
         <MotionSection>
           <BehindScenes />
         </MotionSection>
 
-        {/* 6 ─── GALLERY — visual proof of production quality */}
+        {/* 6 â”€â”€â”€ GALLERY â€” visual proof of production quality */}
         <MotionSection>
           <Gallery />
         </MotionSection>
 
-        {/* 7 ─── TESTIMONIALS — peer validation before the process & booking ask */}
+        {/* 7 â”€â”€â”€ TESTIMONIALS â€” peer validation before the process & booking ask */}
         <MotionSection>
           <Testimonials testimonials={testimonials} />
         </MotionSection>
 
-        {/* 8 ─── PRODUCTION TYPES — supporting context (film, web, ad, music video) */}
+        {/* 8 â”€â”€â”€ PRODUCTION TYPES â€” supporting context (film, web, ad, music video) */}
         <MotionSection>
           <ProductionTypes />
         </MotionSection>
 
-        {/* 9 ─── HOW IT WORKS — transparent booking process */}
+        {/* 9 â”€â”€â”€ HOW IT WORKS â€” transparent booking process */}
         <MotionSection>
           <ShootTimeline />
         </MotionSection>
 
-        {/* 10 ─── AVAILABILITY CALENDAR — check dates, create urgency */}
+        {/* 10 â”€â”€â”€ AVAILABILITY CALENDAR â€” check dates, create urgency */}
         <MotionSection>
           <AvailabilityCalendar studios={studios} />
         </MotionSection>
 
-        {/* 11 ─── ABOUT — brand story for those who want deeper context */}
+        {/* 11 â”€â”€â”€ ABOUT â€” brand story for those who want deeper context */}
         <MotionSection>
           <About />
         </MotionSection>
 
-        {/* 12 ─── LOCATION — practical logistics */}
+        {/* 12 â”€â”€â”€ LOCATION â€” practical logistics */}
         <MotionSection>
           <LocationSection />
         </MotionSection>
 
-        {/* 13 ─── BOOKING — final conversion point */}
+        {/* 13 â”€â”€â”€ BOOKING â€” final conversion point */}
         <MotionSection>
           <Booking />
         </MotionSection>
@@ -138,3 +138,4 @@ export default async function HomePage() {
     </>
   );
 }
+
