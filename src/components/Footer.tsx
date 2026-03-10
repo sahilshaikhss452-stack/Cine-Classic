@@ -1,13 +1,22 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { loadSiteSettings, loadStudioNavItems } from '@/lib/sanity';
+import {
+  ArrowRightIcon,
+  ClockIcon,
+  IconBadge,
+  MailIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  PhoneIcon,
+} from '@/components/ui/icons';
 
 const QUICK_LINKS = [
   { label: 'About Us', href: '#about' },
   { label: 'Studio Facilities', href: '/facilities' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Client Reviews', href: '#testimonials' },
-  { label: 'Book a Studio', href: '#booking' },
+  { label: 'Check Availability', href: '#booking' },
   { label: 'Film Studio Mumbai', href: '/film-studio-rental-mumbai' },
   { label: 'Photoshoot Studio', href: '/photoshoot-studio-mumbai' },
   { label: 'Music Video Location', href: '/music-video-shoot-location' },
@@ -36,6 +45,13 @@ export default async function Footer() {
     `Hi, I'd like to inquire about studio availability at ${settings.businessName}.`,
   )}`;
 
+  const contactItems = [
+    { icon: MapPinIcon, text: addressText },
+    { icon: PhoneIcon, text: settings.phone },
+    { icon: MailIcon, text: settings.email },
+    { icon: ClockIcon, text: settings.hoursText ?? 'By appointment' },
+  ];
+
   return (
     <footer style={{ background: 'var(--dark2)', position: 'relative', padding: '90px 5% 0' }}>
       <div
@@ -58,7 +74,7 @@ export default async function Footer() {
               alt={`${settings.businessName} logo`}
               width={52}
               height={52}
-              style={{ borderRadius: '6px', objectFit: 'cover' }}
+              style={{ borderRadius: '8px', objectFit: 'cover' }}
             />
             <div>
               <div
@@ -89,18 +105,36 @@ export default async function Footer() {
 
           <p
             style={{
-              fontSize: '0.86rem',
+              fontSize: '0.88rem',
               color: 'var(--gray)',
               fontWeight: 300,
               lineHeight: 1.85,
-              maxWidth: '290px',
-              marginBottom: '2rem',
+              maxWidth: '320px',
+              marginBottom: '1.5rem',
             }}
           >
             {settings.tagline ?? `${settings.businessName} is built for working productions, with studio sets, practical logistics, and a responsive team.`}
           </p>
 
-          <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+          <div
+            style={{
+              padding: '1rem 1.1rem',
+              borderRadius: '16px',
+              background: 'rgba(212,175,55,0.05)',
+              border: '1px solid rgba(212,175,55,0.14)',
+              marginBottom: '1.5rem',
+              maxWidth: '340px',
+            }}
+          >
+            <div style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '0.45rem' }}>
+              Short-notice bookings
+            </div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--gray-lt)', lineHeight: 1.65 }}>
+              Need a studio at short notice? Call or WhatsApp us directly. Same-day options are often available depending on the set and schedule.
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
             {settings.socialLinks.map((link) => (
               <a
                 key={link.url}
@@ -111,7 +145,7 @@ export default async function Footer() {
                 style={{
                   width: '40px',
                   height: '40px',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   border: '1px solid rgba(255,255,255,0.1)',
                   display: 'flex',
                   alignItems: 'center',
@@ -121,6 +155,7 @@ export default async function Footer() {
                   fontSize: '0.72rem',
                   fontWeight: 700,
                   textDecoration: 'none',
+                  background: 'rgba(255,255,255,0.02)',
                 }}
               >
                 {getSocialBadge(link.platform)}
@@ -135,19 +170,20 @@ export default async function Footer() {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.5rem',
+              gap: '0.55rem',
               padding: '10px 18px',
               background: '#25D366',
               color: '#fff',
               borderRadius: '100px',
               fontSize: '0.78rem',
-              fontWeight: 600,
+              fontWeight: 700,
               textDecoration: 'none',
               letterSpacing: '0.04em',
               transition: 'all 0.35s ease',
             }}
           >
-            ?? Chat on WhatsApp
+            <MessageCircleIcon size={15} />
+            Chat on WhatsApp
           </a>
         </div>
 
@@ -166,8 +202,8 @@ export default async function Footer() {
           </h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {studios.map((studio) => (
-              <li key={studio._id} style={{ marginBottom: '0.6rem' }}>
-                <Link href={`/studios/${studio.slug}`} style={{ fontSize: '0.85rem', color: 'var(--gray)', lineHeight: 1.5, display: 'block', textDecoration: 'none' }}>
+              <li key={studio._id} style={{ marginBottom: '0.65rem' }}>
+                <Link href={`/studios/${studio.slug}`} style={{ fontSize: '0.86rem', color: 'var(--gray)', lineHeight: 1.5, display: 'block', textDecoration: 'none' }}>
                   {studio.title}
                 </Link>
               </li>
@@ -190,8 +226,8 @@ export default async function Footer() {
           </h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {QUICK_LINKS.map(({ label, href }) => (
-              <li key={label} style={{ marginBottom: '0.6rem' }}>
-                <a href={href} style={{ fontSize: '0.85rem', color: 'var(--gray)', transition: 'color 0.3s ease', textDecoration: 'none' }}>
+              <li key={label} style={{ marginBottom: '0.65rem' }}>
+                <a href={href} style={{ fontSize: '0.86rem', color: 'var(--gray)', transition: 'color 0.3s ease', textDecoration: 'none' }}>
                   {label}
                 </a>
               </li>
@@ -213,69 +249,44 @@ export default async function Footer() {
             Contact Us
           </h4>
 
-          {[
-            { icon: '??', text: addressText },
-            { icon: '??', text: settings.phone },
-            { icon: '??', text: settings.email },
-            { icon: '??', text: settings.hoursText ?? 'By appointment' },
-          ].map((item) => (
-            <div key={item.text} style={{ display: 'flex', gap: '0.85rem', alignItems: 'flex-start', marginBottom: '1.1rem' }}>
-              <span style={{ fontSize: '0.95rem', flexShrink: 0, marginTop: '1px' }}>{item.icon}</span>
-              <span style={{ fontSize: '0.85rem', color: 'var(--gray)', lineHeight: 1.6 }}>{item.text}</span>
-            </div>
-          ))}
-
-          <div
-            style={{
-              marginTop: '1.8rem',
-              padding: '1rem',
-              background: 'rgba(212,175,55,0.05)',
-              border: '1px solid rgba(212,175,55,0.12)',
-              borderRadius: '8px',
-            }}
-          >
-            <div
-              style={{
-                fontSize: '0.68rem',
-                fontWeight: 700,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'var(--gold)',
-                marginBottom: '0.4rem',
-              }}
-            >
-              Short-Notice Bookings
-            </div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--gray)', lineHeight: 1.6 }}>
-              Need a studio at short notice? Call or WhatsApp us directly — we often have same-day slots available.
-            </div>
-          </div>
+          {contactItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div key={item.text} style={{ display: 'flex', gap: '0.85rem', alignItems: 'flex-start', marginBottom: '1.1rem' }}>
+                <IconBadge size={36} rounded={10}>
+                  <Icon size={16} />
+                </IconBadge>
+                <span style={{ fontSize: '0.85rem', color: 'var(--gray)', lineHeight: 1.6 }}>{item.text}</span>
+              </div>
+            );
+          })}
 
           <a
             href="#booking"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              marginTop: '1.5rem',
+              gap: '0.55rem',
+              marginTop: '1.2rem',
               padding: '12px 22px',
               background: 'var(--gold)',
               color: 'var(--dark)',
               borderRadius: '100px',
-              fontSize: '0.9rem',
-              fontWeight: 500,
-              letterSpacing: '0.01em',
+              fontSize: '0.88rem',
+              fontWeight: 700,
+              letterSpacing: '0.02em',
               textDecoration: 'none',
               transition: 'all 0.35s ease',
             }}
           >
-            Book a Studio ?
+            Check Availability
+            <ArrowRightIcon size={15} />
           </a>
         </div>
       </div>
 
       <div className="footer-bottom-mob">
-        <span>© {year} {settings.businessName}. All rights reserved. {settings.city}, {settings.country}.</span>
+        <span>&copy; {year} {settings.businessName}. All rights reserved. {settings.city}, {settings.country}.</span>
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <Link href="/film-studio-rental-mumbai" style={{ color: 'var(--gray)', textDecoration: 'none' }}>
             Film Studio Mumbai

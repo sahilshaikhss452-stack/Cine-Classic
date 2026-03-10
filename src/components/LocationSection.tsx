@@ -1,8 +1,20 @@
 import { loadSiteSettings } from '@/lib/sanity';
+import {
+  CarIcon,
+  ClockIcon,
+  IconBadge,
+  MailIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  NavigationIcon,
+  PhoneIcon,
+  PlaneIcon,
+  TrainIcon,
+} from '@/components/ui/icons';
 
 const ACCESS_POINTS = [
   {
-    icon: '??',
+    icon: CarIcon,
     title: 'By Road',
     lines: [
       'Western Express Highway access nearby',
@@ -11,12 +23,12 @@ const ACCESS_POINTS = [
     ],
   },
   {
-    icon: '??',
+    icon: TrainIcon,
     title: 'By Metro',
     lines: ['Nearest metro access in Goregaon East', 'Auto-rickshaw available at exit'],
   },
   {
-    icon: '??',
+    icon: PlaneIcon,
     title: 'From Airport',
     lines: ['Easy airport transfer route', 'Cab and crew transport arranged on request'],
   },
@@ -25,16 +37,22 @@ const ACCESS_POINTS = [
 export default async function LocationSection() {
   const settings = await loadSiteSettings();
   const infoBlocks = [
-    { icon: '??', label: 'Address', value: [settings.addressLine1, settings.addressLine2, settings.city, settings.region, settings.postalCode].filter(Boolean).join(', ') },
-    { icon: '??', label: 'Phone', value: settings.phone },
-    { icon: '??', label: 'Email', value: settings.email },
-    { icon: '??', label: 'Open', value: settings.hoursText ?? 'By appointment' },
+    {
+      icon: MapPinIcon,
+      label: 'Address',
+      value: [settings.addressLine1, settings.addressLine2, settings.city, settings.region, settings.postalCode]
+        .filter(Boolean)
+        .join(', '),
+    },
+    { icon: PhoneIcon, label: 'Phone', value: settings.phone },
+    { icon: MailIcon, label: 'Email', value: settings.email },
+    { icon: ClockIcon, label: 'Open', value: settings.hoursText ?? 'By appointment' },
   ];
 
   return (
     <section className="mob-section" style={{ background: 'var(--dark)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '5rem' }}>
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
           <span className="section-tag">Find Us</span>
           <h2
             style={{
@@ -47,8 +65,8 @@ export default async function LocationSection() {
           >
             Strategically Located in <span style={{ color: 'var(--gold)' }}>Mumbai&apos;s Film Belt</span>
           </h2>
-          <p style={{ color: 'var(--gray)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.8 }}>
-            Minutes from Film City and the wider production corridor. Easy access for large crews, equipment, and production vehicles.
+          <p style={{ color: 'var(--gray)', maxWidth: '580px', margin: '0 auto', lineHeight: 1.8 }}>
+            Minutes from Film City and the wider production corridor, with access that works for crews, equipment, and last-minute production logistics.
           </p>
         </div>
 
@@ -85,7 +103,7 @@ export default async function LocationSection() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-              {['Near Film City', settings.city, 'Easy Truck Access'].filter(Boolean).map((tag) => (
+              {['Near Film City', settings.city, 'Easy truck access'].filter(Boolean).map((tag) => (
                 <span
                   key={tag}
                   style={{
@@ -106,52 +124,42 @@ export default async function LocationSection() {
           </div>
 
           <div className="reveal reveal-delay-2">
-            <div style={{ marginBottom: '3rem' }}>
-              {infoBlocks.map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    display: 'flex',
-                    gap: '1rem',
-                    alignItems: 'flex-start',
-                    marginBottom: '1.4rem',
-                    paddingBottom: '1.4rem',
-                    borderBottom: '1px solid rgba(255,255,255,0.04)',
-                  }}
-                >
+            <div style={{ marginBottom: '2.5rem' }}>
+              {infoBlocks.map((item) => {
+                const Icon = item.icon;
+                return (
                   <div
+                    key={item.label}
                     style={{
-                      width: '40px',
-                      height: '40px',
-                      flexShrink: 0,
-                      border: '1px solid var(--border)',
-                      borderRadius: '8px',
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1rem',
-                      background: 'rgba(212,175,55,0.04)',
+                      gap: '1rem',
+                      alignItems: 'flex-start',
+                      marginBottom: '1.4rem',
+                      paddingBottom: '1.4rem',
+                      borderBottom: '1px solid rgba(255,255,255,0.04)',
                     }}
                   >
-                    {item.icon}
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontSize: '0.65rem',
-                        letterSpacing: '0.15em',
-                        textTransform: 'uppercase',
-                        color: 'var(--gold)',
-                        marginBottom: '3px',
-                        fontWeight: 600,
-                      }}
-                    >
-                      {item.label}
+                    <IconBadge>
+                      <Icon size={18} />
+                    </IconBadge>
+                    <div>
+                      <div
+                        style={{
+                          fontSize: '0.65rem',
+                          letterSpacing: '0.15em',
+                          textTransform: 'uppercase',
+                          color: 'var(--gold)',
+                          marginBottom: '3px',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {item.label}
+                      </div>
+                      <div style={{ fontSize: '0.88rem', color: 'var(--white2)', lineHeight: 1.6 }}>{item.value}</div>
                     </div>
-                    <div style={{ fontSize: '0.88rem', color: 'var(--white2)', lineHeight: 1.6 }}>{item.value}</div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div
@@ -160,32 +168,37 @@ export default async function LocationSection() {
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 color: 'var(--gold)',
-                marginBottom: '1.2rem',
+                marginBottom: '1rem',
                 fontWeight: 600,
               }}
             >
-              How to Reach
+              Access Overview
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
-              {ACCESS_POINTS.map((point) => (
-                <div
-                  key={point.title}
-                  style={{
-                    background: 'var(--dark3)',
-                    border: '1px solid rgba(255,255,255,0.06)',
-                    borderRadius: '10px',
-                    padding: '1.2rem',
-                  }}
-                >
-                  <div style={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>{point.icon}</div>
-                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--white)', marginBottom: '0.6rem' }}>{point.title}</div>
-                  {point.lines.map((line) => (
-                    <div key={line} style={{ fontSize: '0.78rem', color: 'var(--gray)', lineHeight: 1.6, marginBottom: '3px' }}>
-                      {line}
-                    </div>
-                  ))}
-                </div>
-              ))}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
+              {ACCESS_POINTS.map((point) => {
+                const Icon = point.icon;
+                return (
+                  <div
+                    key={point.title}
+                    style={{
+                      background: 'var(--dark3)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      borderRadius: '12px',
+                      padding: '1.2rem',
+                    }}
+                  >
+                    <IconBadge size={40} rounded={10} style={{ marginBottom: '0.7rem' }}>
+                      <Icon size={18} />
+                    </IconBadge>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--white)', marginBottom: '0.6rem' }}>{point.title}</div>
+                    {point.lines.map((line) => (
+                      <div key={line} style={{ fontSize: '0.78rem', color: 'var(--gray)', lineHeight: 1.6, marginBottom: '3px' }}>
+                        {line}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
 
             <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -197,7 +210,8 @@ export default async function LocationSection() {
                   className="btn-outline"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem' }}
                 >
-                  ?? Get Directions
+                  <NavigationIcon size={15} />
+                  Get Directions
                 </a>
               )}
               <a
@@ -221,7 +235,8 @@ export default async function LocationSection() {
                   transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
                 }}
               >
-                ?? WhatsApp Us
+                <MessageCircleIcon size={15} />
+                WhatsApp for Directions
               </a>
             </div>
           </div>

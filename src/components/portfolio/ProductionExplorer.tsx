@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { IconBadge, SparkIcon } from '@/components/ui/icons';
 import type { Production, ProductionType } from '@/lib/ui/production';
 import { TYPE_ICONS } from '@/lib/ui/production';
 
@@ -32,12 +33,11 @@ function ProductionCard({ prod, index, onClick }: { prod: Production; index: num
           {prod.posterImage ? (
             <Image src={prod.posterImage} alt={`${prod.title} poster`} fill sizes="(max-width:600px) 100vw, (max-width:1024px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
           ) : (
-            <div style={{ width: '100%', height: '100%', background: prod.gradient }} />
+            <div style={{ width: '100%', height: '100%', background: prod.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.22)', fontSize: '2rem', fontWeight: 700, letterSpacing: '0.14em' }}>{TYPE_ICONS[prod.type]}</div>
           )}
         </div>
         <div className="prod-vignette" />
         <div className="prod-overlay" />
-        {!prod.posterImage && <div className="prod-icon">{TYPE_ICONS[prod.type]}</div>}
         {prod.network && <NetworkBadge name={prod.network} />}
       </div>
 
@@ -73,8 +73,8 @@ function ProductionModal({ prod, onClose }: { prod: Production; onClose: () => v
           {prod.posterImage ? (
             <Image src={prod.posterImage} alt={`${prod.title} poster`} fill style={{ objectFit: 'cover' }} />
           ) : (
-            <div style={{ position: 'absolute', inset: 0, background: prod.gradient, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
-              <span style={{ fontSize: '5rem', opacity: 0.2 }}>{TYPE_ICONS[prod.type]}</span>
+            <div style={{ position: 'absolute', inset: 0, background: prod.gradient, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', color: 'rgba(255,255,255,0.22)' }}>
+              <span style={{ fontSize: '4rem', fontWeight: 700, letterSpacing: '0.16em' }}>{TYPE_ICONS[prod.type]}</span>
               <span style={{ fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>{prod.type}</span>
             </div>
           )}
@@ -88,17 +88,20 @@ function ProductionModal({ prod, onClose }: { prod: Production; onClose: () => v
 
           <h2 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 700, color: 'var(--white)', lineHeight: 1.2 }}>{prod.title}</h2>
 
-          <p style={{ fontSize: '0.85rem', color: 'var(--gray)', fontWeight: 500 }}>{prod.network ? `${prod.network} · ` : ''}{prod.year}</p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--gray)', fontWeight: 500 }}>{prod.network ? `${prod.network} | ` : ''}{prod.year}</p>
 
           {prod.description && <p style={{ fontSize: '0.95rem', color: 'var(--gray-lt)', lineHeight: 1.8, fontWeight: 300 }}>{prod.description}</p>}
 
-          <div style={{ marginTop: '0.5rem', padding: '0.9rem 1rem', background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.18)', borderRadius: '8px', fontSize: '0.8rem', color: 'var(--gold)', letterSpacing: '0.04em', fontWeight: 500 }}>
-            ?? Shot at Cine Classic Studios
+          <div style={{ marginTop: '0.5rem', padding: '0.9rem 1rem', background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.18)', borderRadius: '8px', fontSize: '0.8rem', color: 'var(--gold)', letterSpacing: '0.04em', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '0.7rem', width: 'fit-content' }}>
+            <IconBadge size={28} rounded={8} style={{ background: 'rgba(212,175,55,0.1)' }}>
+              <SparkIcon size={14} />
+            </IconBadge>
+            Shot at Cine Classic Studios
           </div>
         </div>
 
         <button onClick={onClose} style={{ position: 'absolute', top: '1rem', right: '1rem', width: '34px', height: '34px', borderRadius: '50%', background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--white)', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, transition: 'background 0.2s' }}>
-          ×
+          x
         </button>
       </div>
     </div>

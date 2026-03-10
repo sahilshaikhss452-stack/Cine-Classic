@@ -3,11 +3,14 @@
 import { useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
+import { ArrowRightIcon, SparkIcon } from '@/components/ui/icons';
 import type { HomePageContent } from '@/lib/sanity';
 
 interface Props {
   content: HomePageContent;
 }
+
+const TRUST_POINTS = ['Fast inquiry replies', 'Production-ready sets', 'Crew-friendly logistics'];
 
 export default function Hero({ content }: Props) {
   const [videoFailed, setVideoFailed] = useState(false);
@@ -22,7 +25,7 @@ export default function Hero({ content }: Props) {
   });
 
   const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const trustLine = settings.featuredClients.slice(0, 4);
+  const trustLine = settings.featuredClients.slice(0, 5);
 
   return (
     <section
@@ -89,7 +92,7 @@ export default function Hero({ content }: Props) {
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to top, rgba(6,6,6,0.92) 0%, rgba(6,6,6,0.55) 45%, rgba(6,6,6,0.35) 100%)',
+            'linear-gradient(to top, rgba(6,6,6,0.94) 0%, rgba(6,6,6,0.56) 45%, rgba(6,6,6,0.34) 100%)',
         }}
       />
 
@@ -114,7 +117,7 @@ export default function Hero({ content }: Props) {
         style={{
           position: 'relative',
           textAlign: 'center',
-          maxWidth: '900px',
+          maxWidth: '960px',
           padding: '140px 5% 100px',
           width: '100%',
           margin: '0 auto',
@@ -134,7 +137,7 @@ export default function Hero({ content }: Props) {
             border: '1px solid rgba(212,175,55,0.22)',
             padding: '8px 22px',
             borderRadius: '100px',
-            marginBottom: '2.2rem',
+            marginBottom: '2rem',
           }}
         >
           <span
@@ -153,11 +156,11 @@ export default function Hero({ content }: Props) {
         <h1
           style={{
             fontSize: 'clamp(2.8rem, 6.5vw, 5.2rem)',
-            lineHeight: 1.05,
+            lineHeight: 1.03,
             fontWeight: 800,
-            letterSpacing: '-0.025em',
+            letterSpacing: '-0.03em',
             color: 'var(--white)',
-            marginBottom: '1.4rem',
+            marginBottom: '1.25rem',
           }}
         >
           {content.heroHeadline}
@@ -178,12 +181,12 @@ export default function Hero({ content }: Props) {
 
         <p
           style={{
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-            color: 'rgba(255,255,255,0.72)',
-            maxWidth: '560px',
-            margin: '0 auto 2.8rem',
+            fontSize: 'clamp(1rem, 2vw, 1.18rem)',
+            color: 'rgba(255,255,255,0.74)',
+            maxWidth: '620px',
+            margin: '0 auto 2.25rem',
             fontWeight: 300,
-            lineHeight: 1.65,
+            lineHeight: 1.72,
             letterSpacing: '0.01em',
           }}
         >
@@ -199,33 +202,97 @@ export default function Hero({ content }: Props) {
             flexWrap: 'wrap',
           }}
         >
-          <a href={content.heroPrimaryCta.href} className="btn-primary" style={{ fontSize: '1rem', padding: '14px 32px' }}>
-            {content.heroPrimaryCta.label} {'->'}
+          <a
+            href={content.heroPrimaryCta.href}
+            className="btn-primary"
+            style={{ fontSize: '1rem', padding: '14px 32px' }}
+          >
+            {content.heroPrimaryCta.label}
+            <ArrowRightIcon size={16} />
           </a>
-          <a href={content.heroSecondaryCta.href} className="btn-outline" style={{ fontSize: '1rem', padding: '14px 32px' }}>
+          <a
+            href={content.heroSecondaryCta.href}
+            className="btn-outline"
+            style={{ fontSize: '1rem', padding: '14px 32px' }}
+          >
             {content.heroSecondaryCta.label}
           </a>
         </div>
 
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            marginTop: '1.4rem',
+          }}
+        >
+          {TRUST_POINTS.map((point) => (
+            <span
+              key={point}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                padding: '8px 14px',
+                borderRadius: '999px',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                color: 'rgba(255,255,255,0.72)',
+                fontSize: '0.74rem',
+                letterSpacing: '0.05em',
+              }}
+            >
+              <SparkIcon size={13} />
+              {point}
+            </span>
+          ))}
+        </div>
+
         {trustLine.length > 0 && (
-          <p
+          <div
             style={{
-              marginTop: '1.8rem',
-              fontSize: '0.75rem',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.32)',
-              fontWeight: 400,
+              marginTop: '1.6rem',
+              display: 'inline-flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '0.6rem',
+              padding: '0.85rem 1rem',
+              borderRadius: '18px',
+              background: 'rgba(8,8,8,0.38)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.24)',
             }}
           >
-            Trusted by{' '}
-            {trustLine.map((client, index) => (
-              <span key={client}>
-                <span style={{ color: 'rgba(212,175,55,0.7)' }}>{client}</span>
-                {index < trustLine.length - 1 ? ' · ' : ''}
+            <span
+              style={{
+                fontSize: '0.68rem',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.38)',
+                paddingTop: '0.15rem',
+              }}
+            >
+              Featured with
+            </span>
+            {trustLine.map((client) => (
+              <span
+                key={client}
+                style={{
+                  color: 'rgba(212,175,55,0.86)',
+                  fontSize: '0.78rem',
+                  letterSpacing: '0.05em',
+                  padding: '0.25rem 0.6rem',
+                  borderRadius: '999px',
+                  background: 'rgba(212,175,55,0.08)',
+                  border: '1px solid rgba(212,175,55,0.14)',
+                }}
+              >
+                {client}
               </span>
             ))}
-          </p>
+          </div>
         )}
 
         <div
@@ -233,30 +300,28 @@ export default function Hero({ content }: Props) {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            gap: '3rem',
-            marginTop: '4rem',
+            gap: '1rem',
+            marginTop: '3.25rem',
             flexWrap: 'wrap',
           }}
         >
-          {content.heroStats.map((stat, index) => (
-            <div key={stat.label} style={{ textAlign: 'center', position: 'relative' }}>
-              {index > 0 && (
-                <span
-                  style={{
-                    position: 'absolute',
-                    left: '-1.5rem',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '1px',
-                    height: '32px',
-                    background: 'rgba(212,175,55,0.15)',
-                  }}
-                />
-              )}
+          {content.heroStats.map((stat) => (
+            <div
+              key={stat.label}
+              style={{
+                minWidth: '165px',
+                padding: '1.2rem 1.35rem',
+                textAlign: 'center',
+                borderRadius: '18px',
+                background: 'rgba(10,10,10,0.5)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                boxShadow: '0 22px 48px rgba(0,0,0,0.18)',
+              }}
+            >
               <div
                 style={{
                   fontFamily: 'var(--font-inter), sans-serif',
-                  fontSize: '2.4rem',
+                  fontSize: '2.2rem',
                   fontWeight: 800,
                   color: 'var(--gold)',
                   lineHeight: 1,
@@ -271,7 +336,7 @@ export default function Hero({ content }: Props) {
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   color: 'var(--gray)',
-                  marginTop: '8px',
+                  marginTop: '0.6rem',
                 }}
               >
                 {stat.label}

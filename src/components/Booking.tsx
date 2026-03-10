@@ -3,6 +3,17 @@
 import { useMemo, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ClockIcon,
+  IconBadge,
+  MailIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  PhoneIcon,
+  SparkIcon,
+} from '@/components/ui/icons';
 import type { StudioNavItem } from '@/lib/sanity';
 
 const SHOOT_TYPES = [
@@ -29,6 +40,8 @@ const CREW_SIZES = [
   '100+ (Crowd / Event)',
 ];
 
+const TRUST_POINTS = ['No advance payment for inquiry', 'Replies within a few hours', 'WhatsApp preferred for quick coordination'];
+
 interface Props {
   studios: StudioNavItem[];
 }
@@ -42,16 +55,16 @@ export default function Booking({ studios }: Props) {
   const contactItems = useMemo(
     () => [
       {
-        icon: '??',
+        icon: MapPinIcon,
         label: 'Address',
         value: [settings.addressLine1, settings.addressLine2, settings.city, settings.region, settings.postalCode]
           .filter(Boolean)
           .join(', '),
       },
-      { icon: '??', label: 'Phone', value: settings.phone },
-      { icon: '??', label: 'Email', value: settings.email },
-      { icon: '??', label: 'WhatsApp', value: settings.phone + ' (Preferred for quick replies)' },
-      { icon: '??', label: 'Hours', value: settings.hoursText ?? 'By appointment' },
+      { icon: PhoneIcon, label: 'Phone', value: settings.phone },
+      { icon: MailIcon, label: 'Email', value: settings.email },
+      { icon: MessageCircleIcon, label: 'WhatsApp', value: `${settings.phone} (Preferred for quick replies)` },
+      { icon: ClockIcon, label: 'Hours', value: settings.hoursText ?? 'By appointment' },
     ],
     [settings],
   );
@@ -81,14 +94,37 @@ export default function Booking({ studios }: Props) {
 
   return (
     <section id="booking" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
-      <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
+      <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
         <div className="section-tag">Start Your Production</div>
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '1rem' }}>
-          Book Your <span style={{ color: 'var(--gold)' }}>Studio Session</span>
+          Check <span style={{ color: 'var(--gold)' }}>Availability and Rates</span>
         </h2>
-        <p style={{ color: 'var(--gray)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.8 }}>
-          Fill out the form and our team will contact you within a few hours to confirm availability and discuss your requirements.
+        <p style={{ color: 'var(--gray)', maxWidth: '640px', margin: '0 auto', lineHeight: 1.8 }}>
+          Share your shoot details once and our team will guide you on the right set, date options, and the fastest next step to lock your production schedule.
         </p>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2rem' }}>
+        {TRUST_POINTS.map((point) => (
+          <span
+            key={point}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.8rem 1rem',
+              borderRadius: '999px',
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(255,255,255,0.03)',
+              color: 'rgba(255,255,255,0.76)',
+              fontSize: '0.76rem',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <SparkIcon size={14} />
+            {point}
+          </span>
+        ))}
       </div>
 
       <div className="booking-layout">
@@ -96,62 +132,77 @@ export default function Booking({ studios }: Props) {
           <h3
             style={{
               fontFamily: 'var(--font-playfair), serif',
-              fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+              fontSize: 'clamp(1.8rem, 2.6vw, 2.35rem)',
               fontWeight: 700,
               marginBottom: '0.8rem',
             }}
           >
-            Ready to <span style={{ color: 'var(--gold)' }}>Create?</span>
+            Built for <span style={{ color: 'var(--gold)' }}>working productions</span>
           </h3>
-          <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2.5rem', maxWidth: '340px' }}>
-            No payment required for an inquiry. Our team will reply within a few hours with availability and full details.
+          <p style={{ color: 'var(--gray)', lineHeight: 1.85, marginBottom: '2rem', maxWidth: '380px' }}>
+            From ad shoots to series schedules, we help teams move from inquiry to confirmed dates with less friction and faster clarity.
           </p>
 
-          {contactItems.map((item) => (
-            <div
-              key={item.label}
-              style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '1rem',
-                marginBottom: '1.4rem',
-                paddingBottom: '1.4rem',
-                borderBottom: '1px solid rgba(255,255,255,0.04)',
-              }}
-            >
-              <div
-                style={{
-                  width: '42px',
-                  height: '42px',
-                  flexShrink: 0,
-                  border: '1px solid var(--border)',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  background: 'rgba(212,175,55,0.04)',
-                }}
-              >
-                {item.icon}
-              </div>
+          <div
+            style={{
+              padding: '1rem 1.1rem',
+              borderRadius: '16px',
+              background: 'rgba(212,175,55,0.06)',
+              border: '1px solid rgba(212,175,55,0.16)',
+              marginBottom: '1.6rem',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.6rem' }}>
+              <IconBadge size={36} rounded={12}>
+                <ClockIcon size={16} />
+              </IconBadge>
               <div>
-                <div
-                  style={{
-                    fontSize: '0.63rem',
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase',
-                    color: 'var(--gold)',
-                    marginBottom: '2px',
-                    fontWeight: 600,
-                  }}
-                >
-                  {item.label}
+                <div style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>
+                  Typical Response Window
                 </div>
-                <div style={{ fontSize: '0.88rem', color: 'var(--white)', lineHeight: 1.5 }}>{item.value}</div>
+                <div style={{ fontSize: '0.92rem', color: 'var(--white)' }}>A few hours during working hours</div>
               </div>
             </div>
-          ))}
+            <div style={{ fontSize: '0.84rem', color: 'var(--gray-lt)', lineHeight: 1.7 }}>
+              Need a faster answer? WhatsApp is the quickest route for availability checks, held dates, and recce coordination.
+            </div>
+          </div>
+
+          {contactItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.label}
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '1rem',
+                  marginBottom: '1.25rem',
+                  paddingBottom: '1.25rem',
+                  borderBottom: '1px solid rgba(255,255,255,0.04)',
+                }}
+              >
+                <IconBadge>
+                  <Icon size={18} />
+                </IconBadge>
+                <div>
+                  <div
+                    style={{
+                      fontSize: '0.63rem',
+                      letterSpacing: '0.15em',
+                      textTransform: 'uppercase',
+                      color: 'var(--gold)',
+                      marginBottom: '2px',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {item.label}
+                  </div>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--white)', lineHeight: 1.55 }}>{item.value}</div>
+                </div>
+              </div>
+            );
+          })}
 
           <a
             href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
@@ -162,21 +213,22 @@ export default function Booking({ studios }: Props) {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.6rem',
+              gap: '0.65rem',
               padding: '13px 24px',
               background: '#25D366',
               color: '#fff',
               borderRadius: '100px',
               fontSize: '0.82rem',
-              fontWeight: 600,
+              fontWeight: 700,
               textDecoration: 'none',
               letterSpacing: '0.04em',
-              marginTop: '0.5rem',
+              marginTop: '0.6rem',
               transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
               boxShadow: '0 4px 16px rgba(37,211,102,0.25)',
             }}
           >
-            ?? WhatsApp Quick Inquiry
+            <MessageCircleIcon size={16} />
+            WhatsApp Quick Inquiry
           </a>
         </div>
 
@@ -185,10 +237,11 @@ export default function Booking({ studios }: Props) {
           style={{
             background: 'var(--dark2)',
             border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: '16px',
+            borderRadius: '18px',
             padding: '2.5rem',
             position: 'relative',
             overflow: 'hidden',
+            boxShadow: '0 28px 64px rgba(0,0,0,0.22)',
           }}
         >
           <div
@@ -291,8 +344,8 @@ export default function Booking({ studios }: Props) {
               </select>
             </FormGroup>
 
-            <p style={{ fontSize: '0.78rem', color: 'var(--gray)', marginBottom: '1.2rem' }}>
-              No payment required to inquire. We respond within a few hours.
+            <p style={{ fontSize: '0.78rem', color: 'var(--gray)', marginBottom: '1.2rem', lineHeight: 1.65 }}>
+              No advance payment required to inquire. We typically respond within a few hours with next-step guidance.
             </p>
 
             <button
@@ -314,9 +367,14 @@ export default function Booking({ studios }: Props) {
                 cursor: status === 'loading' ? 'not-allowed' : 'pointer',
                 transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                 boxShadow: '0 4px 16px rgba(212,175,55,0.25)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.55rem',
               }}
             >
-              {status === 'loading' ? 'Sending Inquiry...' : 'Send Studio Inquiry ->'}
+              {status === 'loading' ? 'Sending Inquiry...' : 'Send Availability Request'}
+              {status !== 'loading' && <ArrowRightIcon size={15} />}
             </button>
 
             {status === 'success' && (
@@ -326,16 +384,20 @@ export default function Booking({ studios }: Props) {
                   padding: '1.2rem',
                   background: 'rgba(212,175,55,0.08)',
                   border: '1px solid rgba(212,175,55,0.3)',
-                  borderRadius: '10px',
+                  borderRadius: '12px',
                   textAlign: 'center',
                 }}
               >
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>??</div>
-                <div style={{ fontSize: '0.92rem', color: 'var(--gold)', fontWeight: 600, marginBottom: '0.4rem' }}>
-                  Inquiry Received!
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.6rem' }}>
+                  <IconBadge size={36} rounded={999}>
+                    <CheckIcon size={16} />
+                  </IconBadge>
+                </div>
+                <div style={{ fontSize: '0.92rem', color: 'var(--gold)', fontWeight: 700, marginBottom: '0.4rem' }}>
+                  Inquiry Received
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--gray)', lineHeight: 1.6 }}>
-                  Thank you! Our team will reach out within a few hours to confirm availability and share a detailed quote.
+                  Thank you. Our team will reach out within a few hours to confirm availability and share the next steps.
                 </div>
               </div>
             )}
@@ -353,7 +415,7 @@ export default function Booking({ studios }: Props) {
                   textAlign: 'center',
                 }}
               >
-                Something went wrong. Please WhatsApp us directly at {settings.phone} or email {settings.email}
+                Something went wrong. Please WhatsApp us directly at {settings.phone} or email {settings.email}.
               </div>
             )}
           </form>
@@ -384,4 +446,3 @@ function FormGroup({ label, htmlFor, children }: { label: string; htmlFor: strin
     </div>
   );
 }
-

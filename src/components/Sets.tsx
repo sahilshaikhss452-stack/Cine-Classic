@@ -1,46 +1,45 @@
 import Link from 'next/link';
 import StudioCard from '@/components/studios/StudioCard';
 import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
+import { ArrowRightIcon } from '@/components/ui/icons';
 import type { SanityStudioCard } from '@/lib/sanity';
 
 interface Props {
-  /** Studios to display - fetched from Sanity by the parent page. */
   studios: SanityStudioCard[];
   sanityError?: string | null;
 }
 
 export default function Sets({ studios, sanityError }: Props) {
   const hasStudios = studios.length > 0;
-  const statusMessage = sanityError ?? 'Sanity returned no studio documents for this section.';
 
   return (
     <section id="sets" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
-      <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-        <div className="section-tag">Our Studio Spaces</div>
+      <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <div className="section-tag">Studio Spaces</div>
         <h2
           style={{
-            fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
-            marginBottom: '1.1rem',
-            letterSpacing: '-0.015em',
-            lineHeight: 1.15,
+            fontSize: 'clamp(1.85rem, 3.5vw, 2.7rem)',
+            marginBottom: '1rem',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.14,
           }}
         >
-          {hasStudios ? `${studios.length} Sets.` : 'Studio data unavailable.'}{' '}
-          <span style={{ color: 'var(--gold)' }}>Endless Possibilities.</span>
+          {hasStudios ? `${studios.length} production-ready studio sets` : 'Studios are being updated.'}{' '}
+          <span style={{ color: 'var(--gold)' }}>Built for working shoots.</span>
         </h2>
         <p
           style={{
-            fontSize: '1.05rem',
+            fontSize: '1.02rem',
             color: 'var(--gray)',
-            maxWidth: '580px',
+            maxWidth: '620px',
             margin: '0 auto',
             fontWeight: 300,
-            lineHeight: 1.7,
+            lineHeight: 1.78,
           }}
         >
           {hasStudios
-            ? 'From blank-canvas floors to fully dressed sets - every story finds its perfect stage here. Click any studio to explore specs, facilities, and booking options.'
-            : 'This section is currently showing the raw Sanity state so we can verify whether studio documents are being returned.'}
+            ? 'Browse each set for layouts, galleries, technical specs, facilities, and the fastest route to checking availability.'
+            : 'Our studio catalogue is temporarily unavailable while content refreshes. Please use the inquiry section below and our team will guide you to the right set.'}
         </p>
       </div>
 
@@ -49,18 +48,19 @@ export default function Sets({ studios, sanityError }: Props) {
           style={{
             maxWidth: '760px',
             margin: '0 auto 2rem',
-            padding: '1rem 1.25rem',
-            border: '1px solid rgba(212,175,55,0.3)',
-            borderRadius: '14px',
+            padding: '1.2rem 1.35rem',
+            border: '1px solid rgba(212,175,55,0.24)',
+            borderRadius: '16px',
             background: 'rgba(212,175,55,0.08)',
             color: 'var(--white)',
             lineHeight: 1.7,
+            textAlign: 'center',
           }}
         >
-          <strong style={{ display: 'block', marginBottom: '0.35rem', color: 'var(--gold)' }}>
-            Sanity studio section returned no documents
+          <strong style={{ display: 'block', marginBottom: '0.4rem', color: 'var(--gold)' }}>
+            Studio details will be back shortly
           </strong>
-          <span>{statusMessage}</span>
+          <span>{sanityError ?? 'If you need availability right away, send a booking inquiry and the team will respond directly.'}</span>
         </div>
       )}
 
@@ -75,7 +75,8 @@ export default function Sets({ studios, sanityError }: Props) {
 
           <div style={{ textAlign: 'center' }}>
             <Link href="/studios" className="btn-outline">
-              View All Studios {'->'}
+              Browse All Studios
+              <ArrowRightIcon size={15} />
             </Link>
           </div>
         </>

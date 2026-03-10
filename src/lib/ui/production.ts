@@ -26,9 +26,9 @@ export const TYPE_COLORS: Record<ProductionType, string> = {
 };
 
 export const TYPE_ICONS: Record<ProductionType, string> = {
-  Film: '??',
-  'TV Series': '??',
-  'Web Series': '??',
-  Advertisement: '???',
-  'Music Video': '??',
+  Film: 'FL',
+  'TV Series': 'TV',
+  'Web Series': 'WS',
+  Advertisement: 'AD',
+  'Music Video': 'MV',
 };

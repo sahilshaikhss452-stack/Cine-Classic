@@ -3,6 +3,17 @@
 import { useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ClockIcon,
+  IconBadge,
+  MailIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  PhoneIcon,
+  SparkIcon,
+} from '@/components/ui/icons';
 import type { SanityStudio } from '@/lib/sanity';
 import { fmtMinBooking, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
@@ -72,20 +83,13 @@ export default function StudioBooking({ studio }: Props) {
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
             Reserve <span style={{ color: 'var(--gold)' }}>{studio.title}</span>
           </h2>
-          <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, marginTop: '0.75rem', maxWidth: '500px', margin: '0.75rem auto 0' }}>
-            Send an inquiry or connect instantly on WhatsApp. We confirm within <strong style={{ color: 'var(--white)' }}>2 hours</strong>.
+          <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, maxWidth: '560px', margin: '0.75rem auto 0', lineHeight: 1.8 }}>
+            Ask for rates, dates, and recce support in one place. We keep the process quick so production teams can move to the next decision with confidence.
           </p>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2.5rem',
-            alignItems: 'start',
-          }}
-        >
-          <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
+          <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '1.35rem' }}>
             <a
               href={whatsappUrl}
               target="_blank"
@@ -97,114 +101,80 @@ export default function StudioBooking({ studio }: Props) {
                 background: 'linear-gradient(135deg, #1a8c3c, #25d366)',
                 color: '#fff',
                 padding: '1.25rem 1.5rem',
-                borderRadius: '12px',
+                borderRadius: '16px',
                 fontFamily: 'var(--font-inter), sans-serif',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '0.95rem',
                 transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                 boxShadow: '0 4px 20px rgba(37,211,102,0.2)',
                 textDecoration: 'none',
               }}
             >
-              <span style={{ fontSize: '1.75rem', lineHeight: 1 }}>??</span>
+              <IconBadge size={48} rounded={14} style={{ color: '#fff', background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.18)' }}>
+                <MessageCircleIcon size={20} />
+              </IconBadge>
               <div>
-                <div style={{ fontSize: '0.7rem', fontWeight: 500, opacity: 0.8, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>Fastest Response</div>
+                <div style={{ fontSize: '0.7rem', fontWeight: 600, opacity: 0.82, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>
+                  Fastest Response
+                </div>
                 Book via WhatsApp
               </div>
-              <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>?</span>
+              <ArrowRightIcon size={18} style={{ marginLeft: 'auto' }} />
             </a>
 
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '10px 14px',
-                background: 'rgba(212,175,55,0.06)',
-                border: '1px solid rgba(212,175,55,0.15)',
-                borderRadius: '10px',
-              }}
-            >
-              <span style={{ fontSize: '1.1rem' }}>?</span>
+            <div style={{ display: 'flex', gap: '0.7rem', flexWrap: 'wrap' }}>
+              {['Quick rate checks', 'Recce coordination', 'Crew-ready support'].map((point) => (
+                <span key={point} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 0.9rem', borderRadius: '999px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)', fontSize: '0.74rem' }}>
+                  <SparkIcon size={13} />
+                  {point}
+                </span>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '12px 14px', background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: '12px' }}>
+              <IconBadge size={38} rounded={12}>
+                <ClockIcon size={17} />
+              </IconBadge>
               <div>
-                <div style={{ fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 600, marginBottom: '1px' }}>Response Time</div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--white)', fontWeight: 500 }}>Confirmed within 2 hours</div>
+                <div style={{ fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700, marginBottom: '1px' }}>Response time</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--white)', fontWeight: 500 }}>Usually within a few working hours</div>
               </div>
             </div>
 
             {[
               {
-                icon: '??',
+                icon: MapPinIcon,
                 label: 'Address',
                 value: settings.addressLine1,
-                sub: [settings.addressLine2, settings.city, settings.region, settings.postalCode].filter(Boolean).join(' · '),
+                sub: [settings.addressLine2, settings.city, settings.region, settings.postalCode].filter(Boolean).join(' | '),
               },
-              { icon: '??', label: 'Phone', value: settings.phone },
-              { icon: '??', label: 'Email', value: settings.email },
-              { icon: '??', label: 'Hours', value: settings.hoursText ?? 'By appointment' },
-            ].map((item) => (
-              <div key={item.label} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    flexShrink: 0,
-                    border: '1px solid var(--border)',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.9rem',
-                    background: 'rgba(212,175,55,0.04)',
-                  }}
-                >
-                  {item.icon}
+              { icon: PhoneIcon, label: 'Phone', value: settings.phone },
+              { icon: MailIcon, label: 'Email', value: settings.email },
+              { icon: ClockIcon, label: 'Hours', value: settings.hoursText ?? 'By appointment' },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.label} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <IconBadge>
+                    <Icon size={18} />
+                  </IconBadge>
+                  <div>
+                    <div style={{ fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 600, marginBottom: '2px' }}>{item.label}</div>
+                    <div style={{ fontSize: '0.88rem', color: 'var(--white)' }}>{item.value}</div>
+                    {item.sub && <div style={{ fontSize: '0.78rem', color: 'var(--gray)', marginTop: '1px' }}>{item.sub}</div>}
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 600, marginBottom: '2px' }}>{item.label}</div>
-                  <div style={{ fontSize: '0.88rem', color: 'var(--white)' }}>{item.value}</div>
-                  {item.sub && <div style={{ fontSize: '0.78rem', color: 'var(--gray)', marginTop: '1px' }}>{item.sub}</div>}
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
-            <div
-              style={{
-                padding: '14px',
-                background: 'var(--dark2)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                borderRadius: '10px',
-                fontSize: '0.82rem',
-                color: 'var(--gray-lt)',
-                lineHeight: 1.7,
-              }}
-            >
+            <div style={{ padding: '14px', background: 'var(--dark2)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', fontSize: '0.82rem', color: 'var(--gray-lt)', lineHeight: 1.7 }}>
               <strong style={{ color: 'var(--gold)' }}>{studio.title}</strong> starts at <strong style={{ color: 'var(--white)' }}>{rateFrom}{rateUnit}</strong>.
-              {minBooking && ` Minimum booking: ${minBooking}.`} No advance payment for inquiry.
+              {minBooking && ` Minimum booking: ${minBooking}.`} No advance payment is required to send an inquiry.
             </div>
           </div>
 
-          <div
-            className="reveal reveal-delay-2"
-            style={{
-              background: 'var(--dark2)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: '16px',
-              padding: '2.5rem',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '3px',
-                background: 'linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold))',
-              }}
-            />
+          <div className="reveal reveal-delay-2" style={{ background: 'var(--dark2)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '18px', padding: '2.5rem', position: 'relative', overflow: 'hidden', boxShadow: '0 28px 64px rgba(0,0,0,0.22)' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold))' }} />
 
             <form ref={formRef} onSubmit={handleSubmit}>
               <Field label="Your Name" htmlFor="b-name">
@@ -241,8 +211,8 @@ export default function StudioBooking({ studio }: Props) {
 
               <input type="hidden" name="requestedStudio" value={studio.title} />
 
-              <p style={{ fontSize: '0.72rem', color: 'var(--gray)', marginBottom: '1rem', lineHeight: 1.6 }}>
-                No advance payment for inquiry. Our team confirms within 2 hours.
+              <p style={{ fontSize: '0.72rem', color: 'var(--gray)', marginBottom: '1rem', lineHeight: 1.65 }}>
+                No advance payment for inquiry. Our team usually confirms availability within a few working hours.
               </p>
 
               <button
@@ -255,7 +225,7 @@ export default function StudioBooking({ studio }: Props) {
                   padding: '15px',
                   fontFamily: 'var(--font-inter), sans-serif',
                   fontSize: '0.82rem',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   border: 'none',
@@ -264,40 +234,28 @@ export default function StudioBooking({ studio }: Props) {
                   opacity: status === 'loading' ? 0.7 : 1,
                   transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                   boxShadow: '0 4px 16px rgba(212,175,55,0.25)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.55rem',
                 }}
               >
-                {status === 'loading' ? 'Sending...' : 'Send Booking Request ->'}
+                {status === 'loading' ? 'Sending...' : 'Send Booking Request'}
+                {status !== 'loading' && <ArrowRightIcon size={15} />}
               </button>
 
               {status === 'success' && (
-                <div
-                  style={{
-                    marginTop: '1rem',
-                    padding: '0.875rem',
-                    background: 'rgba(212,175,55,0.08)',
-                    border: '1px solid rgba(212,175,55,0.3)',
-                    borderRadius: '8px',
-                    fontSize: '0.85rem',
-                    color: 'var(--gold)',
-                    textAlign: 'center',
-                  }}
-                >
-                  ? Request received! We'll confirm within 2 hours.
+                <div style={{ marginTop: '1rem', padding: '0.95rem', background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.3)', borderRadius: '10px', fontSize: '0.85rem', color: 'var(--gold)', textAlign: 'center' }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.45rem' }}>
+                    <IconBadge size={34} rounded={999}>
+                      <CheckIcon size={14} />
+                    </IconBadge>
+                  </div>
+                  Request received. We will confirm availability shortly.
                 </div>
               )}
               {status === 'error' && (
-                <div
-                  style={{
-                    marginTop: '1rem',
-                    padding: '0.875rem',
-                    background: 'rgba(255,60,60,0.08)',
-                    border: '1px solid rgba(255,60,60,0.3)',
-                    borderRadius: '8px',
-                    fontSize: '0.85rem',
-                    color: '#ff6b6b',
-                    textAlign: 'center',
-                  }}
-                >
+                <div style={{ marginTop: '1rem', padding: '0.875rem', background: 'rgba(255,60,60,0.08)', border: '1px solid rgba(255,60,60,0.3)', borderRadius: '8px', fontSize: '0.85rem', color: '#ff6b6b', textAlign: 'center' }}>
                   Something went wrong. Please try WhatsApp or email directly.
                 </div>
               )}

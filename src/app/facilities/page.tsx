@@ -3,15 +3,16 @@ import FloatingButtons from '@/components/FloatingButtons';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
+import { ArrowRightIcon, CheckIcon, SparkIcon } from '@/components/ui/icons';
 import { loadFacilities } from '@/lib/sanity';
 
 export const metadata: Metadata = {
-  title: 'Studio Facilities – Professional Infrastructure',
+  title: 'Studio Facilities - Professional Infrastructure',
   description:
     'Cine Classic Studios offers professional-grade infrastructure: power, lighting, support spaces, and operational amenities for film and commercial productions.',
   alternates: { canonical: '/facilities' },
   openGraph: {
-    title: 'Studio Facilities – Cine Classic Studios Mumbai',
+    title: 'Studio Facilities - Cine Classic Studios Mumbai',
     description: 'Professional-grade studio infrastructure for film and commercial productions in Mumbai.',
   },
 };
@@ -41,13 +42,16 @@ export default async function FacilitiesPage() {
           <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
             <div className="section-tag">Infrastructure</div>
             <h1 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2.4rem, 5vw, 4rem)', fontWeight: 800, color: 'var(--white)', margin: '1.5rem 0 1.2rem', lineHeight: 1.1 }}>
-              World-Class Studio <span style={{ color: 'var(--gold)' }}>Facilities</span>
+              World-class studio <span style={{ color: 'var(--gold)' }}>facilities</span>
             </h1>
             <p style={{ color: 'var(--gray)', fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', lineHeight: 1.8, maxWidth: '660px', margin: '0 auto 2.5rem' }}>
               Built to the expectations of working film professionals. Every facility at Cine Classic Studios is designed to reduce production friction and support faster shoot days.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/#booking" className="btn-primary">Book a Studio Tour ?</a>
+              <a href="/#booking" className="btn-primary">
+                Request a Studio Tour
+                <ArrowRightIcon size={15} />
+              </a>
               <a href="/studios" className="btn-outline">View All Studios</a>
             </div>
           </div>
@@ -69,10 +73,10 @@ export default async function FacilitiesPage() {
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '5rem' }}>
               <span className="section-tag">What We Offer</span>
               <h2 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 700, color: 'var(--white)', margin: '1.2rem 0 1rem' }}>
-                Everything Your Production <span style={{ color: 'var(--gold)' }}>Needs</span>
+                Everything your production <span style={{ color: 'var(--gold)' }}>needs</span>
               </h2>
               <p style={{ color: 'var(--gray)', maxWidth: '540px', margin: '0 auto', lineHeight: 1.8 }}>
-                From lighting and power to crew support and logistics, these facilities are managed from the CMS so the team can keep the website aligned with real operations.
+                From lighting and power to crew support and logistics, these facilities are managed from the CMS so the website can reflect real operations without guesswork.
               </p>
             </div>
 
@@ -85,13 +89,17 @@ export default async function FacilitiesPage() {
                 {facilities.map((facility, index) => (
                   <div key={facility._id} className={`reveal reveal-delay-${(index % 3) + 1} fac-card`} style={{ background: facility.gradient ?? 'var(--dark3)' }}>
                     <div style={{ height: '2px', background: `linear-gradient(90deg, ${facility.accentColor ?? '#d4af37'}, transparent)`, marginBottom: '1.8rem', opacity: 0.7 }} />
-                    <div style={{ fontSize: '2rem', marginBottom: '0.8rem' }}>{facility.icon ?? '??'}</div>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.9rem', background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.16)', color: facility.accentColor ?? '#d4af37' }}>
+                      {facility.icon ? <span style={{ fontSize: '1.2rem' }}>{facility.icon}</span> : <SparkIcon size={18} />}
+                    </div>
                     <h3 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.15rem', fontWeight: 700, color: 'var(--white)', marginBottom: '1rem' }}>{facility.name}</h3>
                     {facility.shortDescription && <p style={{ fontSize: '0.88rem', color: 'var(--gray)', lineHeight: 1.7, marginBottom: '1rem' }}>{facility.shortDescription}</p>}
                     <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.2rem' }}>
                       {facility.features.map((feature) => (
                         <li key={feature} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', fontSize: '0.84rem', color: 'var(--gray)', lineHeight: 1.6, marginBottom: '0.5rem' }}>
-                          <span style={{ color: facility.accentColor ?? '#d4af37', flexShrink: 0, marginTop: '2px' }}>?</span>
+                          <span style={{ color: facility.accentColor ?? '#d4af37', flexShrink: 0, marginTop: '2px' }}>
+                            <CheckIcon size={13} />
+                          </span>
                           {feature}
                         </li>
                       ))}
@@ -112,13 +120,16 @@ export default async function FacilitiesPage() {
           <div style={{ maxWidth: '700px', margin: '0 auto' }}>
             <div className="section-tag">Book Your Shoot</div>
             <h2 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 700, color: 'var(--white)', margin: '1.5rem 0 1.2rem' }}>
-              Tour the Facility <span style={{ color: 'var(--gold)' }}>Before You Book</span>
+              Tour the facility <span style={{ color: 'var(--gold)' }}>before you book</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2.5rem' }}>
-              We invite production teams to visit the studio before confirming their booking. Our team will walk you through the spaces, answer technical questions, and help you choose the right setup.
+              We invite production teams to visit before confirming dates. Our team can walk you through the spaces, answer technical questions, and help you choose the right setup.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/#booking" className="btn-primary">Request a Studio Tour ?</a>
+              <a href="/#booking" className="btn-primary">
+                Request a Studio Tour
+                <ArrowRightIcon size={15} />
+              </a>
             </div>
           </div>
         </section>
