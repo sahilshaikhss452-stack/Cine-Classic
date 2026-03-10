@@ -144,8 +144,8 @@ export default async function StudioDetails({ studio }: Props) {
           </p>
         </div>
 
-        <div className="details-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '3.5rem', alignItems: 'start' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+        <div className="details-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 380px)', gap: '3.5rem', alignItems: 'start', minWidth: 0 }}>
+          <div className="details-main-column" style={{ display: 'flex', flexDirection: 'column', gap: '3rem', minWidth: 0 }}>
             <div className="reveal">
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
                 <div style={{ width: '3px', height: '18px', background: 'var(--gold)', borderRadius: '2px', flexShrink: 0 }} />
@@ -153,7 +153,7 @@ export default async function StudioDetails({ studio }: Props) {
                   About This Set
                 </h3>
               </div>
-              <p style={{ fontSize: '0.97rem', color: 'var(--gray-lt)', fontWeight: 300, lineHeight: 1.9 }}>
+              <p className="studio-details-description" style={{ fontSize: '0.97rem', color: 'var(--gray-lt)', fontWeight: 300, lineHeight: 1.9 }}>
                 {studio.description ?? ''}
               </p>
             </div>
@@ -166,10 +166,11 @@ export default async function StudioDetails({ studio }: Props) {
                     Suitable For
                   </h3>
                 </div>
-                <div className="use-case-scroll" style={{ display: 'flex', gap: '0.625rem', overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: '4px', flexWrap: 'wrap' }}>
+                <div className="use-case-scroll" style={{ display: 'flex', gap: '0.625rem', overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: '4px', flexWrap: 'wrap', maxWidth: '100%' }}>
                   {studio.suitableFor.map((useCase, index) => (
                     <div
                       key={useCase}
+                      className="use-case-pill"
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -213,7 +214,7 @@ export default async function StudioDetails({ studio }: Props) {
             )}
           </div>
 
-          <div className="reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="reveal reveal-delay-1 details-side-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: 0 }}>
             <div style={{ background: 'var(--dark3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', overflow: 'hidden' }}>
               <div style={{ padding: '14px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CheckIcon size={13} style={{ color: 'var(--gold)' }} />
@@ -243,8 +244,9 @@ export default async function StudioDetails({ studio }: Props) {
                 {minBooking ? ` | Minimum ${minBooking}` : ''}
                 {' | '}Fast availability confirmation from the Cine Classic team
               </p>
-              <div style={{ display: 'flex', gap: '0.625rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <div className="details-cta-row" style={{ display: 'flex', gap: '0.625rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <a
+                  className="details-cta-button"
                   href="#booking"
                   style={{
                     display: 'inline-flex',
@@ -267,6 +269,7 @@ export default async function StudioDetails({ studio }: Props) {
                   <ArrowRightIcon size={14} />
                 </a>
                 <a
+                  className="details-cta-button"
                   href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(`Hi, I'd like to enquire about the ${studio.title} at Cine Classic Studios.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -298,16 +301,70 @@ export default async function StudioDetails({ studio }: Props) {
       <style>{`
         .spec-strip::-webkit-scrollbar { display: none; }
         .spec-strip > div:hover { background: rgba(255,255,255,0.03); }
+        .details-grid > * { min-width: 0; }
+        .details-main-column,
+        .details-side-column,
+        .studio-details-description { min-width: 0; }
+        .studio-details-description { overflow-wrap: anywhere; }
+        .use-case-scroll { max-width: 100%; }
+        .use-case-pill { min-width: max-content; }
 
         @media (max-width: 900px) {
           .details-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
+            gap: 2.25rem !important;
           }
         }
 
         @media (max-width: 640px) {
+          .spec-strip-outer {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+          }
+
+          .spec-strip {
+            padding: 0 5% !important;
+            max-width: 100% !important;
+          }
+
+          .spec-strip > div {
+            min-width: 104px !important;
+            padding: 18px 16px !important;
+          }
+
+          .details-main-column {
+            gap: 2rem !important;
+          }
+
+          .details-side-column {
+            gap: 1rem !important;
+          }
+
+          .studio-details-description {
+            font-size: 0.92rem !important;
+            line-height: 1.8 !important;
+          }
+
           .use-case-scroll { flex-wrap: nowrap !important; }
           .use-case-scroll::-webkit-scrollbar { display: none; }
+          .use-case-scroll {
+            padding-bottom: 0.35rem !important;
+            scroll-snap-type: x proximity;
+          }
+
+          .use-case-pill {
+            scroll-snap-align: start;
+          }
+
+          .details-cta-row {
+            display: grid !important;
+            grid-template-columns: 1fr;
+          }
+
+          .details-cta-button {
+            width: 100%;
+            justify-content: center !important;
+          }
         }
       `}</style>
     </section>
