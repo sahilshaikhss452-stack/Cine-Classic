@@ -1,158 +1,131 @@
-# 🎬 Cine Classic Studios — Official Website
+# Cine Classic Studios
 
-A premium, conversion-optimised studio rental website built with **Next.js 15**, **React 18**, **TypeScript**, and **Sanity CMS**. Features cinematic UI, full portfolio showcase, dynamic studio pages, and a CMS-powered backend so non-technical staff can update content without touching code.
+Production website for a Mumbai studio rental business, built with Next.js and a rebuilt Sanity CMS architecture.
 
----
+## Stack
 
-## ✨ Features
+- Next.js 15 App Router
+- React 18 + TypeScript
+- Sanity Studio (standalone in `sanity-studio/`)
+- Sanity Content Lake for CMS-managed business content
 
-- **9 Studio Sets** — Individual landing pages with galleries, specs & booking CTAs
-- **Portfolio Page** — Filter by type (Film / TV / Web Series / Ads / Music Videos), click-to-expand modal
-- **Sanity CMS** — Edit studios, facilities, testimonials, and productions from a visual dashboard
-- **SEO-ready** — `generateMetadata` per page, Open Graph tags, semantic HTML
-- **WhatsApp Booking** — Deep-link with pre-filled inquiry message
-- **Scroll Reveal Animations** — IntersectionObserver-powered entrance effects
-- **Responsive** — Mobile-first design across all breakpoints
-- **Next.js Image Optimization** — Automatic WebP conversion & lazy loading
+## CMS Architecture
 
----
+The frontend and Studio now share one Sanity configuration model:
 
-## 🛠 Tech Stack
+- `SANITY_PROJECT_ID`
+- `SANITY_DATASET`
+- `SANITY_WRITE_TOKEN`
+- `SANITY_REVALIDATE_SECRET`
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript |
-| Styling | CSS Custom Properties + Inline Styles |
-| Fonts | Playfair Display + Inter (next/font) |
-| CMS | Sanity v3 |
-| Images | next/image + Sanity CDN |
-| Deployment | Vercel (recommended) |
+There are no silent project or dataset fallbacks.
+If required Sanity env vars are missing or invalid, the app fails clearly.
 
----
+## Content Model
 
-## 🚀 Getting Started Locally
+Managed in Sanity:
 
-### Prerequisites
-- **Node.js** v18 or higher
-- **npm** v9 or higher
+- `siteSettings`
+- `homePage`
+- `studio`
+- `production`
+- `testimonial`
+- `facility`
+- `faq`
+- `bookingInquiry`
 
-### 1. Clone the repository
+Code-managed by design:
 
-```bash
-git clone https://github.com/YOUR_USERNAME/cine-classic-nextjs.git
-cd cine-classic-nextjs
-```
+- navigation structure
+- motion / presentation components
+- certain long-form marketing landing page copy
 
-### 2. Install dependencies
+## Local Setup
+
+### 1. Install dependencies
 
 ```bash
 npm install
+npm --prefix sanity-studio install
 ```
 
-### 3. Set up environment variables
+### 2. Configure environment variables
 
-Create a `.env.local` file in the project root:
+Create `.env.local` in the project root:
 
 ```env
-# Sanity CMS
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id_here
-NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_TOKEN=your_api_token_here
+SANITY_PROJECT_ID=your_project_id_here
+SANITY_DATASET=production
+SANITY_WRITE_TOKEN=your_editor_token_here
+SANITY_REVALIDATE_SECRET=your_random_secret_here
 ```
 
-> Get these from your [Sanity project dashboard](https://sanity.io/manage)
+Create `sanity-studio/.env` if you run the Studio separately:
 
-### 4. Run the development server
+```env
+SANITY_PROJECT_ID=your_project_id_here
+SANITY_DATASET=production
+```
+
+### 3. Bootstrap missing foundational CMS documents
+
+This creates the required singleton docs and starter facilities / FAQs without touching existing studio, production, or testimonial collections.
+
+```bash
+npm run sanity:bootstrap
+```
+
+### 4. Run the apps
 
 ```bash
 npm run dev
+npm run sanity:dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+- Website: [http://localhost:3000](http://localhost:3000)
+- Studio: [http://localhost:3333](http://localhost:3333)
 
----
-
-## 📁 Project Structure
-
-```
-cine-classic-nextjs/
-├── public/
-│   └── images/
-│       └── studios/          # Studio photos (hero.jpg, 1.jpg–6.jpg per set)
-├── src/
-│   ├── app/
-│   │   ├── page.tsx          # Homepage
-│   │   ├── portfolio/        # Portfolio page
-│   │   └── studios/[slug]/   # Individual studio pages
-│   ├── components/
-│   │   ├── portfolio/        # Portfolio section components
-│   │   └── studio/           # Studio page components
-│   ├── data/
-│   │   ├── productions.ts    # Film/TV production data
-│   │   └── sets.ts           # Studio set definitions
-│   └── lib/
-│       └── sanity.ts         # Sanity client configuration
-└── sanity/
-    └── schemas/              # CMS content schemas
-```
-
----
-
-## 🎨 Adding Studio Photos
-
-Place photos in `public/images/studios/<studio-slug>/`:
-
-| File Name | Usage |
-|---|---|
-| `hero.jpg` | Full-width hero image (recommend 1920×1080) |
-| `1.jpg` – `6.jpg` | Gallery images (recommend 1200×800) |
-
-Studio slugs: `empty-floor`, `market-1`, `market-2`, `market-7`, `chawl-new`, `court-set`, `hospital-set`, `police-station`, `open-ground`
-
----
-
-## 📝 Managing Content (Sanity CMS)
-
-### Launch the Sanity Studio
+## Build Commands
 
 ```bash
-cd sanity-studio
-npm install
-npm run dev
+npm run build
+npm run sanity:build
 ```
 
-Open [http://localhost:3333](http://localhost:3333) to access the visual CMS dashboard.
+## Revalidation
 
-### What you can edit without coding:
-- ✅ Studio names, descriptions, rates, and amenities
-- ✅ Facilities and equipment lists
-- ✅ Client testimonials
-- ✅ Productions / portfolio items
-- ✅ All images (hero photos, galleries)
+Sanity publish hooks should call:
 
----
+```text
+POST /api/revalidate?secret=YOUR_SECRET
+```
 
-## 🌐 Deploying to Vercel
+This invalidates the shared `sanity` cache tag used by frontend queries.
 
-1. Push this repository to GitHub
-2. Go to [vercel.com](https://vercel.com) → **New Project** → Import your GitHub repo
-3. Add environment variables in Vercel dashboard (same as `.env.local`)
-4. Click **Deploy** — Vercel handles everything automatically
+## Important Notes
 
-Every `git push` to `main` triggers an automatic redeploy.
+- The frontend read client does not send a token for normal public reads.
+- Homepage and studio pages use ISR with `revalidate = 30`.
+- Missing CMS data is shown explicitly instead of being masked by hardcoded fallback arrays.
+- `siteSettings` and `homePage` are required singleton documents.
 
----
+## Project Structure
 
-## 📞 Contact
-
-**Cine Classic Studios**
-Mumbai, Maharashtra, India
-WhatsApp: +91 XXXXX XXXXX
-Email: info@cineclassicstudios.com
-
----
-
-## 📄 License
-
-Private repository — all rights reserved © Cine Classic Studios
+```text
+src/
+  app/
+  components/
+  lib/
+    sanity/
+      client.ts
+      env.ts
+      index.ts
+      loaders.ts
+      mappers.ts
+      queries.ts
+      types.ts
+sanity-studio/
+  schemas/
+scripts/
+  bootstrap-sanity.mjs
+```

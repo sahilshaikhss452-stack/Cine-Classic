@@ -7,71 +7,62 @@ export const bookingInquirySchema = defineType({
   fields: [
     defineField({
       name: 'name',
-      title: 'Full Name',
+      title: 'Full name',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'productionName',
-      title: 'Production Company / Brand',
+      name: 'company',
+      title: 'Company / brand',
       type: 'string',
     }),
     defineField({
       name: 'email',
-      title: 'Email Address',
+      title: 'Email',
       type: 'string',
-      validation: (Rule) => Rule.required().email(),
+      validation: (Rule) => Rule.email(),
     }),
     defineField({
       name: 'phone',
       title: 'Phone / WhatsApp',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'shootType',
-      title: 'Shoot Type',
-      type: 'string',
-      options: {
-        list: [
-          'Feature Film',
-          'OTT / Web Series',
-          'TV Serial',
-          'Television Commercial',
-          'Music Video',
-          'Fashion / Editorial',
-          'Documentary',
-          'Reality Show',
-          'Photoshoot',
-          'Product Launch / Corporate',
-          'Other',
-        ],
-      },
-    }),
-    defineField({
-      name: 'studioRequired',
-      title: 'Studio Interest',
+      title: 'Shoot type',
       type: 'string',
     }),
     defineField({
-      name: 'shootDates',
-      title: 'Shoot Date (From)',
+      name: 'requestedStudio',
+      title: 'Requested studio',
+      type: 'string',
+    }),
+    defineField({
+      name: 'preferredDate',
+      title: 'Preferred date',
       type: 'string',
     }),
     defineField({
       name: 'crewSize',
-      title: 'Crew Size',
+      title: 'Crew size',
       type: 'string',
     }),
     defineField({
       name: 'package',
-      title: 'Duration / Package',
+      title: 'Package / duration',
       type: 'string',
     }),
     defineField({
-      name: 'notes',
-      title: 'Additional Notes',
+      name: 'projectBrief',
+      title: 'Project brief',
       type: 'text',
-      rows: 3,
+      rows: 4,
+    }),
+    defineField({
+      name: 'sourcePage',
+      title: 'Source page',
+      type: 'string',
     }),
     defineField({
       name: 'status',
@@ -80,7 +71,7 @@ export const bookingInquirySchema = defineType({
       options: {
         list: [
           { title: 'New', value: 'new' },
-          { title: 'In Progress', value: 'in-progress' },
+          { title: 'In progress', value: 'in-progress' },
           { title: 'Confirmed', value: 'confirmed' },
           { title: 'Completed', value: 'completed' },
           { title: 'Cancelled', value: 'cancelled' },
@@ -91,13 +82,14 @@ export const bookingInquirySchema = defineType({
     }),
     defineField({
       name: 'createdAt',
-      title: 'Received At',
+      title: 'Created at',
       type: 'datetime',
+      validation: (Rule) => Rule.required(),
     }),
   ],
   orderings: [
     {
-      title: 'Newest First',
+      title: 'Newest first',
       name: 'createdAtDesc',
       by: [{ field: 'createdAt', direction: 'desc' }],
     },
@@ -105,13 +97,13 @@ export const bookingInquirySchema = defineType({
   preview: {
     select: {
       title: 'name',
-      subtitle: 'shootType',
-      description: 'email',
+      subtitle: 'requestedStudio',
+      description: 'phone',
     },
     prepare({ title, subtitle, description }) {
       return {
-        title: title ?? 'Unknown',
-        subtitle: `${subtitle ?? ''} · ${description ?? ''}`,
+        title: title ?? 'Unknown inquiry',
+        subtitle: [subtitle, description].filter(Boolean).join(' · '),
       };
     },
   },

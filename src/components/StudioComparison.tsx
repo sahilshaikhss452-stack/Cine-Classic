@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { SanityStudioCard } from '@/lib/sanity.types';
+import type { SanityStudioCard } from '@/lib/sanity';
 import { fmtSize } from '@/lib/studio-utils';
 
 const MAX_COMPARE = 3;
@@ -208,3 +208,4 @@ export default function StudioComparison({ studios = [] }: Props) {
     </section>
   );
 }
+

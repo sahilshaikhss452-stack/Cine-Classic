@@ -10,7 +10,8 @@
  *  - SVG icons (not emoji) for premium feel
  */
 
-import type { SanityStudio } from '@/lib/sanity.types';
+import { loadSiteSettings } from '@/lib/sanity';
+import type { SanityStudio } from '@/lib/sanity';
 import { fmtSize, fmtHeight, fmtRate, fmtRateUnit, fmtMinBooking } from '@/lib/studio-utils';
 
 interface Props {
@@ -101,7 +102,8 @@ const USE_CASE_BORDERS = [
 ];
 
 /* ── Main component ──────────────────────────────────────────────────────────── */
-export default function StudioDetails({ studio }: Props) {
+export default async function StudioDetails({ studio }: Props) {
+  const settings = await loadSiteSettings();
   const rateFrom = fmtRate(studio.rateHourly, studio.ratePerDay);
   const rateUnit = fmtRateUnit(studio.rateUnit, studio.rateHourly);
   const minBooking = fmtMinBooking(studio.minBookingHours);
@@ -417,7 +419,7 @@ export default function StudioDetails({ studio }: Props) {
                   Check Availability →
                 </a>
                 <a
-                  href={`https://wa.me/919876543210?text=${encodeURIComponent(`Hi, I'd like to enquire about the ${studio.title} at Cine Classic Studios.`)}`}
+                  href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(`Hi, I'd like to enquire about the ${studio.title} at Cine Classic Studios.`)}`}
                   target="_blank" rel="noopener noreferrer"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '5px',

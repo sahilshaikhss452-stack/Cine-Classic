@@ -15,7 +15,8 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import type { SanityStudio } from '@/lib/sanity.types';
+import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
+import type { SanityStudio } from '@/lib/sanity';
 import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 interface Props {
@@ -105,6 +106,7 @@ function GallerySlot({ src, alt, label, aspectRatio, gradient, icon, revealClass
 
 // ─── Premium "See It In Person" CTA ──────────────────────────────────────────
 function PhotoTourCTA({ studio }: { studio: SanityStudio }) {
+  const settings = useSiteSettings();
   const whatsappText = encodeURIComponent(
     `Hi, I'd like to schedule a walkthrough of the ${studio.title} at Cine Classic Studios.`
   );
@@ -187,7 +189,7 @@ function PhotoTourCTA({ studio }: { studio: SanityStudio }) {
 
         <div style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap' }}>
           <a
-            href={`https://wa.me/919876543210?text=${whatsappText}`}
+            href={`https://wa.me/${settings.whatsappNumber}?text=${whatsappText}`}
             target="_blank" rel="noopener noreferrer"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '7px',

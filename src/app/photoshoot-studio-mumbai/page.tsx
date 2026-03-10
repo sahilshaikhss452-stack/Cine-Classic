@@ -3,6 +3,7 @@ import Navbar  from '@/components/Navbar';
 import Footer  from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import RevealProvider  from '@/components/RevealProvider';
+import { loadSiteSettings } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'Photoshoot Studio Mumbai – Book a Professional Photography Studio',
@@ -47,7 +48,10 @@ const PHOTO_FEATURES = [
   { icon: '⚡', title: '200A Power Supply', desc: 'Dedicated power circuits for high-output flash and continuous lighting systems.' },
 ];
 
-export default function PhotoshootStudioMumbaiPage() {
+export default async function PhotoshootStudioMumbaiPage() {
+  const settings = await loadSiteSettings();
+  const primaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent("Hi, I'm looking for a photoshoot studio in Mumbai.")}`;
+  const secondaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need to book a photoshoot studio in Mumbai.')}`;
   return (
     <>
       <RevealProvider />
@@ -87,7 +91,7 @@ export default function PhotoshootStudioMumbaiPage() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Book a Studio →</a>
               <a
-                href="https://wa.me/919876543210?text=Hi%2C%20I%27m%20looking%20for%20a%20photoshoot%20studio%20in%20Mumbai."
+                href={primaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
@@ -197,7 +201,7 @@ export default function PhotoshootStudioMumbaiPage() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Send a Booking Inquiry →</a>
               <a
-                href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20to%20book%20a%20photoshoot%20studio%20in%20Mumbai."
+                href={secondaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.5rem',

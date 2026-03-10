@@ -1,47 +1,41 @@
 import type { Metadata } from 'next';
-import Navbar               from '@/components/Navbar';
-import Footer               from '@/components/Footer';
-import RevealProvider       from '@/components/RevealProvider';
-import PortfolioHero        from '@/components/portfolio/PortfolioHero';
-import ProductionExplorer   from '@/components/portfolio/ProductionExplorer';
-import FeaturedProduction   from '@/components/portfolio/FeaturedProduction';
-import ProductionTimeline   from '@/components/portfolio/ProductionTimeline';
-import TrustedProductions   from '@/components/portfolio/TrustedProductions';
-import ProductionCompanies  from '@/components/portfolio/ProductionCompanies';
-import PortfolioBookingCTA  from '@/components/portfolio/PortfolioBookingCTA';
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import RevealProvider from '@/components/RevealProvider';
+import PortfolioBookingCTA from '@/components/portfolio/PortfolioBookingCTA';
+import FeaturedProduction from '@/components/portfolio/FeaturedProduction';
+import PortfolioHero from '@/components/portfolio/PortfolioHero';
+import ProductionCompanies from '@/components/portfolio/ProductionCompanies';
+import ProductionExplorer from '@/components/portfolio/ProductionExplorer';
+import ProductionTimeline from '@/components/portfolio/ProductionTimeline';
+import TrustedProductions from '@/components/portfolio/TrustedProductions';
+import { loadFeaturedProduction, loadProductions, mapProductionToUi, mapProductionsToUi } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'Portfolio – Productions Shot at Cine Classic Studios',
   description:
-    'Explore films, TV shows, web series, and commercials shot at Cine Classic Studios. Trusted by Netflix India, Amazon Prime, Dharma Productions, and more.',
+    'Explore films, TV shows, web series, and commercials shot at Cine Classic Studios. Trusted by filmmakers, brands, and production houses across India.',
 };
 
-export default function PortfolioPage() {
+export const revalidate = 30;
+
+export default async function PortfolioPage() {
+  const [productionDocs, featuredDoc] = await Promise.all([loadProductions(), loadFeaturedProduction()]);
+  const productions = mapProductionsToUi(productionDocs);
+  const featuredProduction = featuredDoc ? mapProductionToUi(featuredDoc) : productions[0] ?? null;
+
   return (
     <>
       <RevealProvider />
       <Navbar />
 
       <main>
-        {/* 1. Cinematic hero */}
-        <PortfolioHero />
-
-        {/* 2. Filter + Netflix-style grid + modal */}
-        <ProductionExplorer />
-
-        {/* 3. Featured production spotlight */}
-        <FeaturedProduction />
-
-        {/* 4. Year-by-year timeline */}
-        <ProductionTimeline />
-
-        {/* 5. Trusted productions name wall */}
-        <TrustedProductions />
-
-        {/* 6. Production companies */}
+        <PortfolioHero totalProductions={productions.length} />
+        <ProductionExplorer productions={productions} />
+        <FeaturedProduction production={featuredProduction} />
+        <ProductionTimeline productions={productions} />
+        <TrustedProductions productions={productions} />
         <ProductionCompanies />
-
-        {/* 7. Booking CTA */}
         <PortfolioBookingCTA />
       </main>
 

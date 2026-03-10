@@ -22,7 +22,8 @@
  */
 
 import { useState } from 'react';
-import type { SanityStudio } from '@/lib/sanity.types';
+import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
+import type { SanityStudio } from '@/lib/sanity';
 
 interface Props {
   studio: SanityStudio;
@@ -37,6 +38,7 @@ export default function DownloadSetDeckButton({
 }: Props) {
   // ghost label is shorter for tertiary placement
   const [status, setStatus] = useState<'idle' | 'generating' | 'error'>('idle');
+  const settings = useSiteSettings();
 
   const label = variant === 'ghost' ? 'Set Deck PDF' : 'Download Set Deck';
 
@@ -65,7 +67,7 @@ export default function DownloadSetDeckButton({
       ]);
 
       // Render the PDF to a Blob
-      const blob = await pdf(<SetDeckDocument studio={studio} />).toBlob();
+      const blob = await pdf(<SetDeckDocument studio={studio} businessName={settings.businessName} contactPhone={settings.phone} contactEmail={settings.email} />).toBlob();
 
       // Trigger browser download
       const url = URL.createObjectURL(blob);

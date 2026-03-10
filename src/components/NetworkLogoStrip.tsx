@@ -1,70 +1,80 @@
 'use client';
 
-/* ── NetworkLogoStrip ──────────────────────────────────────────────────────
-   Horizontal trust strip showing streaming / broadcast networks that have
-   shot productions at Cine Classic Studios.
-   Appears immediately below the hero to establish instant credibility.
-─────────────────────────────────────────────────────────────────────────── */
+import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
 
-const NETWORKS = [
-  { name: 'Netflix',          abbr: 'N' },
-  { name: 'Amazon Prime',     abbr: 'P' },
-  { name: 'SonyLIV',          abbr: 'S' },
-  { name: 'Disney+ Hotstar',  abbr: 'D' },
-  { name: 'Star Sports',      abbr: 'SS' },
-  { name: 'Zee5',             abbr: 'Z' },
-];
+function getAbbr(value: string) {
+  return value
+    .split(' ')
+    .map((segment) => segment.charAt(0))
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+}
 
 export default function NetworkLogoStrip() {
-  return (
-    <div style={{
-      background: 'var(--dark2)',
-      borderTop:    '1px solid rgba(255,255,255,0.04)',
-      borderBottom: '1px solid rgba(255,255,255,0.04)',
-      padding: '1.5rem 5%',
-      overflow: 'hidden',
-    }}>
-      <div style={{
-        maxWidth: '1100px',
-        margin: '0 auto',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1.5rem',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-      }}>
+  const settings = useSiteSettings();
+  const networks = settings.featuredClients;
 
-        {/* Label */}
-        <span style={{
-          fontSize: '0.65rem',
-          fontWeight: 600,
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.28)',
-          flexShrink: 0,
-          whiteSpace: 'nowrap',
-        }}>
+  if (networks.length === 0) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        background: 'var(--dark2)',
+        borderTop: '1px solid rgba(255,255,255,0.04)',
+        borderBottom: '1px solid rgba(255,255,255,0.04)',
+        padding: '1.5rem 5%',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1100px',
+          margin: '0 auto',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.65rem',
+            fontWeight: 600,
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.28)',
+            flexShrink: 0,
+            whiteSpace: 'nowrap',
+          }}
+        >
           Featured on
         </span>
 
-        {/* Divider */}
-        <span style={{
-          width: '1px', height: '20px',
-          background: 'rgba(255,255,255,0.1)',
-          flexShrink: 0,
-        }} />
+        <span
+          style={{
+            width: '1px',
+            height: '20px',
+            background: 'rgba(255,255,255,0.1)',
+            flexShrink: 0,
+          }}
+        />
 
-        {/* Network badges */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.75rem',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-        }}>
-          {NETWORKS.map((n, i) => (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}
+        >
+          {networks.map((network) => (
             <span
-              key={n.name}
+              key={network}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -81,23 +91,25 @@ export default function NetworkLogoStrip() {
                 transition: 'color 0.2s ease, border-color 0.2s ease',
               }}
             >
-              {/* Monogram dot */}
-              <span style={{
-                width: '16px', height: '16px',
-                borderRadius: '4px',
-                background: 'linear-gradient(135deg, var(--gold-dk), var(--gold))',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.52rem',
-                fontWeight: 800,
-                color: 'var(--dark)',
-                flexShrink: 0,
-                letterSpacing: 0,
-              }}>
-                {n.abbr}
+              <span
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '4px',
+                  background: 'linear-gradient(135deg, var(--gold-dk), var(--gold))',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.52rem',
+                  fontWeight: 800,
+                  color: 'var(--dark)',
+                  flexShrink: 0,
+                  letterSpacing: 0,
+                }}
+              >
+                {getAbbr(network)}
               </span>
-              {n.name}
+              {network}
             </span>
           ))}
         </div>

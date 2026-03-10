@@ -15,7 +15,8 @@
  */
 
 import Image from 'next/image';
-import type { SanityStudio, LayoutZone } from '@/lib/sanity.types';
+import { loadSiteSettings } from '@/lib/sanity';
+import type { SanityStudio, LayoutZone } from '@/lib/sanity';
 import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 interface Props {
@@ -30,7 +31,8 @@ const DEFAULT_ZONES: LayoutZone[] = [
   { label: 'Equipment Bay', x: '18%', y: '70%' },
 ];
 
-export default function SetLayout({ studio }: Props) {
+export default async function SetLayout({ studio }: Props) {
+  const settings = await loadSiteSettings();
   const hasImage = !!studio.setLayoutImage;
   const hasDescription = !!studio.setLayoutDescription;
 
@@ -262,7 +264,7 @@ export default function SetLayout({ studio }: Props) {
           </div>
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <a
-              href={`https://wa.me/919876543210?text=${encodeURIComponent(
+              href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
                 `Hi, I'd like to schedule a walkthrough of the ${studio.title} at Cine Classic Studios.`
               )}`}
               target="_blank"

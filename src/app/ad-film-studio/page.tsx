@@ -3,6 +3,7 @@ import Navbar  from '@/components/Navbar';
 import Footer  from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import RevealProvider  from '@/components/RevealProvider';
+import { loadSiteSettings } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'Ad Film Studio Mumbai – TVC & Commercial Shoot Location',
@@ -47,7 +48,10 @@ const AD_ADVANTAGES = [
   { title: 'Production Support', value: 'On-site studio manager coordinates floor operations. Art department, prop sourcing, and lighting technicians on request.' },
 ];
 
-export default function AdFilmStudioPage() {
+export default async function AdFilmStudioPage() {
+  const settings = await loadSiteSettings();
+  const primaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need an ad film studio in Mumbai.')}`;
+  const secondaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need an ad film studio in Mumbai for a TVC shoot.')}`;
   return (
     <>
       <RevealProvider />
@@ -89,7 +93,7 @@ export default function AdFilmStudioPage() {
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   <a href="/#booking" className="btn-primary">Book a Studio →</a>
                   <a
-                    href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20an%20ad%20film%20studio%20in%20Mumbai."
+                    href={primaryWhatsappUrl}
                     target="_blank" rel="noopener noreferrer"
                     style={{
                       display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
@@ -281,7 +285,7 @@ export default function AdFilmStudioPage() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Send a Booking Inquiry →</a>
               <a
-                href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20an%20ad%20film%20studio%20in%20Mumbai%20for%20a%20TVC%20shoot."
+                href={secondaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.5rem',

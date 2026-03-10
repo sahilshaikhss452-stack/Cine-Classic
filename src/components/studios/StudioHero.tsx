@@ -14,7 +14,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import type { SanityStudio } from '@/lib/sanity.types';
+import type { SanityStudio } from '@/lib/sanity';
 import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 import DownloadSetDeckButton from '@/components/studios/DownloadSetDeckButton';
 

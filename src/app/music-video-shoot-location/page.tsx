@@ -3,6 +3,7 @@ import Navbar  from '@/components/Navbar';
 import Footer  from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import RevealProvider  from '@/components/RevealProvider';
+import { loadSiteSettings } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'Music Video Shoot Location Mumbai – Book a Studio Today',
@@ -46,7 +47,10 @@ const MV_REASONS = [
   { icon: '🚛', title: 'Equipment & Access', desc: 'Drive-in access for production trucks. Lighting and camera rigs can be moved in directly to the studio floor.' },
 ];
 
-export default function MusicVideoShootLocationPage() {
+export default async function MusicVideoShootLocationPage() {
+  const settings = await loadSiteSettings();
+  const primaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need a music video shoot location in Mumbai.')}`;
+  const secondaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need to book a music video shoot location in Mumbai.')}`;
   return (
     <>
       <RevealProvider />
@@ -86,7 +90,7 @@ export default function MusicVideoShootLocationPage() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Book a Location →</a>
               <a
-                href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20a%20music%20video%20shoot%20location%20in%20Mumbai."
+                href={primaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
@@ -196,7 +200,7 @@ export default function MusicVideoShootLocationPage() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">Get a Quote →</a>
               <a
-                href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20to%20book%20a%20music%20video%20shoot%20location%20in%20Mumbai."
+                href={secondaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.5rem',

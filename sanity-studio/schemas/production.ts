@@ -2,14 +2,13 @@ import { defineField, defineType } from 'sanity';
 
 export const productionSchema = defineType({
   name: 'production',
-  title: 'Production (Film / Show)',
+  title: 'Production',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'Name of the film, show, or advertisement',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -17,13 +16,7 @@ export const productionSchema = defineType({
       title: 'Type',
       type: 'string',
       options: {
-        list: [
-          { title: 'Film', value: 'Film' },
-          { title: 'TV Series', value: 'TV Series' },
-          { title: 'Web Series', value: 'Web Series' },
-          { title: 'Advertisement', value: 'Advertisement' },
-          { title: 'Music Video', value: 'Music Video' },
-        ],
+        list: ['Film', 'TV Series', 'Web Series', 'Advertisement', 'Music Video'],
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -31,41 +24,48 @@ export const productionSchema = defineType({
       name: 'year',
       title: 'Year',
       type: 'number',
-      description: 'Year of release or production',
-      validation: (Rule) => Rule.min(1990).max(new Date().getFullYear() + 2),
+      validation: (Rule) => Rule.required().min(1990).max(new Date().getFullYear() + 2),
     }),
     defineField({
       name: 'network',
-      title: 'Network / Platform',
+      title: 'Network / platform',
       type: 'string',
-      description: 'e.g. "Netflix", "Amazon Prime", "Star Plus"',
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
-      rows: 3,
-      description: 'Brief synopsis or notes for the portfolio modal',
+      rows: 4,
     }),
     defineField({
       name: 'posterImage',
-      title: 'Poster Image',
+      title: 'Poster image',
       type: 'image',
-      description: 'Production poster or still (recommend 400×600 portrait)',
       options: { hotspot: true },
     }),
     defineField({
       name: 'featured',
-      title: 'Featured Production?',
+      title: 'Featured production',
       type: 'boolean',
-      description: 'Show as the spotlight feature on the portfolio page',
       initialValue: false,
     }),
     defineField({
+      name: 'showOnHome',
+      title: 'Show on homepage',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'isActive',
+      title: 'Active',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
       name: 'order',
-      title: 'Display Order',
+      title: 'Display order',
       type: 'number',
-      initialValue: 99,
+      initialValue: 999,
     }),
   ],
   preview: {

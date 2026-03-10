@@ -17,7 +17,7 @@ import {
   StyleSheet,
   Font,
 } from '@react-pdf/renderer';
-import type { SanityStudio } from '@/lib/sanity.types';
+import type { SanityStudio } from '@/lib/sanity';
 import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 // ── Register built-in Helvetica (no font download needed) ─────────────────────
@@ -287,9 +287,12 @@ function NumberedItem({ index, text }: { index: number; text: string }) {
 // ── PDF Document ─────────────────────────────────────────────────────────────
 interface Props {
   studio: SanityStudio;
+  businessName: string;
+  contactPhone: string;
+  contactEmail: string;
 }
 
-export function SetDeckDocument({ studio }: Props) {
+export function SetDeckDocument({ studio, businessName, contactPhone, contactEmail }: Props) {
   const rateFrom = fmtRate(studio.rateHourly, studio.ratePerDay);
   const rateUnit = fmtRateUnit(studio.rateUnit, studio.rateHourly);
 
@@ -368,14 +371,14 @@ export function SetDeckDocument({ studio }: Props) {
         {/* ── Footer ── */}
         <View style={s.footer}>
           <View style={s.footerLeft}>
-            <Text style={s.footerBrand}>Cine Classic Studios</Text>
+            <Text style={s.footerBrand}>{businessName}</Text>
             <Text style={s.footerTagline}>
               Mumbai&apos;s Premier Film Studio Complex  ·  Near Film City, Goregaon East
             </Text>
           </View>
           <View style={s.footerRight}>
-            <Text style={s.footerContact}>+91 98765 43210</Text>
-            <Text style={s.footerContact}>bookings@cineclassicstudios.com</Text>
+            <Text style={s.footerContact}>{contactPhone}</Text>
+            <Text style={s.footerContact}>{contactEmail}</Text>
             <Text style={s.footerCTA}>Book This Set →</Text>
           </View>
         </View>

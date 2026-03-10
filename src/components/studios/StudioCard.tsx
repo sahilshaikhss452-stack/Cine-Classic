@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { SanityStudioCard } from '@/lib/sanity.types';
+import type { SanityStudioCard } from '@/lib/sanity';
 import { fmtSize } from '@/lib/studio-utils';
 
 interface Props {
