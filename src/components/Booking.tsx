@@ -15,6 +15,7 @@ import {
   SparkIcon,
 } from '@/components/ui/icons';
 import type { StudioNavItem } from '@/lib/sanity';
+import { getBookingApiMessage } from '@/lib/booking-submission';
 
 const SHOOT_TYPES = [
   'Feature Film',
@@ -48,6 +49,7 @@ interface Props {
 
 export default function Booking({ studios }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const today = new Date().toISOString().split('T')[0];
   const settings = useSiteSettings();
@@ -72,6 +74,7 @@ export default function Booking({ studios }: Props) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus('loading');
+    setErrorMessage(null);
     const data = Object.fromEntries(new FormData(event.currentTarget));
 
     try {
@@ -81,13 +84,17 @@ export default function Booking({ studios }: Props) {
         body: JSON.stringify({ ...data, sourcePage: 'home' }),
       });
 
+      const apiMessage = await getBookingApiMessage(response);
+
       if (!response.ok) {
-        throw new Error('Request failed');
+        throw new Error(apiMessage ?? 'We could not send your inquiry right now.');
       }
 
+      setErrorMessage(null);
       setStatus('success');
       formRef.current?.reset();
-    } catch {
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'We could not send your inquiry right now.');
       setStatus('error');
     }
   }
@@ -415,7 +422,7 @@ export default function Booking({ studios }: Props) {
                   textAlign: 'center',
                 }}
               >
-                Something went wrong. Please WhatsApp us directly at {settings.phone} or email {settings.email}.
+                {errorMessage ?? `Something went wrong. Please WhatsApp us directly at ${settings.phone} or email ${settings.email}.`}
               </div>
             )}
           </form>

@@ -19,7 +19,8 @@
     "framer-motion": "^12.35.0",
     "next": "^15.2.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "resend": "^6.9.3"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -31,4 +32,3 @@
     "typescript": "^5"
   }
 }
-

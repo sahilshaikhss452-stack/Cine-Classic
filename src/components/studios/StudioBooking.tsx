@@ -15,6 +15,7 @@ import {
   SparkIcon,
 } from '@/components/ui/icons';
 import type { SanityStudio } from '@/lib/sanity';
+import { getBookingApiMessage } from '@/lib/booking-submission';
 import { fmtMinBooking, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 interface Props {
@@ -23,6 +24,7 @@ interface Props {
 
 export default function StudioBooking({ studio }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const today = new Date().toISOString().split('T')[0];
   const settings = useSiteSettings();
@@ -39,6 +41,7 @@ export default function StudioBooking({ studio }: Props) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus('loading');
+    setErrorMessage(null);
     const data = {
       ...Object.fromEntries(new FormData(event.currentTarget)),
       requestedStudio: studio.title,
@@ -52,13 +55,17 @@ export default function StudioBooking({ studio }: Props) {
         body: JSON.stringify(data),
       });
 
+      const apiMessage = await getBookingApiMessage(response);
+
       if (!response.ok) {
-        throw new Error('Request failed');
+        throw new Error(apiMessage ?? 'We could not send your booking request right now.');
       }
 
+      setErrorMessage(null);
       setStatus('success');
       formRef.current?.reset();
-    } catch {
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'We could not send your booking request right now.');
       setStatus('error');
     }
   }
@@ -256,7 +263,7 @@ export default function StudioBooking({ studio }: Props) {
               )}
               {status === 'error' && (
                 <div style={{ marginTop: '1rem', padding: '0.875rem', background: 'rgba(255,60,60,0.08)', border: '1px solid rgba(255,60,60,0.3)', borderRadius: '8px', fontSize: '0.85rem', color: '#ff6b6b', textAlign: 'center' }}>
-                  Something went wrong. Please try WhatsApp or email directly.
+                  {errorMessage ?? 'Something went wrong. Please try WhatsApp or email directly.'}
                 </div>
               )}
             </form>

@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client';
 import { NextRequest, NextResponse } from 'next/server';
+import { sendBookingInquiryNotification } from '@/lib/booking-notifications';
 import {
   getSanityApiVersion,
   getSanityDataset,
@@ -24,6 +25,23 @@ interface BookingRequestBody {
   crewSize?: string;
   package?: string;
   project?: string;
+  projectBrief?: string;
+  sourcePage?: string;
+}
+
+interface BookingInquiryDocument {
+  _type: 'bookingInquiry';
+  name: string;
+  phone: string;
+  status: 'new';
+  createdAt: string;
+  company?: string;
+  email?: string;
+  shootType?: string;
+  requestedStudio?: string;
+  preferredDate?: string;
+  crewSize?: string;
+  package?: string;
   projectBrief?: string;
   sourcePage?: string;
 }
@@ -62,6 +80,22 @@ function resolveProjectBrief(body: BookingRequestBody): string | undefined {
   return optionalString(body.projectBrief) ?? optionalString(body.project);
 }
 
+function isHomepageSubmission(body: BookingRequestBody, sourcePage: string | undefined): boolean {
+  return sourcePage === 'home'
+    || optionalString(body.firstName) !== undefined
+    || optionalString(body.lastName) !== undefined
+    || optionalString(body.shootType) !== undefined
+    || optionalString(body.studio) !== undefined
+    || optionalString(body.dateFrom) !== undefined;
+}
+
+function isStudioPageSubmission(body: BookingRequestBody, sourcePage: string | undefined): boolean {
+  return sourcePage?.startsWith('/studios/') === true
+    || optionalString(body.requestedStudio) !== undefined
+    || optionalString(body.preferredDate) !== undefined
+    || optionalString(body.projectBrief) !== undefined;
+}
+
 export async function POST(request: NextRequest) {
   let body: BookingRequestBody;
 
@@ -74,6 +108,14 @@ export async function POST(request: NextRequest) {
   const name = resolveName(body);
   const phone = optionalString(body.phone);
   const email = optionalString(body.email);
+  const sourcePage = optionalString(body.sourcePage);
+  const company = optionalString(body.company);
+  const shootType = optionalString(body.shootType);
+  const requestedStudio = resolveRequestedStudio(body);
+  const preferredDate = resolvePreferredDate(body);
+  const crewSize = optionalString(body.crewSize);
+  const packageSelection = optionalString(body.package);
+  const projectBrief = resolveProjectBrief(body);
 
   if (!name) {
     return NextResponse.json({ error: 'Name is required.' }, { status: 422 });
@@ -87,21 +129,50 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Email address is invalid.' }, { status: 422 });
   }
 
-  const document = {
+  if (isHomepageSubmission(body, sourcePage)) {
+    if (!shootType) {
+      return NextResponse.json({ error: 'Shoot type is required.' }, { status: 422 });
+    }
+
+    if (!requestedStudio) {
+      return NextResponse.json({ error: 'Please select a studio.' }, { status: 422 });
+    }
+
+    if (!preferredDate) {
+      return NextResponse.json({ error: 'Preferred shoot date is required.' }, { status: 422 });
+    }
+  }
+
+  if (isStudioPageSubmission(body, sourcePage)) {
+    if (!requestedStudio) {
+      return NextResponse.json({ error: 'Requested studio is required.' }, { status: 422 });
+    }
+
+    if (!preferredDate) {
+      return NextResponse.json({ error: 'Preferred shoot date is required.' }, { status: 422 });
+    }
+
+    if (!packageSelection) {
+      return NextResponse.json({ error: 'Please select a booking duration.' }, { status: 422 });
+    }
+  }
+
+  const createdAt = new Date().toISOString();
+  const document: BookingInquiryDocument = {
     _type: 'bookingInquiry',
     name,
     phone,
     status: 'new',
-    createdAt: new Date().toISOString(),
-    ...(optionalString(body.company) ? { company: optionalString(body.company) } : {}),
+    createdAt,
+    ...(company ? { company } : {}),
     ...(email ? { email } : {}),
-    ...(optionalString(body.shootType) ? { shootType: optionalString(body.shootType) } : {}),
-    ...(resolveRequestedStudio(body) ? { requestedStudio: resolveRequestedStudio(body) } : {}),
-    ...(resolvePreferredDate(body) ? { preferredDate: resolvePreferredDate(body) } : {}),
-    ...(optionalString(body.crewSize) ? { crewSize: optionalString(body.crewSize) } : {}),
-    ...(optionalString(body.package) ? { package: optionalString(body.package) } : {}),
-    ...(resolveProjectBrief(body) ? { projectBrief: resolveProjectBrief(body) } : {}),
-    ...(optionalString(body.sourcePage) ? { sourcePage: optionalString(body.sourcePage) } : {}),
+    ...(shootType ? { shootType } : {}),
+    ...(requestedStudio ? { requestedStudio } : {}),
+    ...(preferredDate ? { preferredDate } : {}),
+    ...(crewSize ? { crewSize } : {}),
+    ...(packageSelection ? { package: packageSelection } : {}),
+    ...(projectBrief ? { projectBrief } : {}),
+    ...(sourcePage ? { sourcePage } : {}),
   };
 
   try {
@@ -113,7 +184,16 @@ export async function POST(request: NextRequest) {
       token: requireSanityWriteToken(),
     });
 
-    await client.create(document);
+    const createdDocument = await client.create(document);
+
+    try {
+      await sendBookingInquiryNotification({
+        id: createdDocument._id,
+        ...document,
+      });
+    } catch (error) {
+      console.error('[booking] Inquiry saved but notification email failed', error);
+    }
   } catch (error) {
     console.error('[booking] Failed to save inquiry', error);
     return NextResponse.json(
