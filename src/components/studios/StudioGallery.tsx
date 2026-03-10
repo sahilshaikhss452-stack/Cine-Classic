@@ -296,6 +296,7 @@ export default function StudioGallery({ studio }: Props) {
             gridTemplateColumns: hasLayoutImage ? 'minmax(0, 0.92fr) minmax(0, 1.08fr)' : '1fr',
             gap: '1.5rem',
             alignItems: 'start',
+            minWidth: 0,
           }}
         >
           {hasLayoutImage && layoutImageUrl && (
@@ -630,6 +631,7 @@ export default function StudioGallery({ studio }: Props) {
           font-size: 0.88rem;
           color: var(--gray-lt);
           line-height: 1.7;
+          overflow-wrap: anywhere;
         }
 
         .studio-area-grid {
@@ -683,6 +685,23 @@ export default function StudioGallery({ studio }: Props) {
           font-size: 0.86rem;
           color: var(--white);
           line-height: 1.5;
+        }
+
+        .studio-scout-grid > * {
+          min-width: 0;
+        }
+
+        .studio-area-panel-header > * {
+          min-width: 0;
+        }
+
+        .studio-area-copy,
+        .studio-area-count {
+          min-width: 0;
+        }
+
+        .studio-area-count {
+          white-space: nowrap;
         }
 
         @keyframes studioAreaFade {
@@ -771,6 +790,11 @@ export default function StudioGallery({ studio }: Props) {
           .studio-layout-card__meta {
             padding: 0.85rem 0.95rem !important;
             align-items: flex-start !important;
+            gap: 0.55rem !important;
+          }
+
+          .studio-layout-card__meta > div {
+            min-width: 0;
           }
 
           .studio-layout-card__stats {

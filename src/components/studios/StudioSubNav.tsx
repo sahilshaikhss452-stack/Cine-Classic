@@ -1,30 +1,28 @@
 'use client';
 
-/**
- * StudioSubNav — sticky in-page section navigation for studio landing pages.
- *
- * Appears after the user scrolls past the hero (300px), then sticks below
- * the main Navbar. Active section is highlighted via IntersectionObserver.
- *
- * Sections: Gallery · Layout · Specs · Book
- */
+import { useEffect, useMemo, useState } from 'react';
 
-import { useState, useEffect } from 'react';
+type NavItem = {
+  label: string;
+  href: '#gallery' | '#details' | '#booking';
+  cta?: boolean;
+};
 
-const NAV_ITEMS = [
-  { label: 'Gallery',  href: '#gallery'  },
-  { label: 'Layout',   href: '#set-layout' },
-  { label: 'Specs',    href: '#details'  },
-  { label: 'Book',     href: '#booking',  cta: true },
-];
-
-const SECTION_IDS = NAV_ITEMS.map((n) => n.href.replace('#', ''));
+const NAV_ITEMS: NavItem[] = [
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'Specs', href: '#details' },
+  { label: 'Book', href: '#booking', cta: true },
+] as const;
 
 export default function StudioSubNav() {
-  const [visible, setVisible]   = useState(false);
-  const [active,  setActive]    = useState('');
+  const [visible, setVisible] = useState(false);
+  const [active, setActive] = useState('');
 
-  /* Show subnav after scrolling 300px past page top */
+  const sectionIds = useMemo(
+    () => NAV_ITEMS.map((item) => item.href.replace('#', '')).filter((id) => id !== 'booking'),
+    [],
+  );
+
   useEffect(() => {
     function onScroll() {
       setVisible(window.scrollY > 300);
@@ -33,44 +31,50 @@ export default function StudioSubNav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* Track which section is in view */
   useEffect(() => {
-    const targets = SECTION_IDS
+    const targets = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
         });
       },
-      { rootMargin: '-30% 0px -60% 0px' }
+      { rootMargin: '-28% 0px -60% 0px' },
     );
 
-    targets.forEach((t) => observer.observe(t));
+    targets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
-  }, []);
+  }, [sectionIds]);
 
-  function handleClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    e.preventDefault();
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    event.preventDefault();
     const id = href.replace('#', '');
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 80; // account for sticky navbar height
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+    const element = document.getElementById(id);
+    if (!element) {
+      return;
     }
+
+    const offset = 84;
+    const top = element.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 
   return (
     <nav
-      aria-label="Page sections"
+      aria-label="Studio page sections"
       style={{
         position: 'fixed',
-        top: visible ? '60px' : '-80px', // slides down from under Navbar
-        left: 0, right: 0,
+        top: visible ? '60px' : '-84px',
+        left: 0,
+        right: 0,
         zIndex: 90,
+        width: '100%',
+        maxWidth: '100vw',
         background: 'rgba(10,10,10,0.9)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
@@ -78,66 +82,62 @@ export default function StudioSubNav() {
         transition: 'top 0.35s cubic-bezier(0.22,1,0.36,1)',
       }}
     >
-      <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '0 5%',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.25rem',
-        height: '44px',
-      }}>
+      <div className="studio-subnav__track">
         {NAV_ITEMS.map((item) => {
-          const isActive = active === item.href.replace('#', '');
+          const id = item.href.replace('#', '');
+          const isActive = active === id;
+
           if (item.cta) {
             return (
               <a
                 key={item.href}
                 href={item.href}
-                onClick={(e) => handleClick(e, item.href)}
+                onClick={(event) => handleClick(event, item.href)}
+                className="studio-subnav__cta"
                 style={{
-                  marginLeft: 'auto',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  padding: '6px 18px',
+                  padding: '6px 16px',
                   background: 'var(--gold)',
-                  borderRadius: '100px',
+                  borderRadius: '999px',
                   color: 'var(--dark)',
                   fontSize: '0.72rem',
                   fontWeight: 700,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   textDecoration: 'none',
-                  transition: 'all 0.3s',
+                  transition: 'all 0.3s ease',
                   whiteSpace: 'nowrap',
+                  flexShrink: 0,
+                  marginLeft: 'auto',
                 }}
               >
-                {item.label} →
+                {item.label}
               </a>
             );
           }
+
           return (
             <a
               key={item.href}
               href={item.href}
-              onClick={(e) => handleClick(e, item.href)}
+              onClick={(event) => handleClick(event, item.href)}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                padding: '6px 14px',
-                borderRadius: '6px',
+                padding: '6px 12px',
+                borderRadius: '8px',
                 fontSize: '0.72rem',
-                fontWeight: isActive ? 600 : 400,
+                fontWeight: isActive ? 600 : 500,
                 letterSpacing: '0.06em',
                 textTransform: 'uppercase',
                 color: isActive ? 'var(--gold)' : 'var(--gray)',
                 background: isActive ? 'rgba(212,175,55,0.08)' : 'transparent',
                 textDecoration: 'none',
-                transition: 'all 0.25s',
+                transition: 'all 0.25s ease',
                 whiteSpace: 'nowrap',
-                borderBottom: isActive
-                  ? '1px solid rgba(212,175,55,0.35)'
-                  : '1px solid transparent',
+                border: isActive ? '1px solid rgba(212,175,55,0.3)' : '1px solid transparent',
+                flexShrink: 0,
               }}
             >
               {item.label}
@@ -145,6 +145,39 @@ export default function StudioSubNav() {
           );
         })}
       </div>
+
+      <style>{`
+        .studio-subnav__track {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 5%;
+          height: 46px;
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          min-width: 0;
+        }
+
+        @media (max-width: 900px) {
+          .studio-subnav__track {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start;
+            padding-right: calc(5% + 0.75rem);
+          }
+
+          .studio-subnav__track::-webkit-scrollbar {
+            display: none;
+          }
+
+          .studio-subnav__cta {
+            margin-left: 0 !important;
+          }
+        }
+      `}</style>
     </nav>
   );
 }
+

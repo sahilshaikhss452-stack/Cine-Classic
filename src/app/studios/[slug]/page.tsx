@@ -76,12 +76,12 @@ export default async function StudioPage({ params }: Props) {
                     Other <span style={{ color: 'var(--gold)' }}>Studio Spaces</span>
                   </h2>
                 </div>
-                <Link href="/studios" style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(212,175,55,0.3)', padding: '10px 22px', borderRadius: '100px', transition: 'all 0.4s', textDecoration: 'none' }}>
+                <Link href="/studios" style={{ fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(212,175,55,0.3)', padding: '10px 22px', borderRadius: '100px', transition: 'all 0.4s', textDecoration: 'none', maxWidth: '100%' }}>
                   View All Studios
                 </Link>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
                 {otherStudios.map((item, index) => (
                   <StudioCard key={item._id} studio={item} index={index} />
                 ))}

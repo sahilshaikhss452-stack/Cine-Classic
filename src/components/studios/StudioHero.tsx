@@ -32,15 +32,21 @@ export default function StudioHero({ studio }: Props) {
     <section
       className="studio-hero"
       style={{
-        height: '100vh',
-        minHeight: '700px',
+        height: '100svh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      <div style={{ position: 'absolute', inset: 0, background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }} />
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)',
+        }}
+      />
 
       {heroSrc && !heroBgFailed && (
         <Image
@@ -100,6 +106,7 @@ export default function StudioHero({ studio }: Props) {
           width: '100%',
           margin: '0 auto',
           padding: '0 5%',
+          minWidth: 0,
         }}
       >
         <div
@@ -111,17 +118,36 @@ export default function StudioHero({ studio }: Props) {
             paddingTop: '88px',
             flexWrap: 'wrap',
             gap: '0.75rem',
+            minWidth: 0,
           }}
         >
-          <nav aria-label="Breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.34)' }}>
-            <Link href="/" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }}>Home</Link>
+          <nav
+            aria-label="Breadcrumb"
+            className="studio-hero__breadcrumb"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: '0.7rem',
+              color: 'rgba(255,255,255,0.34)',
+              minWidth: 0,
+              maxWidth: '100%',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Link href="/" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }}>
+              Home
+            </Link>
             <span style={{ opacity: 0.5 }}>/</span>
-            <Link href="/studios" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }}>Studios</Link>
+            <Link href="/studios" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }}>
+              Studios
+            </Link>
             <span style={{ opacity: 0.5 }}>/</span>
             <span style={{ color: 'rgba(255,255,255,0.7)' }}>{studio.title}</span>
           </nav>
 
           <div
+            className="studio-hero__badge"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -150,7 +176,16 @@ export default function StudioHero({ studio }: Props) {
           </div>
         </div>
 
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: '44px' }}>
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            paddingBottom: '44px',
+            minWidth: 0,
+          }}
+        >
           <h1
             className="studio-hero__title"
             style={{
@@ -182,7 +217,15 @@ export default function StudioHero({ studio }: Props) {
 
           {topUseCases.length > 0 && (
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
-              <span style={{ fontSize: '0.64rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.36)', paddingTop: '0.2rem' }}>
+              <span
+                style={{
+                  fontSize: '0.64rem',
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.36)',
+                  paddingTop: '0.2rem',
+                }}
+              >
                 Best for
               </span>
               {topUseCases.map((useCase) => (
@@ -196,6 +239,7 @@ export default function StudioHero({ studio }: Props) {
                     borderRadius: '100px',
                     padding: '5px 12px',
                     whiteSpace: 'nowrap',
+                    maxWidth: '100%',
                   }}
                 >
                   {useCase}
@@ -213,9 +257,19 @@ export default function StudioHero({ studio }: Props) {
                 gap: '0.5rem',
                 flexWrap: 'wrap',
                 marginBottom: '2.2rem',
+                minWidth: 0,
               }}
             >
-              <span style={{ fontSize: '0.58rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.24)', flexShrink: 0 }}>
+              <span
+                style={{
+                  fontSize: '0.58rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.24)',
+                  flexShrink: 0,
+                }}
+              >
                 Filmed here
               </span>
               {studio.productions.map((production) => (
@@ -231,6 +285,7 @@ export default function StudioHero({ studio }: Props) {
                     padding: '3px 11px',
                     whiteSpace: 'nowrap',
                     backdropFilter: 'blur(4px)',
+                    maxWidth: '100%',
                   }}
                 >
                   {production}
@@ -239,7 +294,17 @@ export default function StudioHero({ studio }: Props) {
             </div>
           )}
 
-          <div className="studio-hero__ctas" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '2.5rem' }}>
+          <div
+            className="studio-hero__ctas"
+            style={{
+              display: 'flex',
+              gap: '0.75rem',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              marginBottom: '2.5rem',
+              minWidth: 0,
+            }}
+          >
             <a
               href="#booking"
               style={{
@@ -260,6 +325,7 @@ export default function StudioHero({ studio }: Props) {
                 transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                 boxShadow: '0 4px 24px rgba(212,175,55,0.3)',
                 whiteSpace: 'nowrap',
+                maxWidth: '100%',
               }}
             >
               Check Availability
@@ -284,6 +350,7 @@ export default function StudioHero({ studio }: Props) {
                 textDecoration: 'none',
                 transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                 whiteSpace: 'nowrap',
+                maxWidth: '100%',
               }}
             >
               View Specs
@@ -303,6 +370,7 @@ export default function StudioHero({ studio }: Props) {
               border: '1px solid rgba(255,255,255,0.08)',
               borderRadius: '16px',
               overflow: 'hidden',
+              minWidth: 0,
             }}
           >
             {statsBar.map((stat, index, items) => (
@@ -312,12 +380,30 @@ export default function StudioHero({ studio }: Props) {
                   padding: '18px 20px',
                   borderRight: index < items.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
                   transition: 'background 0.3s',
+                  minWidth: 0,
                 }}
               >
-                <div style={{ fontSize: '0.54rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600, marginBottom: '5px', color: stat.gold ? 'var(--gold)' : 'rgba(255,255,255,0.32)' }}>
+                <div
+                  style={{
+                    fontSize: '0.54rem',
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                    fontWeight: 600,
+                    marginBottom: '5px',
+                    color: stat.gold ? 'var(--gold)' : 'rgba(255,255,255,0.32)',
+                  }}
+                >
                   {stat.label}
                 </div>
-                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(0.88rem, 1.3vw, 1.1rem)', fontWeight: 700, letterSpacing: '-0.01em', color: stat.gold ? 'var(--gold)' : 'var(--white)' }}>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-playfair), serif',
+                    fontSize: 'clamp(0.88rem, 1.3vw, 1.1rem)',
+                    fontWeight: 700,
+                    letterSpacing: '-0.01em',
+                    color: stat.gold ? 'var(--gold)' : 'var(--white)',
+                  }}
+                >
                   {stat.value}
                 </div>
               </div>
@@ -327,6 +413,7 @@ export default function StudioHero({ studio }: Props) {
       </div>
 
       <div
+        className="studio-hero__scroll-indicator"
         aria-hidden="true"
         style={{
           position: 'absolute',
@@ -353,34 +440,91 @@ export default function StudioHero({ studio }: Props) {
           0%, 100% { transform: translateY(0); opacity: 0.6; }
           50% { transform: translateY(4px); opacity: 0.15; }
         }
+
         @keyframes hero-scroll-fade {
           0%, 60%, 100% { opacity: 1; }
           80% { opacity: 0.3; }
+        }
+
+        .studio-hero__statsbar > div:hover {
+          background: rgba(255,255,255,0.04);
+        }
+
+        @media (max-width: 768px) {
+          .studio-hero {
+            height: 100svh !important;
+            min-height: 100svh !important;
+          }
+
+          .studio-hero__topbar {
+            padding-top: 74px !important;
+            align-items: flex-start !important;
+          }
+
+          .studio-hero__breadcrumb {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 2px;
+          }
+
+          .studio-hero__breadcrumb::-webkit-scrollbar {
+            display: none;
+          }
+
+          .studio-hero__badge {
+            display: none !important;
+          }
+
+          .studio-hero__ctas {
+            display: grid !important;
+            grid-template-columns: 1fr;
+            gap: 0.6rem !important;
+            margin-bottom: 1.7rem !important;
+          }
+
+          .studio-hero__ctas > * {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+
+          .studio-hero__statsbar > div {
+            padding: 14px 12px !important;
+          }
+
+          .studio-hero__statsbar > div > div:last-child {
+            overflow-wrap: anywhere;
+          }
         }
 
         @media (max-width: 540px) {
           .studio-hero__statsbar {
             grid-template-columns: 1fr 1fr !important;
           }
+
           .studio-hero__statsbar > div:nth-child(2) {
             border-right: none !important;
           }
+
           .studio-hero__statsbar > div:nth-child(1),
           .studio-hero__statsbar > div:nth-child(2) {
             border-bottom: 1px solid rgba(255,255,255,0.06);
           }
         }
 
-        @media (max-width: 480px) {
-          .studio-hero__ctas a:first-child { width: 100%; justify-content: center; }
-        }
+        @media (max-width: 430px) {
+          .studio-hero__title {
+            font-size: clamp(2.2rem, 12vw, 3.2rem) !important;
+            line-height: 0.98 !important;
+          }
 
-        @media (max-width: 480px) {
-          .studio-hero__topbar { padding-top: 76px !important; }
-        }
+          .studio-hero__productions {
+            margin-bottom: 1.4rem !important;
+          }
 
-        .studio-hero__statsbar > div:hover {
-          background: rgba(255,255,255,0.04);
+          .studio-hero__scroll-indicator {
+            display: none !important;
+          }
         }
       `}</style>
     </section>
