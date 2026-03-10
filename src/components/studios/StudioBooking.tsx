@@ -184,6 +184,27 @@ export default function StudioBooking({ studio }: Props) {
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold))' }} />
 
             <form ref={formRef} onSubmit={handleSubmit}>
+              <div
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  left: '-10000px',
+                  top: 'auto',
+                  width: '1px',
+                  height: '1px',
+                  overflow: 'hidden',
+                }}
+              >
+                <label htmlFor="studio-booking-websiteUrl">Leave this field empty</label>
+                <input
+                  type="text"
+                  id="studio-booking-websiteUrl"
+                  name="websiteUrl"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  defaultValue=""
+                />
+              </div>
               <Field label="Your Name" htmlFor="b-name">
                 <input className="form-input" type="text" id="b-name" name="name" placeholder="e.g. Priya Sharma" required />
               </Field>
@@ -295,3 +316,4 @@ function Field({ label, htmlFor, children }: { label: string; htmlFor: string; c
     </div>
   );
 }
+

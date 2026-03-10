@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client';
 import { NextRequest, NextResponse } from 'next/server';
+import { checkBookingRateLimit } from '@/lib/booking-anti-spam';
 import { sendBookingInquiryNotification } from '@/lib/booking-notifications';
 import {
   getSanityApiVersion,
@@ -27,6 +28,8 @@ interface BookingRequestBody {
   project?: string;
   projectBrief?: string;
   sourcePage?: string;
+  websiteUrl?: string;
+  middleName?: string;
 }
 
 interface BookingInquiryDocument {
@@ -96,6 +99,10 @@ function isStudioPageSubmission(body: BookingRequestBody, sourcePage: string | u
     || optionalString(body.projectBrief) !== undefined;
 }
 
+function hasTriggeredHoneypot(body: BookingRequestBody): boolean {
+  return optionalString(body.websiteUrl) !== undefined || optionalString(body.middleName) !== undefined;
+}
+
 export async function POST(request: NextRequest) {
   let body: BookingRequestBody;
 
@@ -103,6 +110,23 @@ export async function POST(request: NextRequest) {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+  }
+
+  if (hasTriggeredHoneypot(body)) {
+    return NextResponse.json({ success: true }, { status: 200 });
+  }
+
+  const rateLimitResult = await checkBookingRateLimit(request);
+  if (!rateLimitResult.allowed) {
+    return NextResponse.json(
+      { error: 'Too many booking requests right now. Please wait a few minutes and try again.' },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': String(rateLimitResult.retryAfterSeconds),
+        },
+      },
+    );
   }
 
   const name = resolveName(body);

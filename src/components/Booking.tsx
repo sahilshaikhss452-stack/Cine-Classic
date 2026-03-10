@@ -263,6 +263,27 @@ export default function Booking({ studios }: Props) {
           />
 
           <form ref={formRef} onSubmit={handleSubmit}>
+            <div
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                left: '-10000px',
+                top: 'auto',
+                width: '1px',
+                height: '1px',
+                overflow: 'hidden',
+              }}
+            >
+              <label htmlFor="booking-websiteUrl">Leave this field empty</label>
+              <input
+                type="text"
+                id="booking-websiteUrl"
+                name="websiteUrl"
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
+              />
+            </div>
             <div className="form-row-2">
               <FormGroup label="First Name" htmlFor="fname">
                 <input className="form-input" type="text" id="fname" name="firstName" placeholder="Rahul" required />
@@ -453,3 +474,4 @@ function FormGroup({ label, htmlFor, children }: { label: string; htmlFor: strin
     </div>
   );
 }
+
