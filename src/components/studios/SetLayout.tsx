@@ -4,7 +4,7 @@
  * Gives production teams, art directors, and location managers a quick
  * visual overview of the set's physical layout.
  *
- * Content (managed via Sanity CMS or src/data/sets.ts):
+ * Content (managed via Sanity CMS):
  *   studio.setLayoutImage        → floor plan / annotated layout photo
  *   studio.setLayoutDescription  → short description of zones / angles
  *
@@ -15,23 +15,27 @@
  */
 
 import Image from 'next/image';
-import type { StudioSet } from '@/data/sets';
+import type { SanityStudio, LayoutZone } from '@/lib/sanity.types';
+import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
 }
 
 /* ── Fallback zone labels when the set has no custom layoutZones ── */
-const DEFAULT_ZONES = [
+const DEFAULT_ZONES: LayoutZone[] = [
   { label: 'Main Shooting Zone', x: '18%', y: '30%' },
-  { label: 'Lighting Rig Area',  x: '65%', y: '18%' },
-  { label: 'Crew / Catering',    x: '72%', y: '68%' },
-  { label: 'Equipment Bay',      x: '18%', y: '70%' },
+  { label: 'Lighting Rig Area', x: '65%', y: '18%' },
+  { label: 'Crew / Catering', x: '72%', y: '68%' },
+  { label: 'Equipment Bay', x: '18%', y: '70%' },
 ];
 
 export default function SetLayout({ studio }: Props) {
-  const hasImage       = !!studio.setLayoutImage;
+  const hasImage = !!studio.setLayoutImage;
   const hasDescription = !!studio.setLayoutDescription;
+
+  const rateFrom = fmtRate(studio.rateHourly, studio.ratePerDay);
+  const rateUnit = fmtRateUnit(studio.rateUnit, studio.rateHourly);
 
   return (
     <section
@@ -93,7 +97,7 @@ export default function SetLayout({ studio }: Props) {
               <div style={{ position: 'relative', aspectRatio: '16/9' }}>
                 <Image
                   src={studio.setLayoutImage!}
-                  alt={`${studio.name} set layout floor plan`}
+                  alt={`${studio.title} set layout floor plan`}
                   fill
                   sizes="(max-width: 768px) 100vw, 70vw"
                   style={{ objectFit: 'contain', padding: '8px' }}
@@ -193,10 +197,10 @@ export default function SetLayout({ studio }: Props) {
                   Quick Reference
                 </div>
                 {[
-                  { icon: '📐', label: 'Floor Area',     value: studio.size },
-                  { icon: '↕️', label: 'Ceiling Height', value: studio.ceilingHeight },
-                  { icon: '👥', label: 'Max Crew',       value: studio.capacity },
-                  { icon: '💡', label: 'Rate From',      value: `${studio.rateFrom}${studio.rateUnit}` },
+                  { icon: '📐', label: 'Floor Area', value: fmtSize(studio.size) },
+                  { icon: '↕️', label: 'Ceiling Height', value: fmtHeight(studio.height) },
+                  { icon: '👥', label: 'Max Crew', value: studio.capacity ?? '—' },
+                  { icon: '💡', label: 'Rate From', value: `${rateFrom}${rateUnit}` },
                 ].map((row, i, arr) => (
                   <div
                     key={row.label}
@@ -253,13 +257,13 @@ export default function SetLayout({ studio }: Props) {
               Need a site visit?
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--gray-lt)', fontWeight: 300 }}>
-              Schedule a walkthrough and we'll show you every zone in person.
+              Schedule a walkthrough and we&apos;ll show you every zone in person.
             </p>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <a
               href={`https://wa.me/919876543210?text=${encodeURIComponent(
-                `Hi, I'd like to schedule a walkthrough of the ${studio.name} at Cine Classic Studios.`
+                `Hi, I'd like to schedule a walkthrough of the ${studio.title} at Cine Classic Studios.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -313,7 +317,7 @@ export default function SetLayout({ studio }: Props) {
 }
 
 /* ── Placeholder diagram (rendered when no layout image is uploaded) ────────── */
-function PlaceholderDiagram({ studio }: { studio: StudioSet }) {
+function PlaceholderDiagram({ studio }: { studio: SanityStudio }) {
   const zones = studio.layoutZones ?? DEFAULT_ZONES;
   return (
     <div style={{
@@ -403,7 +407,7 @@ function PlaceholderDiagram({ studio }: { studio: StudioSet }) {
           alignItems: 'center', justifyContent: 'center',
           gap: '6px',
         }}>
-          <span style={{ fontSize: '2.5rem', opacity: 0.15 }}>{studio.icon}</span>
+          <span style={{ fontSize: '2.5rem', opacity: 0.15 }}>{studio.icon ?? '🎬'}</span>
           <span style={{
             fontSize: '0.65rem',
             letterSpacing: '0.2em',
@@ -411,7 +415,7 @@ function PlaceholderDiagram({ studio }: { studio: StudioSet }) {
             color: 'rgba(255,255,255,0.18)',
             fontWeight: 600,
           }}>
-            {studio.name}
+            {studio.title}
           </span>
         </div>
       </div>

@@ -15,11 +15,11 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import type { StudioSet } from '@/data/sets';
-import { studioGalleryPaths } from '@/data/sets';
+import type { SanityStudio } from '@/lib/sanity.types';
+import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
 }
 
 // ─── Individual gallery slot ──────────────────────────────────────────────────
@@ -104,10 +104,12 @@ function GallerySlot({ src, alt, label, aspectRatio, gradient, icon, revealClass
 }
 
 // ─── Premium "See It In Person" CTA ──────────────────────────────────────────
-function PhotoTourCTA({ studio }: { studio: StudioSet }) {
+function PhotoTourCTA({ studio }: { studio: SanityStudio }) {
   const whatsappText = encodeURIComponent(
-    `Hi, I'd like to schedule a walkthrough of the ${studio.name} at Cine Classic Studios.`
+    `Hi, I'd like to schedule a walkthrough of the ${studio.title} at Cine Classic Studios.`
   );
+
+  const rateDisplay = `${fmtRate(studio.rateHourly, studio.ratePerDay)}${fmtRateUnit(studio.rateUnit, studio.rateHourly)}`;
 
   return (
     <div
@@ -115,7 +117,7 @@ function PhotoTourCTA({ studio }: { studio: StudioSet }) {
       style={{
         borderRadius: '20px',
         border: '1px solid rgba(255,255,255,0.07)',
-        background: studio.gradient,
+        background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)',
         position: 'relative',
         overflow: 'hidden',
         padding: 'clamp(48px, 8vw, 80px) clamp(24px, 6%, 60px)',
@@ -170,7 +172,7 @@ function PhotoTourCTA({ studio }: { studio: StudioSet }) {
           lineHeight: 1.15, marginBottom: '1rem',
           letterSpacing: '-0.01em',
         }}>
-          Experience {studio.name}<br />
+          Experience {studio.title}<br />
           <span style={{ color: 'var(--gold)' }}>In Person</span>
         </h3>
 
@@ -220,10 +222,10 @@ function PhotoTourCTA({ studio }: { studio: StudioSet }) {
         display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem',
       }}>
         {[
-          { label: 'Floor Area',     value: studio.size,          icon: '📐' },
-          { label: 'Ceiling Height', value: studio.ceilingHeight,  icon: '↕️' },
-          { label: 'Max Crew',       value: studio.capacity,       icon: '👥' },
-          { label: 'Rate From',      value: `${studio.rateFrom}${studio.rateUnit}`, icon: '💰', gold: true },
+          { label: 'Floor Area', value: fmtSize(studio.size), icon: '📐' },
+          { label: 'Ceiling Height', value: fmtHeight(studio.height), icon: '↕️' },
+          { label: 'Max Crew', value: studio.capacity ?? '—', icon: '👥' },
+          { label: 'Rate From', value: rateDisplay, icon: '💰', gold: true },
         ].map((chip) => (
           <div key={chip.label} style={{
             padding: '16px',
@@ -264,10 +266,6 @@ function PhotoTourCTA({ studio }: { studio: StudioSet }) {
 
 // ─── Gallery section ──────────────────────────────────────────────────────────
 export default function StudioGallery({ studio }: Props) {
-  const imagePaths: (string | undefined)[] = studio.galleryImages
-    ? Array.from({ length: 6 }, (_, i) => studio.galleryImages![i])
-    : studioGalleryPaths(studio.slug);
-
   const hasRealImages = !!(studio.galleryImages && studio.galleryImages.length > 0);
 
   // ── No photos uploaded yet ────────────────────────────────────────────────
@@ -295,6 +293,7 @@ export default function StudioGallery({ studio }: Props) {
   // Row 1: Large image (spans 2) + 2 stacked right (spans 1)
   // Row 2: 3 equal images
   const SLOT_LABELS = ['Wide Shot', 'Detail', 'Lighting Setup', 'Full Floor', 'Dressed Set', 'Production Ready'];
+  const imagePaths: (string | undefined)[] = Array.from({ length: 6 }, (_, i) => studio.galleryImages![i]);
 
   return (
     <section id="gallery" style={{ padding: '80px 5%', background: 'var(--dark)' }}>
@@ -307,7 +306,7 @@ export default function StudioGallery({ studio }: Props) {
             <span style={{ color: 'var(--gold)' }}>in Action</span>
           </h2>
           <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, marginTop: '0.5rem' }}>
-            A look inside {studio.name}.
+            A look inside {studio.title}.
           </p>
         </div>
 
@@ -324,32 +323,32 @@ export default function StudioGallery({ studio }: Props) {
           {/* Slot 0: hero — spans 2 cols */}
           <GallerySlot
             src={imagePaths[0]}
-            alt={`${studio.name} · ${SLOT_LABELS[0]}`}
+            alt={`${studio.title} · ${SLOT_LABELS[0]}`}
             label={SLOT_LABELS[0]}
             aspectRatio="16/9"
-            gradient={studio.gradient}
-            icon={studio.icon}
+            gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
+            icon={studio.icon ?? '🎬'}
             revealClass="reveal"
             gridArea="1 / 1 / 2 / 3"
           />
           {/* Slot 1: top right */}
           <GallerySlot
             src={imagePaths[1]}
-            alt={`${studio.name} · ${SLOT_LABELS[1]}`}
+            alt={`${studio.title} · ${SLOT_LABELS[1]}`}
             label={SLOT_LABELS[1]}
             aspectRatio="4/3"
-            gradient={studio.gradient}
-            icon={studio.icon}
+            gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
+            icon={studio.icon ?? '🎬'}
             revealClass="reveal reveal-delay-1"
           />
           {/* Slot 2: stacked right — fills next row right col naturally */}
           <GallerySlot
             src={imagePaths[2]}
-            alt={`${studio.name} · ${SLOT_LABELS[2]}`}
+            alt={`${studio.title} · ${SLOT_LABELS[2]}`}
             label={SLOT_LABELS[2]}
             aspectRatio="4/3"
-            gradient={studio.gradient}
-            icon={studio.icon}
+            gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
+            icon={studio.icon ?? '🎬'}
             revealClass="reveal reveal-delay-2"
           />
           {/* Slots 3–5: bottom row of 3 equal */}
@@ -357,11 +356,11 @@ export default function StudioGallery({ studio }: Props) {
             <GallerySlot
               key={idx}
               src={imagePaths[idx]}
-              alt={`${studio.name} · ${SLOT_LABELS[idx]}`}
+              alt={`${studio.title} · ${SLOT_LABELS[idx]}`}
               label={SLOT_LABELS[idx]}
               aspectRatio="4/3"
-              gradient={studio.gradient}
-              icon={studio.icon}
+              gradient={studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)'}
+              icon={studio.icon ?? '🎬'}
               revealClass={`reveal reveal-delay-${idx - 2}`}
             />
           ))}

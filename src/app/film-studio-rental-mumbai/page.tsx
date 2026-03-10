@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
-import Navbar  from '@/components/Navbar';
-import Footer  from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
-import RevealProvider  from '@/components/RevealProvider';
-import { STUDIO_SETS } from '@/data/sets';
+import RevealProvider from '@/components/RevealProvider';
+import { sanityFetch } from '@/lib/sanity';
+import { STUDIO_CARD_QUERY } from '@/lib/sanity.queries';
+import type { SanityStudioCard } from '@/lib/sanity.types';
+import { fmtSize } from '@/lib/studio-utils';
+
+export const revalidate = 30;
 
 export const metadata: Metadata = {
   title: 'Film Studio Rental Mumbai – Book a Film Set Today',
@@ -62,9 +67,16 @@ const WHY_CHOOSE = [
   },
 ];
 
-const STUDIOS_HIGHLIGHT = STUDIO_SETS.slice(0, 6);
+export default async function FilmStudioRentalMumbaiPage() {
+  let studios: SanityStudioCard[] = [];
+  try {
+    studios = await sanityFetch<SanityStudioCard[]>(STUDIO_CARD_QUERY);
+  } catch {
+    // Sanity unavailable — show page without studio cards
+  }
 
-export default function FilmStudioRentalMumbaiPage() {
+  const studiosHighlight = studios.slice(0, 6);
+
   return (
     <>
       <RevealProvider />
@@ -188,85 +200,87 @@ export default function FilmStudioRentalMumbaiPage() {
           </div>
         </section>
 
-        {/* Studio Listing */}
-        <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div className="reveal" style={{ marginBottom: '3.5rem' }}>
-              <span className="section-tag">Our Film Sets</span>
-              <h2 style={{
-                fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
-                fontWeight: 700, color: 'var(--white)',
-                margin: '1.2rem 0 1rem',
-                letterSpacing: '-0.015em', lineHeight: 1.15,
+        {/* Studio Listing — from Sanity */}
+        {studiosHighlight.length > 0 && (
+          <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+              <div className="reveal" style={{ marginBottom: '3.5rem' }}>
+                <span className="section-tag">Our Film Sets</span>
+                <h2 style={{
+                  fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
+                  fontWeight: 700, color: 'var(--white)',
+                  margin: '1.2rem 0 1rem',
+                  letterSpacing: '-0.015em', lineHeight: 1.15,
+                }}>
+                  Sets Available for{' '}
+                  <span style={{ color: 'var(--gold)' }}>Film Production</span>
+                </h2>
+              </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '1.5rem',
               }}>
-                Sets Available for{' '}
-                <span style={{ color: 'var(--gold)' }}>Film Production</span>
-              </h2>
-            </div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '1.5rem',
-            }}>
-              {STUDIOS_HIGHLIGHT.map((studio, i) => (
-                <div
-                  key={studio.id}
-                  className={`reveal reveal-delay-${(i % 3) + 1}`}
-                  style={{
-                    background: studio.gradient,
-                    border: '1px solid rgba(255,255,255,0.06)',
-                    borderRadius: '12px',
-                    padding: '2rem',
-                    transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s',
-                  }}
-                >
-                  <div style={{
-                    height: '2px',
-                    background: `linear-gradient(90deg, ${studio.accentColor}, transparent)`,
-                    marginBottom: '1.5rem',
-                    opacity: 0.6,
-                  }} />
-                  <div style={{ fontSize: '1.8rem', marginBottom: '0.6rem' }}>{studio.icon}</div>
-                  <h3 style={{
-                    fontSize: '1.2rem', fontWeight: 700,
-                    color: 'var(--white)', marginBottom: '0.5rem',
-                    letterSpacing: '-0.01em',
-                  }}>
-                    {studio.name}
-                  </h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--gray)', lineHeight: 1.7, marginBottom: '1.2rem' }}>
-                    {studio.shortDescription}
-                  </p>
-                  <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.2rem', flexWrap: 'wrap' }}>
-                    {[
-                      { l: 'Size', v: studio.size },
-                      { l: 'Capacity', v: studio.capacity },
-                    ].map(m => (
-                      <div key={m.l}>
-                        <div style={{ fontSize: '0.62rem', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px' }}>{m.l}</div>
-                        <div style={{ fontSize: '0.85rem', color: 'var(--white)', fontWeight: 600 }}>{m.v}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <a
-                    href={`/studios/${studio.slug}`}
+                {studiosHighlight.map((studio, i) => (
+                  <div
+                    key={studio._id}
+                    className={`reveal reveal-delay-${(i % 3) + 1}`}
                     style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '5px',
-                      fontSize: '0.78rem', fontWeight: 600,
-                      color: studio.accentColor, textDecoration: 'none',
-                      letterSpacing: '0.06em', textTransform: 'uppercase',
+                      background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      borderRadius: '12px',
+                      padding: '2rem',
+                      transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s',
                     }}
                   >
-                    View Set Details →
-                  </a>
-                </div>
-              ))}
+                    <div style={{
+                      height: '2px',
+                      background: `linear-gradient(90deg, ${studio.accentColor ?? '#d4af37'}, transparent)`,
+                      marginBottom: '1.5rem',
+                      opacity: 0.6,
+                    }} />
+                    <div style={{ fontSize: '1.8rem', marginBottom: '0.6rem' }}>{studio.icon ?? '🎬'}</div>
+                    <h3 style={{
+                      fontSize: '1.2rem', fontWeight: 700,
+                      color: 'var(--white)', marginBottom: '0.5rem',
+                      letterSpacing: '-0.01em',
+                    }}>
+                      {studio.title}
+                    </h3>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--gray)', lineHeight: 1.7, marginBottom: '1.2rem' }}>
+                      {studio.tagline ?? ''}
+                    </p>
+                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.2rem', flexWrap: 'wrap' }}>
+                      {[
+                        { l: 'Size', v: fmtSize(studio.size) },
+                        { l: 'Capacity', v: studio.capacity ?? '—' },
+                      ].map(m => (
+                        <div key={m.l}>
+                          <div style={{ fontSize: '0.62rem', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px' }}>{m.l}</div>
+                          <div style={{ fontSize: '0.85rem', color: 'var(--white)', fontWeight: 600 }}>{m.v}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <a
+                      href={`/studios/${studio.slug}`}
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '5px',
+                        fontSize: '0.78rem', fontWeight: 600,
+                        color: studio.accentColor ?? 'var(--gold)', textDecoration: 'none',
+                        letterSpacing: '0.06em', textTransform: 'uppercase',
+                      }}
+                    >
+                      View Set Details →
+                    </a>
+                  </div>
+                ))}
+              </div>
+              <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                <a href="/studios" className="btn-outline">View All Studios →</a>
+              </div>
             </div>
-            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-              <a href="/" className="btn-outline">View All 9 Studios →</a>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* FAQ */}
         <section style={{ padding: '80px 5%', background: 'var(--dark2)' }}>

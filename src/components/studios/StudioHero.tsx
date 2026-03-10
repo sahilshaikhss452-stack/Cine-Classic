@@ -14,23 +14,23 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import type { StudioSet } from '@/data/sets';
-import { studioHeroPath } from '@/data/sets';
+import type { SanityStudio } from '@/lib/sanity.types';
+import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 import DownloadSetDeckButton from '@/components/studios/DownloadSetDeckButton';
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
 }
 
 export default function StudioHero({ studio }: Props) {
-  const heroSrc = studio.heroImage ?? studioHeroPath(studio.slug);
+  const heroSrc = studio.heroImage;
   const [heroBgFailed, setHeroBgFailed] = useState(false);
 
   const statsBar = [
-    { label: 'Floor Area',     value: studio.size,                              gold: false },
-    { label: 'Ceiling Height', value: studio.ceilingHeight,                     gold: false },
-    { label: 'Max Crew',       value: studio.capacity,                          gold: false },
-    { label: 'Rate From',      value: `${studio.rateFrom}${studio.rateUnit}`,   gold: true  },
+    { label: 'Floor Area', value: fmtSize(studio.size), gold: false },
+    { label: 'Ceiling Height', value: fmtHeight(studio.height), gold: false },
+    { label: 'Max Crew', value: studio.capacity ?? '—', gold: false },
+    { label: 'Rate From', value: `${fmtRate(studio.rateHourly, studio.ratePerDay)}${fmtRateUnit(studio.rateUnit, studio.rateHourly)}`, gold: true },
   ];
 
   return (
@@ -46,13 +46,13 @@ export default function StudioHero({ studio }: Props) {
       }}
     >
       {/* ── Background: gradient fallback ── */}
-      <div style={{ position: 'absolute', inset: 0, background: studio.gradient }} />
+      <div style={{ position: 'absolute', inset: 0, background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }} />
 
-      {/* ── Background: real photo ── */}
-      {!heroBgFailed && (
+      {/* ── Background: real photo (only if Sanity has one) ── */}
+      {heroSrc && !heroBgFailed && (
         <Image
           src={heroSrc}
-          alt={`${studio.name} studio`}
+          alt={`${studio.title} studio`}
           fill
           priority
           sizes="100vw"
@@ -86,7 +86,7 @@ export default function StudioHero({ studio }: Props) {
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
         height: '2px',
-        background: `linear-gradient(90deg, transparent 0%, rgba(${hexToRgb(studio.accentColor)}, 0.5) 50%, transparent 100%)`,
+        background: `linear-gradient(90deg, transparent 0%, rgba(${hexToRgb(studio.accentColor ?? '#d4af37')}, 0.5) 50%, transparent 100%)`,
         opacity: 0.6,
       }} />
 
@@ -125,21 +125,21 @@ export default function StudioHero({ studio }: Props) {
             <span style={{ opacity: 0.5 }}>›</span>
             <Link href="/studios" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }}>Studios</Link>
             <span style={{ opacity: 0.5 }}>›</span>
-            <span style={{ color: 'rgba(255,255,255,0.6)' }}>{studio.name}</span>
+            <span style={{ color: 'rgba(255,255,255,0.6)' }}>{studio.title}</span>
           </nav>
 
           {/* Studio tag */}
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: '7px',
             fontSize: '0.62rem', fontWeight: 600, letterSpacing: '0.2em',
-            textTransform: 'uppercase', color: studio.accentColor,
-            background: `rgba(${hexToRgb(studio.accentColor)}, 0.1)`,
-            border: `1px solid rgba(${hexToRgb(studio.accentColor)}, 0.28)`,
+            textTransform: 'uppercase', color: studio.accentColor ?? '#d4af37',
+            background: `rgba(${hexToRgb(studio.accentColor ?? '#d4af37')}, 0.1)`,
+            border: `1px solid rgba(${hexToRgb(studio.accentColor ?? '#d4af37')}, 0.28)`,
             padding: '5px 14px', borderRadius: '100px',
           }}>
             <span style={{
               width: '5px', height: '5px',
-              background: studio.accentColor, borderRadius: '50%',
+              background: studio.accentColor ?? '#d4af37', borderRadius: '50%',
               animation: 'pulse-dot 2s ease-in-out infinite',
             }} />
             Cine Classic Studios
@@ -162,7 +162,7 @@ export default function StudioHero({ studio }: Props) {
               letterSpacing: '-0.025em',
             }}
           >
-            {studio.name}
+            {studio.title}
           </h1>
 
           {/* Short description */}
@@ -177,7 +177,7 @@ export default function StudioHero({ studio }: Props) {
               marginBottom: '1.75rem',
             }}
           >
-            {studio.shortDescription}
+            {studio.tagline ?? ''}
           </p>
 
           {/* "Filmed here" trust pills */}

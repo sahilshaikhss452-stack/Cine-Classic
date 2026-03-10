@@ -10,10 +10,11 @@
  *  - SVG icons (not emoji) for premium feel
  */
 
-import type { StudioSet } from '@/data/sets';
+import type { SanityStudio } from '@/lib/sanity.types';
+import { fmtSize, fmtHeight, fmtRate, fmtRateUnit, fmtMinBooking } from '@/lib/studio-utils';
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
 }
 
 /* ── SVG spec icons ─────────────────────────────────────────────────────────── */
@@ -101,15 +102,19 @@ const USE_CASE_BORDERS = [
 
 /* ── Main component ──────────────────────────────────────────────────────────── */
 export default function StudioDetails({ studio }: Props) {
+  const rateFrom = fmtRate(studio.rateHourly, studio.ratePerDay);
+  const rateUnit = fmtRateUnit(studio.rateUnit, studio.rateHourly);
+  const minBooking = fmtMinBooking(studio.minBookingHours);
+
   /* Build the spec strip — only include cards for fields that exist */
   const specItems = [
-    { icon: <IconArea />,    label: 'Floor Area',     value: studio.size,                             gold: false },
-    { icon: <IconHeight />,  label: 'Ceiling Height', value: studio.ceilingHeight,                    gold: false },
-    { icon: <IconCrew />,    label: 'Max Crew',       value: studio.capacity,                         gold: false },
-    { icon: <IconRate />,    label: 'Rate From',      value: `${studio.rateFrom}${studio.rateUnit}`,  gold: true  },
-    ...(studio.parking    ? [{ icon: <IconParking />, label: 'Parking',     value: studio.parking,    gold: false }] : []),
-    ...(studio.power      ? [{ icon: <IconPower />,   label: 'Power',       value: studio.power,      gold: false }] : []),
-    ...(studio.minBooking ? [{ icon: <IconClock />,   label: 'Min Booking', value: studio.minBooking, gold: false }] : []),
+    { icon: <IconArea />, label: 'Floor Area', value: fmtSize(studio.size), gold: false },
+    { icon: <IconHeight />, label: 'Ceiling Height', value: fmtHeight(studio.height), gold: false },
+    { icon: <IconCrew />, label: 'Max Crew', value: studio.capacity ?? '—', gold: false },
+    { icon: <IconRate />, label: 'Rate From', value: `${rateFrom}${rateUnit}`, gold: true },
+    ...(studio.parking ? [{ icon: <IconParking />, label: 'Parking', value: studio.parking, gold: false }] : []),
+    ...(studio.powerCapacity ? [{ icon: <IconPower />, label: 'Power', value: studio.powerCapacity, gold: false }] : []),
+    ...(minBooking ? [{ icon: <IconClock />, label: 'Min Booking', value: minBooking, gold: false }] : []),
   ];
 
   return (
@@ -234,7 +239,7 @@ export default function StudioDetails({ studio }: Props) {
                 fontSize: '0.97rem', color: 'var(--gray-lt)',
                 fontWeight: 300, lineHeight: 1.9,
               }}>
-                {studio.description}
+                {studio.description ?? ''}
               </p>
             </div>
 
@@ -393,8 +398,8 @@ export default function StudioDetails({ studio }: Props) {
                 fontSize: '0.82rem', color: 'var(--gray-lt)',
                 fontWeight: 300, marginBottom: '1.125rem', lineHeight: 1.65,
               }}>
-                From {studio.rateFrom}{studio.rateUnit}
-                {studio.minBooking ? ` · Min ${studio.minBooking}` : ''}
+                From {rateFrom}{rateUnit}
+                {minBooking ? ` · Min ${minBooking}` : ''}
                 {' · '}Confirmed within 2 hours
               </p>
               <div style={{ display: 'flex', gap: '0.625rem', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -412,7 +417,7 @@ export default function StudioDetails({ studio }: Props) {
                   Check Availability →
                 </a>
                 <a
-                  href={`https://wa.me/919876543210?text=${encodeURIComponent(`Hi, I'd like to enquire about the ${studio.name} at Cine Classic Studios.`)}`}
+                  href={`https://wa.me/919876543210?text=${encodeURIComponent(`Hi, I'd like to enquire about the ${studio.title} at Cine Classic Studios.`)}`}
                   target="_blank" rel="noopener noreferrer"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '5px',

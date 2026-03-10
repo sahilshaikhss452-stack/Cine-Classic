@@ -15,17 +15,17 @@
  *       PDF client-side, and triggers a Blob download. ~1–2 s on first click.
  *
  * Props:
- *  studio   — full StudioSet data object
+ *  studio   — SanityStudio data object
  *  variant  — 'primary' (gold filled) | 'outline' (white border)
  *             default: 'outline'
  *  size     — 'sm' | 'md'  default: 'md'
  */
 
 import { useState } from 'react';
-import type { StudioSet } from '@/data/sets';
+import type { SanityStudio } from '@/lib/sanity.types';
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
   variant?: 'primary' | 'outline' | 'ghost';
   size?: 'sm' | 'md';
 }

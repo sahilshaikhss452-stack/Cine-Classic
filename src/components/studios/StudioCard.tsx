@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import type { StudioSet } from '@/data/sets';
+import type { SanityStudioCard } from '@/lib/sanity.types';
+import { fmtSize } from '@/lib/studio-utils';
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudioCard;
   index?: number;
 }
 
@@ -25,7 +26,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
       {/* Thumbnail */}
       <div className="studio-card-thumb" style={{
         aspectRatio: '16/9',
-        background: studio.gradient,
+        background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -34,7 +35,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
         gap: '0.5rem',
         overflow: 'hidden',
       }}>
-        <span style={{ fontSize: '3rem', opacity: 0.6 }}>{studio.icon}</span>
+        <span style={{ fontSize: '3rem', opacity: 0.6 }}>{studio.icon ?? '🎬'}</span>
         <span style={{
           fontSize: '0.65rem',
           letterSpacing: '0.2em',
@@ -42,7 +43,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           color: 'rgba(255,255,255,0.25)',
           fontFamily: 'var(--font-inter), sans-serif',
         }}>
-          {studio.name}
+          {studio.title}
         </span>
 
         {/* Accent top bar */}
@@ -50,7 +51,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           position: 'absolute',
           top: 0, left: 0, right: 0,
           height: '3px',
-          background: `linear-gradient(90deg, transparent, ${studio.accentColor}, transparent)`,
+          background: `linear-gradient(90deg, transparent, ${studio.accentColor ?? '#d4af37'}, transparent)`,
           opacity: 0.6,
         }} />
       </div>
@@ -62,10 +63,10 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           fontWeight: 600,
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          color: studio.accentColor,
+          color: studio.accentColor ?? '#d4af37',
           opacity: 0.85,
         }}>
-          {studio.size} · {studio.capacity}
+          {fmtSize(studio.size)} · {studio.capacity ?? '—'}
         </div>
 
         <h3 style={{
@@ -75,7 +76,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           color: 'var(--white)',
           lineHeight: 1.2,
         }}>
-          {studio.name}
+          {studio.title}
         </h3>
 
         <p style={{
@@ -85,7 +86,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           lineHeight: 1.7,
           flex: 1,
         }}>
-          {studio.shortDescription}
+          {studio.tagline ?? ''}
         </p>
 
         {/* Tags */}

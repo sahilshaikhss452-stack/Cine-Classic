@@ -10,7 +10,8 @@
     "sanity:dev": "npm --prefix sanity-studio run dev",
     "sanity:build": "npm --prefix sanity-studio run build",
     "sanity:deploy": "npm --prefix sanity-studio run deploy",
-    "sanity:seed": "node --env-file=.env.local scripts/seed-sanity.mjs"
+    "sanity:seed": "node --env-file=.env.local scripts/seed-sanity.mjs",
+    "upgrade-deps": "npx npm-check-updates -u && npm install --legacy-peer-deps"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.2",
@@ -20,7 +21,8 @@
     "next": "^15.2.2",
     "next-sanity": "^9.12.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sanity": "^5.13.0"
   },
   "devDependencies": {
     "@types/node": "^20",

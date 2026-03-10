@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import type { StudioSet } from '@/data/sets';
+import type { SanityStudio } from '@/lib/sanity.types';
+import { fmtRate, fmtRateUnit, fmtMinBooking } from '@/lib/studio-utils';
 
 // ── Replace with your actual WhatsApp number ─────────────────
 const WHATSAPP_NUMBER = '919876543210'; // format: countrycode + number, no +
 
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
 }
 
 export default function StudioBooking({ studio }: Props) {
@@ -15,8 +16,12 @@ export default function StudioBooking({ studio }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const today = new Date().toISOString().split('T')[0];
 
+  const rateFrom = fmtRate(studio.rateHourly, studio.ratePerDay);
+  const rateUnit = fmtRateUnit(studio.rateUnit, studio.rateHourly);
+  const minBooking = fmtMinBooking(studio.minBookingHours);
+
   const whatsappText = encodeURIComponent(
-    `Hi! I'm interested in booking the *${studio.name}* studio at Cine Classic Studios.\n\nPlease share availability and rates.`
+    `Hi! I'm interested in booking the *${studio.title}* studio at Cine Classic Studios.\n\nPlease share availability and rates.`
   );
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
 
@@ -25,7 +30,7 @@ export default function StudioBooking({ studio }: Props) {
     setStatus('loading');
     const data = {
       ...Object.fromEntries(new FormData(e.currentTarget)),
-      set: studio.name,
+      set: studio.title,
     };
     try {
       const res = await fetch('/api/booking', {
@@ -61,7 +66,7 @@ export default function StudioBooking({ studio }: Props) {
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <div className="section-tag">Book This Set</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            Reserve <span style={{ color: 'var(--gold)' }}>{studio.name}</span>
+            Reserve <span style={{ color: 'var(--gold)' }}>{studio.title}</span>
           </h2>
           <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, marginTop: '0.75rem', maxWidth: '500px', margin: '0.75rem auto 0' }}>
             Send an inquiry or connect instantly on WhatsApp. We confirm within{' '}
@@ -128,9 +133,9 @@ export default function StudioBooking({ studio }: Props) {
                 value: 'Film City Road, Goregaon East',
                 sub: 'Mumbai 400065 · Near Film City (7-min drive)',
               },
-              { icon: '📞', label: 'Phone',    value: '+91 98765 43210' },
-              { icon: '✉️', label: 'Email',    value: 'bookings@cineclassicstudios.com' },
-              { icon: '🕐', label: 'Hours',    value: 'Mon – Sun · 6:00 AM – Midnight' },
+              { icon: '📞', label: 'Phone', value: '+91 98765 43210' },
+              { icon: '✉️', label: 'Email', value: 'bookings@cineclassicstudios.com' },
+              { icon: '🕐', label: 'Hours', value: 'Mon – Sun · 6:00 AM – Midnight' },
             ].map((item) => (
               <div key={item.label} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{
@@ -162,9 +167,9 @@ export default function StudioBooking({ studio }: Props) {
               color: 'var(--gray-lt)',
               lineHeight: 1.7,
             }}>
-              <strong style={{ color: 'var(--gold)' }}>{studio.name}</strong> starts at{' '}
-              <strong style={{ color: 'var(--white)' }}>{studio.rateFrom}{studio.rateUnit}</strong>.
-              {studio.minBooking && ` Minimum booking: ${studio.minBooking}.`}
+              <strong style={{ color: 'var(--gold)' }}>{studio.title}</strong> starts at{' '}
+              <strong style={{ color: 'var(--white)' }}>{rateFrom}{rateUnit}</strong>.
+              {minBooking && ` Minimum booking: ${minBooking}.`}
               {' '}No advance payment for inquiry.
             </div>
           </div>
@@ -217,13 +222,13 @@ export default function StudioBooking({ studio }: Props) {
                 <textarea
                   className="form-input"
                   id="b-project" name="project"
-                  placeholder={`Brief description of your project for ${studio.name}…`}
+                  placeholder={`Brief description of your project for ${studio.title}…`}
                   style={{ resize: 'vertical', minHeight: '80px' }}
                 />
               </Field>
 
               {/* Hidden field: studio name pre-filled */}
-              <input type="hidden" name="set" value={studio.name} />
+              <input type="hidden" name="set" value={studio.title} />
 
               <p style={{ fontSize: '0.72rem', color: 'var(--gray)', marginBottom: '1rem', lineHeight: 1.6 }}>
                 No advance payment for inquiry. Our team confirms within 2 hours.
@@ -255,7 +260,7 @@ export default function StudioBooking({ studio }: Props) {
                   border: '1px solid rgba(212,175,55,0.3)',
                   borderRadius: '8px', fontSize: '0.85rem', color: 'var(--gold)', textAlign: 'center',
                 }}>
-                  ✓ Request received! We'll confirm within 2 hours.
+                  ✓ Request received! We&apos;ll confirm within 2 hours.
                 </div>
               )}
               {status === 'error' && (

@@ -1,28 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { STUDIO_SETS, type StudioSet } from '@/data/sets';
+import type { SanityStudioCard } from '@/lib/sanity.types';
+import { fmtSize } from '@/lib/studio-utils';
 
 const MAX_COMPARE = 3;
 
-const ROWS: { label: string; key: keyof StudioSet | 'rate' }[] = [
-  { label: 'Floor Size',      key: 'size' },
-  { label: 'Ceiling Height',  key: 'ceilingHeight' },
-  { label: 'Crew Capacity',   key: 'capacity' },
-  { label: 'Rate From',       key: 'rate' },
-];
-
-function getRateDisplay(studio: StudioSet) {
-  return `${studio.rateFrom}${studio.rateUnit}`;
+interface Props {
+  studios?: SanityStudioCard[];
 }
 
-function getCellValue(studio: StudioSet, key: keyof StudioSet | 'rate'): string {
-  if (key === 'rate') return getRateDisplay(studio);
-  const val = studio[key as keyof StudioSet];
-  return typeof val === 'string' ? val : '';
-}
-
-export default function StudioComparison() {
+export default function StudioComparison({ studios = [] }: Props) {
   const [selected, setSelected] = useState<string[]>([]);
 
   function toggle(slug: string) {
@@ -33,7 +21,7 @@ export default function StudioComparison() {
     });
   }
 
-  const compareStudios = STUDIO_SETS.filter(s => selected.includes(s.slug));
+  const compareStudios = studios.filter(s => selected.includes(s.slug));
 
   return (
     <section style={{ background: 'var(--dark3)', padding: '120px 5%' }}>
@@ -58,7 +46,7 @@ export default function StudioComparison() {
 
         {/* Studio Selector Pills */}
         <div className="sc-studio-pills reveal">
-          {STUDIO_SETS.map(studio => {
+          {studios.map(studio => {
             const isSelected = selected.includes(studio.slug);
             const isDisabled = !isSelected && selected.length >= MAX_COMPARE;
             return (
@@ -67,8 +55,8 @@ export default function StudioComparison() {
                 onClick={() => toggle(studio.slug)}
                 className={`sc-pill ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
               >
-                <span style={{ marginRight: '6px' }}>{studio.icon}</span>
-                {studio.label}
+                <span style={{ marginRight: '6px' }}>{studio.icon ?? '🎬'}</span>
+                {studio.title}
               </button>
             );
           })}
@@ -96,9 +84,9 @@ export default function StudioComparison() {
                   {compareStudios.map(studio => (
                     <th key={studio.slug} className="sc-th-studio">
                       <span style={{ fontSize: '1.4rem', display: 'block', marginBottom: '0.3rem' }}>
-                        {studio.icon}
+                        {studio.icon ?? '🎬'}
                       </span>
-                      {studio.name}
+                      {studio.title}
                       <div style={{
                         fontSize: '0.68rem',
                         fontWeight: 400,
@@ -106,26 +94,32 @@ export default function StudioComparison() {
                         letterSpacing: '0.06em',
                         marginTop: '0.2rem',
                       }}>
-                        from {studio.rateFrom}{studio.rateUnit}
+                        {studio.tagline ?? ''}
                       </div>
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {ROWS.map(row => (
-                  <tr key={row.label}>
-                    <td className="sc-td">{row.label}</td>
-                    {compareStudios.map(studio => (
-                      <td
-                        key={studio.slug}
-                        className={`sc-td-val ${row.key === 'rate' ? 'gold' : ''}`}
-                      >
-                        {getCellValue(studio, row.key)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {/* Floor Size */}
+                <tr>
+                  <td className="sc-td">Floor Size</td>
+                  {compareStudios.map(studio => (
+                    <td key={studio.slug} className="sc-td-val">
+                      {fmtSize(studio.size)}
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Crew Capacity */}
+                <tr>
+                  <td className="sc-td">Crew Capacity</td>
+                  {compareStudios.map(studio => (
+                    <td key={studio.slug} className="sc-td-val">
+                      {studio.capacity ?? '—'}
+                    </td>
+                  ))}
+                </tr>
 
                 {/* Suitable For row */}
                 <tr>
@@ -138,35 +132,15 @@ export default function StudioComparison() {
                           margin: '2px 3px',
                           padding: '2px 8px',
                           borderRadius: '4px',
-                          background: `${studio.accentColor}18`,
-                          border: `1px solid ${studio.accentColor}30`,
-                          color: studio.accentColor,
+                          background: `${studio.accentColor ?? '#d4af37'}18`,
+                          border: `1px solid ${studio.accentColor ?? '#d4af37'}30`,
+                          color: studio.accentColor ?? 'var(--gold)',
                           fontSize: '0.7rem',
                           fontWeight: 600,
                           letterSpacing: '0.04em',
                         }}>
                           {tag}
                         </span>
-                      ))}
-                    </td>
-                  ))}
-                </tr>
-
-                {/* Key Facilities row */}
-                <tr>
-                  <td className="sc-td" style={{ verticalAlign: 'top' }}>Key Facilities</td>
-                  {compareStudios.map(studio => (
-                    <td key={studio.slug} className="sc-td-val" style={{ verticalAlign: 'top', fontSize: '0.8rem' }}>
-                      {studio.facilities.slice(0, 4).map((fac, i) => (
-                        <div key={i} style={{
-                          display: 'flex', alignItems: 'center', gap: '6px',
-                          justifyContent: 'center',
-                          marginBottom: '4px',
-                          color: 'var(--gray-lt)',
-                        }}>
-                          <span style={{ color: 'var(--gold)', fontSize: '0.6rem' }}>✦</span>
-                          {fac}
-                        </div>
                       ))}
                     </td>
                   ))}

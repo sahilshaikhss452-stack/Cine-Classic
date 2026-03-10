@@ -1,44 +1,44 @@
-import Navbar            from '@/components/Navbar';
-import Hero              from '@/components/Hero';
-import NetworkLogoStrip  from '@/components/NetworkLogoStrip';
-import Sets              from '@/components/Sets';
-import Productions       from '@/components/Productions';
-import BehindScenes      from '@/components/BehindScenes';
-import Gallery           from '@/components/Gallery';
-import Testimonials      from '@/components/Testimonials';
-import ProductionTypes   from '@/components/ProductionTypes';
-import ShootTimeline     from '@/components/ShootTimeline';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import NetworkLogoStrip from '@/components/NetworkLogoStrip';
+import Sets from '@/components/Sets';
+import Productions from '@/components/Productions';
+import BehindScenes from '@/components/BehindScenes';
+import Gallery from '@/components/Gallery';
+import Testimonials from '@/components/Testimonials';
+import ProductionTypes from '@/components/ProductionTypes';
+import ShootTimeline from '@/components/ShootTimeline';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
-import About             from '@/components/About';
-import LocationSection   from '@/components/LocationSection';
-import Booking           from '@/components/Booking';
-import Footer            from '@/components/Footer';
-import FloatingButtons   from '@/components/FloatingButtons';
-import RevealProvider    from '@/components/RevealProvider';
-import MotionSection     from '@/components/motion/MotionSection';
+import About from '@/components/About';
+import LocationSection from '@/components/LocationSection';
+import Booking from '@/components/Booking';
+import Footer from '@/components/Footer';
+import FloatingButtons from '@/components/FloatingButtons';
+import RevealProvider from '@/components/RevealProvider';
+import MotionSection from '@/components/motion/MotionSection';
 
-// Data sources — Sanity-first, hardcoded emergency fallback
-import { STUDIO_SETS }               from '@/data/sets';
-import { PRODUCTIONS }               from '@/data/productions';
-import type { Production }           from '@/data/productions';
-import { TESTIMONIALS }              from '@/data/testimonials';
-import type { Testimonial }          from '@/data/testimonials';
-import { sanityFetch }               from '@/lib/sanity';
-import { STUDIOS_QUERY, PRODUCTIONS_QUERY, TESTIMONIALS_QUERY } from '@/lib/sanity.queries';
-import type { SanityStudio, SanityProduction, SanityTestimonial } from '@/lib/sanity.types';
+// Data sources
+import { PRODUCTIONS } from '@/data/productions';
+import type { Production } from '@/data/productions';
+import { TESTIMONIALS } from '@/data/testimonials';
+import type { Testimonial } from '@/data/testimonials';
+import { sanityFetch } from '@/lib/sanity';
+import { STUDIO_CARD_QUERY, PRODUCTIONS_QUERY, TESTIMONIALS_QUERY } from '@/lib/sanity.queries';
+import type { SanityStudioCard, SanityProduction, SanityTestimonial } from '@/lib/sanity.types';
 import {
-  mergeStudiosWithFallback,
   sanityProductionsToProductions,
   sanityTestimonialsToTestimonials,
 } from '@/lib/sanity.adapter';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   // ── Fetch all CMS content in parallel ────────────────────────────────────────
   // All three fetches run concurrently. Each has its own try/catch so a single
   // Sanity failure doesn't take down the entire page.
 
-  // Studios: merge strategy — CMS overrides matching hardcoded; rest stays hardcoded
-  let studios = STUDIO_SETS;
+  // Studios: direct SanityStudioCard[] — no adapter or merge needed
+  let studios: SanityStudioCard[] = [];
 
   // Productions: Sanity-first, full hardcoded array as emergency fallback
   let productions: Production[] = PRODUCTIONS;
@@ -47,14 +47,14 @@ export default async function HomePage() {
   let testimonials: Testimonial[] = TESTIMONIALS;
 
   const [studioDocs, productionDocs, testimonialDocs] = await Promise.allSettled([
-    sanityFetch<SanityStudio[]>(STUDIOS_QUERY),
+    sanityFetch<SanityStudioCard[]>(STUDIO_CARD_QUERY),
     sanityFetch<SanityProduction[]>(PRODUCTIONS_QUERY),
     sanityFetch<SanityTestimonial[]>(TESTIMONIALS_QUERY),
   ]);
 
-  if (studioDocs.status    === 'fulfilled') studios     = mergeStudiosWithFallback(studioDocs.value);
+  if (studioDocs.status === 'fulfilled') studios = studioDocs.value;
   if (productionDocs.status === 'fulfilled' && productionDocs.value.length > 0)
-    productions  = sanityProductionsToProductions(productionDocs.value);
+    productions = sanityProductionsToProductions(productionDocs.value);
   if (testimonialDocs.status === 'fulfilled' && testimonialDocs.value.length > 0)
     testimonials = sanityTestimonialsToTestimonials(testimonialDocs.value);
 
@@ -115,7 +115,7 @@ export default async function HomePage() {
 
         {/* 10 ─── AVAILABILITY CALENDAR — check dates, create urgency */}
         <MotionSection>
-          <AvailabilityCalendar />
+          <AvailabilityCalendar studios={studios} />
         </MotionSection>
 
         {/* 11 ─── ABOUT — brand story for those who want deeper context */}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { STUDIO_SETS } from '@/data/sets';
+import type { SanityStudioCard } from '@/lib/sanity.types';
 
 const DAY_HEADERS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -19,11 +19,15 @@ function generateCalendar(year: number, month: number) {
 }
 
 const MONTH_NAMES = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December',
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-export default function AvailabilityCalendar() {
+interface Props {
+  studios?: SanityStudioCard[];
+}
+
+export default function AvailabilityCalendar({ studios = [] }: Props) {
   const today = new Date();
   const [viewMonth, setViewMonth] = useState({ year: today.getFullYear(), month: today.getMonth() });
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
@@ -191,7 +195,7 @@ export default function AvailabilityCalendar() {
             }}>
               {[
                 { color: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)', label: 'Available' },
-                { color: 'var(--gold)',            border: 'var(--gold)',             label: 'Selected' },
+                { color: 'var(--gold)', border: 'var(--gold)', label: 'Selected' },
                 { color: 'rgba(255,255,255,0.02)', border: 'rgba(255,255,255,0.04)', label: 'Booked' },
               ].map(l => (
                 <div key={l.label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -230,9 +234,9 @@ export default function AvailabilityCalendar() {
                 onChange={e => setSelectedStudio(e.target.value)}
               >
                 <option value="">All Studios</option>
-                {STUDIO_SETS.map(s => (
+                {studios.map(s => (
                   <option key={s.slug} value={s.slug}>
-                    {s.icon} {s.name}
+                    {s.icon} {s.title}
                   </option>
                 ))}
               </select>

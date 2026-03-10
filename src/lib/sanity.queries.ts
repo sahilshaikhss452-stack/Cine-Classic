@@ -3,9 +3,9 @@
  * Import the query + run it with sanityFetch().
  *
  * Example:
- *   import { STUDIOS_QUERY } from '@/lib/sanity.queries';
- *   import { sanityFetch }   from '@/lib/sanity';
- *   const studios = await sanityFetch<SanityStudio[]>(STUDIOS_QUERY);
+ *   import { STUDIO_CARD_QUERY } from '@/lib/sanity.queries';
+ *   import { sanityFetch }      from '@/lib/sanity';
+ *   const studios = await sanityFetch<SanityStudioCard[]>(STUDIO_CARD_QUERY);
  */
 
 // ─── Studio Sets ─────────────────────────────────────────────────────────────
@@ -17,63 +17,54 @@ export const STUDIO_SLUGS_QUERY = `
   }
 `;
 
-/** Full studio list — used on /studios listing page + homepage Sets section */
-export const STUDIOS_QUERY = `
+/**
+ * Minimal studio fields for card / listing components.
+ * Used on: homepage Sets section, /studios listing page, "More Studios" rail.
+ * GROQ renames suitable_for → suitableFor at the query level.
+ */
+export const STUDIO_CARD_QUERY = `
   *[_type == "studio"] | order(order asc) {
     _id,
-    name,
+    "title": name,
     "slug": slug.current,
     tagline,
-    description,
     size,
-    height,
     capacity,
-    powerCapacity,
-    ratePerDay,
-    ratePerShift,
-    rateHourly,
-    rateUnit,
-    minBookingHours,
-    parking,
     icon,
     accentColor,
     gradient,
-    suitable_for,
-    facilities,
-    productions,
-    layoutZones,
+    "suitableFor": suitable_for,
     "heroImage": heroImage.asset->url,
-    "galleryImages": galleryImages[].asset->url,
-    "setPdfUrl": setPDF.asset->url,
-    "setLayoutImage": setLayoutImage.asset->url,
-    setLayoutDescription,
-    featured,
-    order
+    featured
   }
 `;
 
-/** Single studio by slug — used on /studios/[slug] landing page */
-export const STUDIO_BY_SLUG_QUERY = `
+/**
+ * Full studio fields for detail page components.
+ * Used on: /studios/[slug] landing page.
+ * GROQ renames suitable_for → suitableFor at the query level.
+ */
+export const STUDIO_DETAIL_QUERY = `
   *[_type == "studio" && slug.current == $slug][0] {
     _id,
-    name,
+    "title": name,
     "slug": slug.current,
     tagline,
     description,
     size,
     height,
     capacity,
-    powerCapacity,
-    ratePerDay,
-    ratePerShift,
     rateHourly,
     rateUnit,
+    ratePerDay,
+    ratePerShift,
     minBookingHours,
     parking,
+    powerCapacity,
     icon,
     accentColor,
     gradient,
-    suitable_for,
+    "suitableFor": suitable_for,
     facilities,
     productions,
     layoutZones,

@@ -17,19 +17,20 @@ import {
   StyleSheet,
   Font,
 } from '@react-pdf/renderer';
-import type { StudioSet } from '@/data/sets';
+import type { SanityStudio } from '@/lib/sanity.types';
+import { fmtSize, fmtHeight, fmtRate, fmtRateUnit } from '@/lib/studio-utils';
 
 // ── Register built-in Helvetica (no font download needed) ─────────────────────
 Font.register({ family: 'Helvetica', src: 'Helvetica' });
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
-const DARK   = '#0d0d0d';
-const DARK2  = '#141414';
-const DARK3  = '#1a1a1a';
-const GOLD   = '#d4af37';
+const DARK = '#0d0d0d';
+const DARK2 = '#141414';
+const DARK3 = '#1a1a1a';
+const GOLD = '#d4af37';
 const GOLD_L = '#e8cc6a';
-const WHITE  = '#f5f5f0';
-const GRAY   = '#888880';
+const WHITE = '#f5f5f0';
+const GRAY = '#888880';
 const GRAY_L = '#b8b8b0';
 
 // ── Styles ────────────────────────────────────────────────────────────────────
@@ -285,16 +286,19 @@ function NumberedItem({ index, text }: { index: number; text: string }) {
 
 // ── PDF Document ─────────────────────────────────────────────────────────────
 interface Props {
-  studio: StudioSet;
+  studio: SanityStudio;
 }
 
 export function SetDeckDocument({ studio }: Props) {
+  const rateFrom = fmtRate(studio.rateHourly, studio.ratePerDay);
+  const rateUnit = fmtRateUnit(studio.rateUnit, studio.rateHourly);
+
   return (
     <Document
-      title={`${studio.name} — Set Deck | Cine Classic Studios`}
+      title={`${studio.title} — Set Deck | Cine Classic Studios`}
       author="Cine Classic Studios"
       subject="Production Reference Document"
-      keywords={`film studio, ${studio.name}, Mumbai, set deck, production`}
+      keywords={`film studio, ${studio.title}, Mumbai, set deck, production`}
       creator="Cine Classic Studios"
     >
       <Page size="A4" style={s.page}>
@@ -305,20 +309,20 @@ export function SetDeckDocument({ studio }: Props) {
         {/* ── Header ── */}
         <View style={s.header}>
           <Text style={s.studioLabel}>Cine Classic Studios  ·  Set Reference Deck</Text>
-          <Text style={s.setName}>{studio.name}</Text>
-          <Text style={s.tagline}>{studio.shortDescription}</Text>
+          <Text style={s.setName}>{studio.title}</Text>
+          <Text style={s.tagline}>{studio.tagline ?? ''}</Text>
           {/* Rate */}
           <View style={s.rateBadge}>
-            <Text style={s.rateBadgeText}>From {studio.rateFrom}{studio.rateUnit}</Text>
+            <Text style={s.rateBadgeText}>From {rateFrom}{rateUnit}</Text>
           </View>
         </View>
 
         {/* ── Quick-stats strip ── */}
         <View style={s.statsRow}>
           {[
-            { label: 'Floor Area',      value: studio.size },
-            { label: 'Ceiling Height',  value: studio.ceilingHeight },
-            { label: 'Max Capacity',    value: studio.capacity },
+            { label: 'Floor Area', value: fmtSize(studio.size) },
+            { label: 'Ceiling Height', value: fmtHeight(studio.height) },
+            { label: 'Max Capacity', value: studio.capacity ?? '—' },
           ].map((stat) => (
             <View key={stat.label} style={s.statCell}>
               <Text style={s.statLabel}>{stat.label}</Text>
@@ -333,7 +337,7 @@ export function SetDeckDocument({ studio }: Props) {
           {/* About this set */}
           <View>
             <Text style={s.sectionHeading}>About This Set</Text>
-            <Text style={s.description}>{studio.description}</Text>
+            <Text style={s.description}>{studio.description ?? ''}</Text>
           </View>
 
           <View style={s.divider} />
@@ -366,7 +370,7 @@ export function SetDeckDocument({ studio }: Props) {
           <View style={s.footerLeft}>
             <Text style={s.footerBrand}>Cine Classic Studios</Text>
             <Text style={s.footerTagline}>
-              Mumbai's Premier Film Studio Complex  ·  Near Film City, Goregaon East
+              Mumbai&apos;s Premier Film Studio Complex  ·  Near Film City, Goregaon East
             </Text>
           </View>
           <View style={s.footerRight}>
