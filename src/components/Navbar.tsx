@@ -17,7 +17,7 @@ const NAV_ITEMS = [
   },
   {
     label: 'About',
-    homeHref: '#about',
+    homeHref: '/about',
     awayHref: '/about',
     sectionId: 'about',
     matchesPath: (pathname: string) => pathname.startsWith('/about'),
@@ -340,3 +340,4 @@ const mobileLinkStyle: CSSProperties = {
   textDecoration: 'none',
   display: 'block',
 };
+
