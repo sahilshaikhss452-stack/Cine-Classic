@@ -126,7 +126,7 @@ export default function Navbar() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.85rem',
+            gap: '1rem',
             whiteSpace: 'nowrap',
             textDecoration: 'none',
           }}
@@ -134,8 +134,8 @@ export default function Navbar() {
           <Image
             src="/images/logo.jpg"
             alt="Cine Classic Studios Logo"
-            width={44}
-            height={44}
+            width={54}
+            height={54}
             style={{ borderRadius: '8px', objectFit: 'contain', boxShadow: '0 10px 28px rgba(0,0,0,0.22)' }}
             priority
           />
@@ -160,7 +160,7 @@ export default function Navbar() {
                 textTransform: 'uppercase',
               }}
             >
-              Mumbai Film Sets
+              Studios
             </div>
           </div>
         </Link>
