@@ -3,14 +3,12 @@
 import { useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
-import { ArrowRightIcon, SparkIcon } from '@/components/ui/icons';
+import { ArrowRightIcon } from '@/components/ui/icons';
 import type { HomePageContent } from '@/lib/sanity';
 
 interface Props {
   content: HomePageContent;
 }
-
-const TRUST_POINTS = ['Fast recce coordination', 'Crew-friendly support', 'Availability guidance within hours'];
 
 export default function Hero({ content }: Props) {
   const [videoFailed, setVideoFailed] = useState(false);
@@ -25,7 +23,6 @@ export default function Hero({ content }: Props) {
   });
 
   const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const trustLine = settings.featuredClients.slice(0, 4);
 
   return (
     <section
@@ -78,7 +75,7 @@ export default function Hero({ content }: Props) {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              opacity: 0.34,
+              opacity: 0.3,
             }}
           >
             <source src="/videos/hero.mp4" type="video/mp4" />
@@ -92,7 +89,7 @@ export default function Hero({ content }: Props) {
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to top, rgba(6,6,6,0.95) 0%, rgba(6,6,6,0.7) 45%, rgba(6,6,6,0.34) 100%)',
+            'linear-gradient(to top, rgba(6,6,6,0.96) 0%, rgba(6,6,6,0.74) 45%, rgba(6,6,6,0.4) 100%)',
         }}
       />
 
@@ -117,8 +114,8 @@ export default function Hero({ content }: Props) {
         style={{
           position: 'relative',
           textAlign: 'center',
-          maxWidth: '920px',
-          padding: '148px 5% 104px',
+          maxWidth: '780px',
+          padding: '148px 5% 88px',
           width: '100%',
           margin: '0 auto',
         }}
@@ -128,16 +125,16 @@ export default function Hero({ content }: Props) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.7rem',
+            fontSize: '0.68rem',
             fontWeight: 700,
-            letterSpacing: '0.22em',
+            letterSpacing: '0.2em',
             textTransform: 'uppercase',
             color: 'var(--gold)',
             background: 'rgba(212,175,55,0.08)',
             border: '1px solid rgba(212,175,55,0.22)',
-            padding: '9px 22px',
+            padding: '8px 18px',
             borderRadius: '100px',
-            marginBottom: '1.8rem',
+            marginBottom: '1.35rem',
           }}
         >
           <span
@@ -155,13 +152,13 @@ export default function Hero({ content }: Props) {
 
         <h1
           style={{
-            fontSize: 'clamp(2.8rem, 6.5vw, 5.2rem)',
-            lineHeight: 1.01,
+            fontSize: 'clamp(2.7rem, 6vw, 5rem)',
+            lineHeight: 1,
             fontWeight: 800,
-            letterSpacing: '-0.04em',
+            letterSpacing: '-0.045em',
             color: 'var(--white)',
-            margin: '0 auto 1.25rem',
-            maxWidth: '820px',
+            margin: '0 auto 1rem',
+            maxWidth: '720px',
             textWrap: 'balance',
           }}
         >
@@ -183,12 +180,12 @@ export default function Hero({ content }: Props) {
 
         <p
           style={{
-            fontSize: 'clamp(1rem, 2vw, 1.16rem)',
-            color: 'rgba(255,255,255,0.76)',
-            maxWidth: '640px',
-            margin: '0 auto 2rem',
+            fontSize: 'clamp(1rem, 1.6vw, 1.08rem)',
+            color: 'rgba(255,255,255,0.74)',
+            maxWidth: '560px',
+            margin: '0 auto 1.9rem',
             fontWeight: 300,
-            lineHeight: 1.78,
+            lineHeight: 1.72,
             letterSpacing: '0.01em',
             textWrap: 'balance',
           }}
@@ -200,7 +197,7 @@ export default function Hero({ content }: Props) {
           className="hero-cta-group"
           style={{
             display: 'flex',
-            gap: '1rem',
+            gap: '0.9rem',
             justifyContent: 'center',
             flexWrap: 'wrap',
           }}
@@ -208,7 +205,7 @@ export default function Hero({ content }: Props) {
           <a
             href={content.heroPrimaryCta.href}
             className="btn-primary"
-            style={{ fontSize: '0.98rem', padding: '14px 32px' }}
+            style={{ fontSize: '0.96rem', padding: '14px 30px' }}
           >
             {content.heroPrimaryCta.label}
             <ArrowRightIcon size={16} />
@@ -216,118 +213,21 @@ export default function Hero({ content }: Props) {
           <a
             href={content.heroSecondaryCta.href}
             className="btn-outline"
-            style={{ fontSize: '0.98rem', padding: '14px 32px' }}
+            style={{ fontSize: '0.96rem', padding: '14px 30px' }}
           >
             {content.heroSecondaryCta.label}
           </a>
         </div>
-
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '0.7rem',
-            marginTop: '1.3rem',
-          }}
-        >
-          {TRUST_POINTS.map((point) => (
-            <span
-              key={point}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.45rem',
-                padding: '8px 14px',
-                borderRadius: '999px',
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                color: 'rgba(255,255,255,0.74)',
-                fontSize: '0.74rem',
-                letterSpacing: '0.05em',
-              }}
-            >
-              <SparkIcon size={13} />
-              {point}
-            </span>
-          ))}
-        </div>
-
-        {trustLine.length > 0 && (
-          <p
-            style={{
-              margin: '1.35rem auto 0',
-              maxWidth: '640px',
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: '0.8rem',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              lineHeight: 1.7,
-            }}
-          >
-            Featured client work includes teams creating for{' '}
-            <span style={{ color: 'rgba(212,175,55,0.9)' }}>{trustLine.join(' · ')}</span>
-          </p>
-        )}
-
-        <div
-          className="hero-stats-strip"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(165px, 1fr))',
-            gap: '1rem',
-            margin: '3rem auto 0',
-            maxWidth: '760px',
-          }}
-        >
-          {content.heroStats.map((stat) => (
-            <div
-              key={stat.label}
-              style={{
-                padding: '1.1rem 1.2rem',
-                textAlign: 'center',
-                borderRadius: '18px',
-                background: 'rgba(10,10,10,0.58)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 22px 48px rgba(0,0,0,0.16)',
-                backdropFilter: 'blur(10px)',
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: 'var(--font-inter), sans-serif',
-                  fontSize: '2rem',
-                  fontWeight: 800,
-                  color: 'var(--gold)',
-                  lineHeight: 1,
-                  letterSpacing: '-0.03em',
-                }}
-              >
-                {stat.value}
-              </div>
-              <div
-                style={{
-                  fontSize: '0.68rem',
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.5)',
-                  marginTop: '0.65rem',
-                }}
-              >
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
 
-      <style>{`
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(0.8); }
-        }
-      `}</style>
+      <style>
+        {`
+          @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+          }
+        `}
+      </style>
     </section>
   );
 }
-

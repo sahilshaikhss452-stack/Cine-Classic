@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { loadSiteSettings, loadStudioNavItems } from '@/lib/sanity';
 import {
@@ -12,11 +12,11 @@ import {
 } from '@/components/ui/icons';
 
 const QUICK_LINKS = [
-  { label: 'Why Cine Classic', href: '#about' },
+  { label: 'About Cine Classic', href: '/about' },
   { label: 'Studio Facilities', href: '/facilities' },
   { label: 'Production Portfolio', href: '/portfolio' },
-  { label: 'Client Reviews', href: '#testimonials' },
-  { label: 'Check Dates & Rates', href: '#booking' },
+  { label: 'Client Reviews', href: '/#testimonials' },
+  { label: 'Check Dates & Rates', href: '/#booking' },
   { label: 'Film Studio Rental Mumbai', href: '/film-studio-rental-mumbai' },
   { label: 'Photoshoot Studio Mumbai', href: '/photoshoot-studio-mumbai' },
   { label: 'Music Video Shoot Location', href: '/music-video-shoot-location' },
@@ -262,7 +262,7 @@ export default async function Footer() {
           })}
 
           <a
-            href="#booking"
+            href="/#booking"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -305,3 +305,4 @@ export default async function Footer() {
     </footer>
   );
 }
+

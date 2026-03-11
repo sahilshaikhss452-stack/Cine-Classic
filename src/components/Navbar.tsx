@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,18 +16,18 @@ const NAV_ITEMS = [
     matchesPath: (pathname: string) => pathname.startsWith('/studios'),
   },
   {
+    label: 'About',
+    homeHref: '#about',
+    awayHref: '/about',
+    sectionId: 'about',
+    matchesPath: (pathname: string) => pathname.startsWith('/about'),
+  },
+  {
     label: 'Productions',
     homeHref: '#productions',
     awayHref: '/portfolio',
     sectionId: 'productions',
     matchesPath: (pathname: string) => pathname.startsWith('/portfolio'),
-  },
-  {
-    label: 'Reviews',
-    homeHref: '#testimonials',
-    awayHref: '/#testimonials',
-    sectionId: 'testimonials',
-    matchesPath: () => false,
   },
   {
     label: 'Contact',
@@ -85,7 +86,7 @@ export default function Navbar() {
 
   const closeMenu = () => setMobileOpen(false);
 
-  const linkStyle = (active: boolean): React.CSSProperties => ({
+  const linkStyle = (active: boolean): CSSProperties => ({
     fontSize: '0.84rem',
     fontWeight: 600,
     letterSpacing: '0.08em',
@@ -116,12 +117,19 @@ export default function Navbar() {
           WebkitBackdropFilter: 'blur(20px)',
           borderBottom: '1px solid rgba(255,255,255,0.05)',
           boxShadow: scrolled ? '0 10px 40px rgba(0,0,0,0.34)' : 'none',
-          transition: 'height 0.4s cubic-bezier(0.22,1,0.36,1), background 0.4s cubic-bezier(0.22,1,0.36,1)',
+          transition:
+            'height 0.4s cubic-bezier(0.22,1,0.36,1), background 0.4s cubic-bezier(0.22,1,0.36,1)',
         }}
       >
         <Link
           href="/"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', whiteSpace: 'nowrap', textDecoration: 'none' }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+            whiteSpace: 'nowrap',
+            textDecoration: 'none',
+          }}
         >
           <Image
             src="/images/logo.jpg"
@@ -157,7 +165,10 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <ul className="nav-desktop" style={{ alignItems: 'center', gap: '1.55rem', listStyle: 'none', margin: 0, padding: 0 }}>
+        <ul
+          className="nav-desktop"
+          style={{ alignItems: 'center', gap: '1.55rem', listStyle: 'none', margin: 0, padding: 0 }}
+        >
           {NAV_ITEMS.map((item) => {
             const isActive = isHome ? activeId === item.sectionId : item.matchesPath(pathname);
 
@@ -254,7 +265,7 @@ export default function Navbar() {
               lineHeight: 1.7,
             }}
           >
-            Start with the studio sets, review real productions and client feedback, then send one inquiry when you are ready to hold dates.
+            Browse the sets, understand how the studio supports production teams, and send one inquiry when you are ready to hold dates.
           </div>
 
           {NAV_ITEMS.map((item) => {
@@ -317,7 +328,7 @@ function ActiveBar() {
   );
 }
 
-const mobileLinkStyle: React.CSSProperties = {
+const mobileLinkStyle: CSSProperties = {
   fontSize: '0.92rem',
   fontWeight: 600,
   letterSpacing: '0.12em',
@@ -329,4 +340,3 @@ const mobileLinkStyle: React.CSSProperties = {
   textDecoration: 'none',
   display: 'block',
 };
-

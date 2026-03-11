@@ -4,9 +4,11 @@ import type { HomePageContent } from '@/lib/sanity';
 
 interface Props {
   content: HomePageContent;
+  ctaHref?: string;
+  ctaLabel?: string;
 }
 
-export default function About({ content }: Props) {
+export default function About({ content, ctaHref = '#booking', ctaLabel = 'Schedule a Recce' }: Props) {
   return (
     <section
       id="about"
@@ -152,8 +154,8 @@ export default function About({ content }: Props) {
             ))}
           </ul>
 
-          <a href="#booking" className="btn-primary" style={{ marginTop: '0.75rem' }}>
-            Schedule a Recce
+          <a href={ctaHref} className="btn-primary" style={{ marginTop: '0.75rem' }}>
+            {ctaLabel}
             <ArrowRightIcon size={15} />
           </a>
         </div>
