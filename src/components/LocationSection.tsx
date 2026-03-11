@@ -56,7 +56,7 @@ export default async function LocationSection() {
   ];
 
   return (
-    <section className="mob-section" style={{ background: 'var(--dark)', padding: '120px 5%' }}>
+    <section id="map" className="mob-section" style={{ background: 'var(--dark)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
           <span className="section-tag">Location & Access</span>

@@ -16,13 +16,6 @@ const NAV_ITEMS = [
     matchesPath: (pathname: string) => pathname.startsWith('/studios'),
   },
   {
-    label: 'About',
-    homeHref: '/about',
-    awayHref: '/about',
-    sectionId: 'about',
-    matchesPath: (pathname: string) => pathname.startsWith('/about'),
-  },
-  {
     label: 'Productions',
     homeHref: '#productions',
     awayHref: '/portfolio',
@@ -30,11 +23,18 @@ const NAV_ITEMS = [
     matchesPath: (pathname: string) => pathname.startsWith('/portfolio'),
   },
   {
-    label: 'Contact',
-    homeHref: '#booking',
-    awayHref: '/#booking',
-    sectionId: 'booking',
+    label: 'Map',
+    homeHref: '#map',
+    awayHref: '/#map',
+    sectionId: 'map',
     matchesPath: () => false,
+  },
+  {
+    label: 'About',
+    homeHref: '/about',
+    awayHref: '/about',
+    sectionId: 'about',
+    matchesPath: (pathname: string) => pathname.startsWith('/about'),
   },
 ] as const;
 
