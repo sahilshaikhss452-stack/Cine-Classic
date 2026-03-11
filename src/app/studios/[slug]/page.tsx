@@ -32,13 +32,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Studio Not Found' };
   }
 
+  const pageTitle = studio.seo?.title ?? studio.title;
+  const pageDescription = studio.seo?.description ?? studio.tagline ?? undefined;
+  const canonicalPath = `/studios/${slug}`;
+
   return {
-    title: studio.seo?.title ?? `${studio.title} - Cine Classic Studios`,
-    description: studio.seo?.description ?? studio.tagline ?? undefined,
+    title: pageTitle,
+    description: pageDescription,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
-      title: studio.seo?.title ?? `${studio.title} - Cine Classic Studios`,
-      description: studio.seo?.description ?? studio.tagline ?? undefined,
+      title: pageTitle,
+      description: pageDescription,
       type: 'website',
+      url: canonicalPath,
+    },
+    twitter: {
+      title: pageTitle,
+      description: pageDescription,
     },
   };
 }
