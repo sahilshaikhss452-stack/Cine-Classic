@@ -1,28 +1,27 @@
 import type { Metadata } from 'next';
-import About from '@/components/About';
 import FloatingButtons from '@/components/FloatingButtons';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
 import { ArrowRightIcon, CheckIcon, GridIcon, IconBadge, MessageCircleIcon, SparkIcon } from '@/components/ui/icons';
-import { loadHomePage, loadSiteSettings } from '@/lib/sanity';
+import { loadSiteSettings } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
   description:
-    'Learn how Cine Classic Studios supports film, OTT, commercial, music video, and photography teams with production-ready studio sets in Mumbai.',
+    'Learn how Cine Classic Studios helps film, commercial, OTT, music video, and photography teams shortlist studio sets faster, plan recces smoothly, and book with confidence in Mumbai.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
     description:
-      'A production-focused studio rental business in Mumbai built for faster recces, clearer planning, and confident shoot bookings.',
+      'A Mumbai studio rental business built for production teams that need clear set options, practical shoot planning, and faster booking decisions.',
     url: '/about',
     type: 'website',
   },
   twitter: {
     title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
     description:
-      'A production-focused studio rental business in Mumbai built for faster recces, clearer planning, and confident shoot bookings.',
+      'A Mumbai studio rental business built for production teams that need clear set options, practical shoot planning, and faster booking decisions.',
   },
 };
 
@@ -30,59 +29,66 @@ export const revalidate = 30;
 
 const CLIENT_GROUPS = [
   {
-    title: 'Films & OTT',
+    title: 'Films & OTT productions',
     description:
-      'For production houses, directors, and line producers who need controlled set looks, smoother recce decisions, and practical shoot-day planning.',
+      'For producers, directors, line producers, and assistant directors who need studio sets that can be evaluated quickly for scene fit, scheduling, and crew movement.',
     icon: GridIcon,
   },
   {
-    title: 'Commercial & branded content',
+    title: 'Commercial shoots & branded content',
     description:
-      'For agencies and commercial teams looking for polished environments, efficient scheduling, and a studio that works well for fast-moving shoot briefs.',
+      'For agencies and production partners looking for a Mumbai studio that feels polished, practical to shortlist, and easier to coordinate under deadline pressure.',
     icon: SparkIcon,
   },
   {
-    title: 'Photography & music videos',
+    title: 'Photography, music videos & digital campaigns',
     description:
-      'For photographers, stylists, and music video crews who need visually distinct sets in Mumbai and a faster path from shortlist to booking.',
+      'For photographers, stylists, music video teams, and content crews who need visually distinctive sets and a straightforward route from recce to booking.',
     icon: MessageCircleIcon,
   },
 ] as const;
 
+const POSITIONING_POINTS = [
+  'A premium studio rental business in Mumbai focused on production usability, not just presentation.',
+  'A location-scouting experience designed to help teams judge set fit, planning effort, and next steps faster.',
+  'A shoot partner that values clear communication, recce coordination, and practical booking conversations.',
+] as const;
+
 const REASONS = [
-  'Production-ready sets that help teams compare looks faster during planning.',
-  'A Mumbai location that supports recces, access planning, and repeat visits more easily.',
-  'A studio workflow that values response speed, clarity, and practical coordination.',
-  'A business model built around helping crews decide quickly whether a set suits the brief.',
+  'The studio pages are designed to help production teams compare set looks, layouts, and suitability without unnecessary guesswork.',
+  'The business is positioned around faster decision-making, so clients can move from shortlist to recce without feeling stuck in vague back-and-forth.',
+  'The conversation stays focused on real production concerns such as set fit, shoot type, crew planning, and availability.',
+  'The overall experience is built to feel credible for agencies, filmmakers, photographers, and commercial production teams working on deadlines.',
 ] as const;
 
 const WORKFLOW = [
   {
-    step: 'Shortlist the right set',
+    step: 'Review the right sets',
     description:
-      'Start with the studio pages to compare looks, layouts, and suitability for your shoot format.',
+      'Start by exploring the studio pages to understand the look, layout, and type of scenes each set can support.',
   },
   {
-    step: 'Arrange a recce',
+    step: 'Shortlist for your brief',
     description:
-      'If the set is a fit, the team helps coordinate a site visit so producers and creatives can assess it properly.',
+      'Once a set looks relevant, narrow the options based on your shoot format, planning needs, and production timeline.',
   },
   {
-    step: 'Confirm production details',
+    step: 'Check availability or arrange a recce',
     description:
-      'Availability, shoot scope, access, and practical questions can be clarified before you lock dates.',
+      'Use the inquiry flow to confirm dates or begin the recce conversation before your team commits to the location.',
   },
   {
-    step: 'Move into booking',
+    step: 'Move toward booking with clarity',
     description:
-      'Once the team is aligned, the next step is a straightforward booking conversation instead of more guesswork.',
+      'From there, the goal is a clear production conversation, not more confusion, so your team can lock the next step faster.',
   },
 ] as const;
 
 export default async function AboutPage() {
-  const [homePage, settings] = await Promise.all([loadHomePage(), loadSiteSettings()]);
+  const settings = await loadSiteSettings();
+  const businessName = settings.businessName || 'Cine Classic Studios';
   const whatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-    `Hi ${settings.businessName}, I would like to discuss a recce for an upcoming shoot.`,
+    `Hi ${businessName}, I would like to discuss a recce for an upcoming shoot.`,
   )}`;
 
   return (
@@ -104,7 +110,7 @@ export default async function AboutPage() {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 70%)',
+              background: 'radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 70%)',
               pointerEvents: 'none',
             }}
           />
@@ -114,29 +120,30 @@ export default async function AboutPage() {
             <h1
               style={{
                 fontFamily: 'var(--font-playfair), serif',
-                fontSize: 'clamp(2.4rem, 5vw, 4.2rem)',
+                fontSize: 'clamp(2.4rem, 5vw, 4.1rem)',
                 fontWeight: 800,
                 color: 'var(--white)',
                 margin: '1.35rem 0 1rem',
-                lineHeight: 1.08,
+                lineHeight: 1.06,
+                letterSpacing: '-0.03em',
               }}
             >
-              A Mumbai studio built for <span style={{ color: 'var(--gold)' }}>production teams</span>
+              A Mumbai studio partner for <span style={{ color: 'var(--gold)' }}>production teams that need clarity fast</span>
             </h1>
             <p
               style={{
                 color: 'var(--gray)',
-                fontSize: 'clamp(1rem, 1.5vw, 1.12rem)',
+                fontSize: 'clamp(1rem, 1.5vw, 1.1rem)',
                 lineHeight: 1.8,
-                maxWidth: '680px',
+                maxWidth: '700px',
                 margin: '0 auto 2.4rem',
               }}
             >
-              Cine Classic Studios is designed to help producers, directors, photographers, ad filmmakers, and OTT teams evaluate sets faster, plan recces with less friction, and move toward booking with clearer next steps.
+              {businessName} is built for film, commercial, OTT, music video, and photoshoot teams that need production-ready studio sets in Mumbai, practical recce coordination, and a smoother path to booking.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/studios" className="btn-primary">
-                View Studio Sets
+                Explore Studio Sets
                 <ArrowRightIcon size={15} />
               </a>
               <a href="/#booking" className="btn-outline">
@@ -146,7 +153,66 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        <About content={homePage} ctaHref="/#booking" ctaLabel="Check Availability" />
+        <section style={{ padding: '100px 5%', background: 'var(--dark2)' }}>
+          <div className="about-grid" style={{ maxWidth: '1180px', margin: '0 auto' }}>
+            <div className="reveal">
+              <div className="section-tag">What This Business Is Built For</div>
+              <h2
+                style={{
+                  fontFamily: 'var(--font-playfair), serif',
+                  fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                  lineHeight: 1.12,
+                  margin: '1.15rem 0 1rem',
+                }}
+              >
+                A premium studio rental business designed to help teams <span style={{ color: 'var(--gold)' }}>assess fit and move faster</span>
+              </h2>
+              <p style={{ color: 'var(--gray)', lineHeight: 1.82, marginBottom: '1rem', fontSize: '1rem' }}>
+                This is not a generic portfolio-style studio website. The purpose of Cine Classic Studios is to make it easier for serious production teams to understand what each set offers, whether it suits the brief, and how quickly the booking conversation can move forward.
+              </p>
+              <p style={{ color: 'var(--gray)', lineHeight: 1.82, fontSize: '1rem' }}>
+                From recce planning to shoot coordination, the business is positioned around the questions real producers and location teams ask when time, logistics, and visual fit all matter at once.
+              </p>
+            </div>
+
+            <div
+              className="reveal reveal-delay-2"
+              style={{
+                borderRadius: '24px',
+                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+                padding: '1.5rem',
+                boxShadow: '0 30px 70px rgba(0,0,0,0.18)',
+              }}
+            >
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '1rem' }}>
+                Positioning Snapshot
+              </div>
+              <div style={{ display: 'grid', gap: '0.9rem' }}>
+                {POSITIONING_POINTS.map((point, index) => (
+                  <div
+                    key={point}
+                    className={`reveal reveal-delay-${(index % 3) + 1}`}
+                    style={{
+                      display: 'flex',
+                      gap: '0.8rem',
+                      alignItems: 'flex-start',
+                      padding: '0.95rem 1rem',
+                      borderRadius: '18px',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    <IconBadge size={24} rounded={999} style={{ background: 'rgba(212,175,55,0.12)', marginTop: '0.1rem' }}>
+                      <CheckIcon size={12} />
+                    </IconBadge>
+                    <p style={{ color: 'var(--gray-lt)', lineHeight: 1.7, fontSize: '0.92rem' }}>{point}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -160,10 +226,10 @@ export default async function AboutPage() {
                   margin: '1.15rem 0 0.9rem',
                 }}
               >
-                Built for the teams who need to decide <span style={{ color: 'var(--gold)' }}>quickly and confidently</span>
+                Built for the people who need to answer one question quickly: <span style={{ color: 'var(--gold)' }}>can we shoot here?</span>
               </h2>
-              <p style={{ color: 'var(--gray)', lineHeight: 1.8, maxWidth: '660px', margin: '0 auto' }}>
-                The studio is positioned for real production decision-makers: people comparing locations, coordinating recces, and trying to move from shortlist to confirmed dates without avoidable friction.
+              <p style={{ color: 'var(--gray)', lineHeight: 1.8, maxWidth: '700px', margin: '0 auto' }}>
+                The website and studio experience are meant to support production decision-makers, not distract them. That means clearer set evaluation, better planning cues, and more direct next steps when a location looks right.
               </p>
             </div>
 
@@ -209,7 +275,7 @@ export default async function AboutPage() {
                   margin: '1.1rem 0 0.9rem',
                 }}
               >
-                The studio is useful because it helps production teams <span style={{ color: 'var(--gold)' }}>move forward faster</span>
+                The advantage is not just the sets. It is the <span style={{ color: 'var(--gold)' }}>decision-making clarity around them</span>
               </h2>
             </div>
 
@@ -241,7 +307,7 @@ export default async function AboutPage() {
         <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
           <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-              <div className="section-tag">How We Support Shoots</div>
+              <div className="section-tag">How The Process Works</div>
               <h2
                 style={{
                   fontFamily: 'var(--font-playfair), serif',
@@ -250,10 +316,10 @@ export default async function AboutPage() {
                   margin: '1.1rem 0 0.9rem',
                 }}
               >
-                A clearer path from <span style={{ color: 'var(--gold)' }}>recce to booking</span>
+                A smoother path from <span style={{ color: 'var(--gold)' }}>shortlist to booking</span>
               </h2>
-              <p style={{ color: 'var(--gray)', lineHeight: 1.8, maxWidth: '640px', margin: '0 auto' }}>
-                The goal is not just to show sets. It is to help clients understand fit, ask the right questions, and move into the booking conversation with more confidence.
+              <p style={{ color: 'var(--gray)', lineHeight: 1.8, maxWidth: '680px', margin: '0 auto' }}>
+                The experience is structured to reduce uncertainty for producers, photographers, agencies, and location teams. The goal is to help you move toward the right next step with less friction.
               </p>
             </div>
 
@@ -314,10 +380,10 @@ export default async function AboutPage() {
                 margin: '1.15rem 0 0.9rem',
               }}
             >
-              If the studio looks right for your shoot, <span style={{ color: 'var(--gold)' }}>start the conversation</span>
+              If the studio feels right for your brief, <span style={{ color: 'var(--gold)' }}>start the conversation now</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2rem' }}>
-              The fastest next step is to review the studio pages, shortlist the right set, and send one inquiry for availability or recce coordination.
+              Review the studio pages, shortlist the best-fit set, and send one inquiry for availability or recce planning. That is the fastest route toward a confident booking decision.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">
@@ -336,4 +402,3 @@ export default async function AboutPage() {
     </>
   );
 }
-
