@@ -121,6 +121,16 @@ export default function ProductionExplorer({ productions }: Props) {
   return (
     <section style={{ padding: '0 5% 100px', background: 'var(--dark)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <div className="section-tag">Browse By Format</div>
+          <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', marginBottom: '0.8rem' }}>
+            Explore the portfolio by <span style={{ color: 'var(--gold)' }}>production type</span>
+          </h2>
+          <p style={{ maxWidth: '620px', margin: '0 auto', color: 'var(--gray)', lineHeight: 1.8 }}>
+            Filter the work below to see the mix of formats the studio supports, from commercial campaigns and television to music videos and long-form storytelling.
+          </p>
+        </div>
+
         <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '3.5rem' }}>
           {FILTERS.map((filterOption) => (
             <button key={filterOption.value} className={`pf-filter-btn${filter === filterOption.value ? ' active' : ''}`} onClick={() => setFilter(filterOption.value)}>
@@ -135,7 +145,7 @@ export default function ProductionExplorer({ productions }: Props) {
           ))}
         </div>
 
-        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '5rem', color: 'var(--gray)', fontSize: '1rem' }}>No productions in this category yet.</div>}
+        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '5rem', color: 'var(--gray)', fontSize: '1rem' }}>No published productions in this category yet.</div>}
       </div>
 
       {selected && <ProductionModal prod={selected} onClose={() => setSelected(null)} />}

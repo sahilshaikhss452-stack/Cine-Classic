@@ -172,7 +172,7 @@ export default function StudioHero({ studio }: Props) {
                 animation: 'pulse-dot 2s ease-in-out infinite',
               }}
             />
-            Cine Classic Studios
+            Mumbai Production Set
           </div>
         </div>
 
@@ -206,13 +206,13 @@ export default function StudioHero({ studio }: Props) {
             style={{
               fontSize: 'clamp(0.92rem, 1.35vw, 1.08rem)',
               color: 'rgba(255,255,255,0.66)',
-              maxWidth: '560px',
+              maxWidth: '620px',
               fontWeight: 300,
               lineHeight: 1.82,
               marginBottom: '1.2rem',
             }}
           >
-            {studio.tagline ?? 'A flexible production set with practical logistics and shoot-ready infrastructure.'}
+            {studio.tagline ?? 'Production-ready set with a practical layout, controlled shooting conditions, and faster booking support for Mumbai crews.'}
           </p>
 
           {topUseCases.length > 0 && (
@@ -226,7 +226,7 @@ export default function StudioHero({ studio }: Props) {
                   paddingTop: '0.2rem',
                 }}
               >
-                Best for
+                Best suited for
               </span>
               {topUseCases.map((useCase) => (
                 <span
@@ -270,7 +270,7 @@ export default function StudioHero({ studio }: Props) {
                   flexShrink: 0,
                 }}
               >
-                Filmed here
+                Reference productions
               </span>
               {studio.productions.map((production) => (
                 <span
@@ -328,7 +328,7 @@ export default function StudioHero({ studio }: Props) {
                 maxWidth: '100%',
               }}
             >
-              Check Availability
+              Check Dates & Rates
               <ArrowRightIcon size={15} />
             </a>
 
@@ -353,7 +353,7 @@ export default function StudioHero({ studio }: Props) {
                 maxWidth: '100%',
               }}
             >
-              View Specs
+              View Production Specs
             </a>
 
             <DownloadSetDeckButton studio={studio} variant="ghost" size="md" />

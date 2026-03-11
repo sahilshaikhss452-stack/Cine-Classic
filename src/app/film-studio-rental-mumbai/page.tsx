@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import Navbar from '@/components/Navbar';
@@ -9,24 +9,24 @@ import { fmtSize } from '@/lib/studio-utils';
 export const revalidate = 30;
 
 export const metadata: Metadata = {
-  title: 'Film Studio Rental Mumbai - Book a Film Set Today',
+  title: 'Film Studio Rental Mumbai | Cine Classic Studios',
   description:
-    'Looking for a film studio on rent in Mumbai? Cine Classic Studios offers production-ready film sets near Film City, Goregaon East for Bollywood, OTT, TV serials, and commercial shoots.',
+    'Looking for film studio rental in Mumbai? Explore production-ready studio sets near Film City for films, OTT shoots, commercials, and long-form storytelling.',
   keywords: [
     'film studio rental mumbai',
     'film studio on rent mumbai',
     'film set rental mumbai',
-    'bollywood film studio mumbai',
+    'production studio mumbai',
     'film studio near film city mumbai',
     'studio on rent goregaon',
-    'film studio booking mumbai',
-    'production studio mumbai',
+    'commercial shoot studio mumbai',
+    'ott shoot location mumbai',
   ],
   alternates: { canonical: '/film-studio-rental-mumbai' },
   openGraph: {
-    title: 'Film Studio Rental Mumbai - Cine Classic Studios',
+    title: 'Film Studio Rental Mumbai | Cine Classic Studios',
     description:
-      'Professional film sets in Mumbai near Film City, Goregaon East. Market, chawl, court, hospital, police station, and open ground sets available.',
+      'Production-ready studio sets in Mumbai for films, OTT shoots, commercials, and recce-driven production planning.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -34,34 +34,34 @@ export const metadata: Metadata = {
 
 const WHY_CHOOSE = [
   {
-    icon: '???',
-    title: 'Production-Ready Sets',
-    desc: 'From traditional market lanes to a Mumbai chawl, courtroom, hospital ward, police station, and open ground, we reduce location friction and save setup time.',
+    marker: '01',
+    title: 'Production-ready studio sets',
+    desc: 'Move faster with sets designed for working crews, controlled shooting conditions, and simpler production planning inside one studio environment.',
   },
   {
-    icon: '??',
-    title: 'Near Film City, Mumbai',
-    desc: 'Located in Goregaon East, close to Film City and the wider production corridor for easier crew, equipment, and talent movement.',
+    marker: '02',
+    title: 'Mumbai access for active production teams',
+    desc: 'Useful for crews that need a practical studio option in the Goregaon and Film City production corridor.',
   },
   {
-    icon: '?',
-    title: 'Professional Power',
-    desc: 'Three-phase power, production support, and controlled indoor conditions designed for demanding film, OTT, and commercial shoots.',
+    marker: '03',
+    title: 'Faster recce and shortlist decisions',
+    desc: 'Each set page helps producers review look, layout, and specs before they reach out, which reduces wasted calls and back-and-forth.',
   },
   {
-    icon: '??',
-    title: 'Lighting-Friendly Spaces',
-    desc: 'Built to work well for cinematographers and gaffers, with practical production considerations already baked into the floors and set layouts.',
+    marker: '04',
+    title: 'Flexible across multiple formats',
+    desc: 'Suitable for film scenes, OTT blocks, commercials, music videos, and photography-led productions that need controlled sets.',
   },
   {
-    icon: '??',
-    title: 'Crew and Vehicle Access',
-    desc: 'Large equipment movement, crew flow, and on-site logistics are easier when the shoot happens inside a purpose-built studio complex.',
+    marker: '05',
+    title: 'Crew-focused operational support',
+    desc: 'The experience is built around real shoot needs: access, prep, recce coordination, and smoother communication around dates and set fit.',
   },
   {
-    icon: '??',
-    title: 'Fast Booking Response',
-    desc: 'Share your brief, preferred dates, and set requirements. The team can confirm availability and send a quote quickly.',
+    marker: '06',
+    title: 'Fast inquiry handling',
+    desc: 'Share the brief, preferred dates, and set interest once. The team can respond with availability and next-step guidance quickly.',
   },
 ];
 
@@ -105,9 +105,9 @@ export default async function FilmStudioRentalMumbaiPage() {
             }}
           />
           <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', alignItems: 'center' }}>
               <div>
-                <div className="section-tag">Mumbai's Best Film Sets</div>
+                <div className="section-tag">Film Studio Rental Mumbai</div>
                 <h1
                   style={{
                     fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)',
@@ -118,7 +118,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                     letterSpacing: '-0.025em',
                   }}
                 >
-                  Film Studio Rental <span style={{ color: 'var(--gold)' }}>Mumbai</span>
+                  Production-ready studio sets for <span style={{ color: 'var(--gold)' }}>film shoots in Mumbai</span>
                 </h1>
                 <p
                   style={{
@@ -126,14 +126,14 @@ export default async function FilmStudioRentalMumbaiPage() {
                     fontSize: '1.05rem',
                     lineHeight: 1.85,
                     marginBottom: '2.5rem',
-                    maxWidth: '480px',
+                    maxWidth: '520px',
                   }}
                 >
-                  Production-ready studio spaces near Film City, Goregaon East. Bollywood features, OTT series, TV serials, and commercial shoots can move faster when the set, crew flow, and logistics are already handled inside one complex.
+                  Cine Classic Studios helps producers, line teams, and directors move from recce to booking faster with controlled studio sets, practical logistics, and a smoother inquiry process near Film City.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   <a href="/#booking" className="btn-primary">
-                    Book a Studio -&gt;
+                    Check Studio Availability
                   </a>
                   <a
                     href={whatsappInquiryUrl}
@@ -153,17 +153,17 @@ export default async function FilmStudioRentalMumbaiPage() {
                       letterSpacing: '0.06em',
                     }}
                   >
-                    WhatsApp Now
+                    WhatsApp Booking Desk
                   </a>
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
                 {[
-                  { v: String(studios.length), l: 'Active Sets' },
-                  { v: settings.hoursText ?? 'By Appointment', l: 'Response Window' },
-                  { v: 'Near Film City', l: 'Production Access' },
-                  { v: settings.city, l: 'Location' },
+                  { v: String(studios.length), l: 'Published Studio Sets' },
+                  { v: settings.city || 'Mumbai', l: 'Operating Location' },
+                  { v: 'By Appointment', l: 'Recces & Visits' },
+                  { v: 'Production-Ready', l: 'Booking Focus' },
                 ].map((stat) => (
                   <div
                     key={stat.l}
@@ -178,7 +178,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                     <div
                       style={{
                         fontFamily: 'var(--font-playfair), serif',
-                        fontSize: '1.8rem',
+                        fontSize: '1.5rem',
                         fontWeight: 800,
                         color: 'var(--gold)',
                         marginBottom: '0.4rem',
@@ -208,7 +208,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                   lineHeight: 1.15,
                 }}
               >
-                Mumbai's Most Complete <span style={{ color: 'var(--gold)' }}>Film Studio Complex</span>
+                A better fit for <span style={{ color: 'var(--gold)' }}>recce-led film planning</span>
               </h2>
             </div>
             <div className="seo-features-grid">
@@ -218,7 +218,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                   className={`reveal reveal-delay-${(index % 3) + 1} fac-card`}
                   style={{ background: 'var(--dark3)' }}
                 >
-                  <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{item.icon}</div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.14em', color: 'var(--gold)', marginBottom: '1rem' }}>{item.marker}</div>
                   <h3
                     style={{
                       fontSize: '1.1rem',
@@ -240,7 +240,7 @@ export default async function FilmStudioRentalMumbaiPage() {
         <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="reveal" style={{ marginBottom: '3.5rem' }}>
-              <span className="section-tag">Our Film Sets</span>
+              <span className="section-tag">Studio Options</span>
               <h2
                 style={{
                   fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
@@ -251,7 +251,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                   lineHeight: 1.15,
                 }}
               >
-                Sets Available for <span style={{ color: 'var(--gold)' }}>Film Production</span>
+                Browse studio sets for <span style={{ color: 'var(--gold)' }}>film production in Mumbai</span>
               </h2>
             </div>
 
@@ -300,7 +300,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                           opacity: 0.6,
                         }}
                       />
-                      <div style={{ fontSize: '1.8rem', marginBottom: '0.6rem' }}>{studio.icon ?? 'Studio'}</div>
+                      <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '0.75rem' }}>{String(index + 1).padStart(2, '0')}</div>
                       <h3
                         style={{
                           fontSize: '1.2rem',
@@ -313,7 +313,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                         {studio.title}
                       </h3>
                       <p style={{ fontSize: '0.85rem', color: 'var(--gray)', lineHeight: 1.7, marginBottom: '1.2rem' }}>
-                        {studio.tagline ?? ''}
+                        {studio.tagline ?? 'Production-ready set details are being added.'}
                       </p>
                       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.2rem', flexWrap: 'wrap' }}>
                         {[
@@ -350,14 +350,14 @@ export default async function FilmStudioRentalMumbaiPage() {
                           textTransform: 'uppercase',
                         }}
                       >
-                        View Set Details -&gt;
+                        View Set Details
                       </a>
                     </div>
                   ))}
                 </div>
                 <div style={{ textAlign: 'center', marginTop: '3rem' }}>
                   <a href="/studios" className="btn-outline">
-                    View All Studios -&gt;
+                    View All Studios
                   </a>
                 </div>
               </>
@@ -377,7 +377,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                   lineHeight: 1.15,
                 }}
               >
-                Film Studio Rental FAQ
+                Film studio rental <span style={{ color: 'var(--gold)' }}>FAQ</span>
               </h2>
             </div>
 
@@ -438,14 +438,14 @@ export default async function FilmStudioRentalMumbaiPage() {
                 lineHeight: 1.15,
               }}
             >
-              Ready to Book Your <span style={{ color: 'var(--gold)' }}>Film Set?</span>
+              Ready to shortlist your <span style={{ color: 'var(--gold)' }}>film set?</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2rem' }}>
-              Contact {settings.businessName} today. Share your shoot brief, dates, and preferred set, and the team will confirm availability as quickly as possible.
+              Share your shoot brief, dates, and preferred set. The team will help you move to recce or booking with clearer next-step guidance.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">
-                Send a Booking Inquiry -&gt;
+                Send a Booking Inquiry
               </a>
               <a
                 href={whatsappCtaUrl}

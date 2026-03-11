@@ -9,12 +9,12 @@ export default function TrustedProductions({ productions }: Props) {
     <section style={{ padding: '100px 5%', background: 'var(--dark2)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <div className="section-tag">Credibility</div>
+          <div className="section-tag">At A Glance</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            Trusted by <span style={{ color: 'var(--gold)' }}>Leading Productions</span>
+            Production range <span style={{ color: 'var(--gold)' }}>at a glance</span>
           </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--gray)', maxWidth: '500px', margin: '1rem auto 0', fontWeight: 300, lineHeight: 1.8 }}>
-            From blockbuster films to viral web series — they all chose Cine Classic Studios.
+          <p style={{ fontSize: '1rem', color: 'var(--gray)', maxWidth: '560px', margin: '1rem auto 0', fontWeight: 300, lineHeight: 1.8 }}>
+            A quick scan of titles helps clients understand the breadth of formats and styles already produced at the studio.
           </p>
         </div>
 

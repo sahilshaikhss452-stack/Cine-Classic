@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { SiteSettingsProvider } from '@/components/site/SiteSettingsProvider';
@@ -21,9 +21,13 @@ const inter = Inter({
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await loadSiteSettings();
-  const title = settings.defaultSeo?.title ?? `${settings.businessName} – Film & Photoshoot Studio Rental Mumbai`;
+  const title =
+    settings.defaultSeo?.title ??
+    `${settings.businessName} | Film Studio Rental, Photoshoot Studio & Commercial Sets in Mumbai`;
   const description =
-    settings.defaultSeo?.description ?? settings.tagline ?? `${settings.businessName} is a production-ready studio complex in Mumbai.`;
+    settings.defaultSeo?.description ??
+    settings.tagline ??
+    `${settings.businessName} offers production-ready studio sets in Mumbai for film, photoshoots, commercials, music videos, OTT shoots, and branded content.`;
 
   return {
     title: {
@@ -65,7 +69,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     '@type': 'LocalBusiness',
     '@id': 'https://cine-classic-nextjs.vercel.app/#organization',
     name: settings.businessName,
-    description: settings.defaultSeo?.description ?? settings.tagline ?? `${settings.businessName} studio complex`,
+    description:
+      settings.defaultSeo?.description ??
+      settings.tagline ??
+      `${settings.businessName} offers production-ready studio sets in Mumbai.`,
     url: 'https://cine-classic-nextjs.vercel.app',
     telephone: settings.phone,
     email: settings.email,

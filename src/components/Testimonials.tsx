@@ -13,10 +13,10 @@ export default function Testimonials({ testimonials }: Props) {
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
           <div className="section-tag">Client Reviews</div>
           <h2 style={{ fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)', letterSpacing: '-0.015em', lineHeight: 1.15, marginTop: '0.5rem' }}>
-            What Creators <span style={{ color: 'var(--gold)' }}>Say</span>
+            What production teams <span style={{ color: 'var(--gold)' }}>say after the shoot</span>
           </h2>
           <p style={{ color: 'var(--gray)', maxWidth: '560px', margin: '1rem auto 0', lineHeight: 1.8 }}>
-            No testimonial documents are published in Sanity yet.
+            Client review documents are not published yet. The booking team can still share references during a recce or inquiry.
           </p>
         </div>
       </section>
@@ -48,10 +48,10 @@ export default function Testimonials({ testimonials }: Props) {
             marginBottom: '0.9rem',
           }}
         >
-          Trusted by <span style={{ color: 'var(--gold)' }}>production teams</span>
+          Feedback from <span style={{ color: 'var(--gold)' }}>working production teams</span>
         </h2>
-        <p style={{ maxWidth: '580px', margin: '0 auto', color: 'var(--gray)', lineHeight: 1.8 }}>
-          Social proof matters in production planning. These reviews help new clients understand the responsiveness, practicality, and professionalism behind the sets.
+        <p style={{ maxWidth: '620px', margin: '0 auto', color: 'var(--gray)', lineHeight: 1.8 }}>
+          These reviews speak to the things that matter on shoot day: responsiveness, floor practicality, support from the team, and how smoothly the schedule moves.
         </p>
       </div>
 

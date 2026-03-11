@@ -86,12 +86,12 @@ export default function StudioBooking({ studio }: Props) {
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div className="section-tag">Book This Set</div>
+          <div className="section-tag">Book This Studio</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            Reserve <span style={{ color: 'var(--gold)' }}>{studio.title}</span>
+            Check dates for <span style={{ color: 'var(--gold)' }}>{studio.title}</span>
           </h2>
-          <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, maxWidth: '560px', margin: '0.75rem auto 0', lineHeight: 1.8 }}>
-            Ask for rates, dates, and recce support in one place. We keep the process quick so production teams can move to the next decision with confidence.
+          <p style={{ fontSize: '0.95rem', color: 'var(--gray)', fontWeight: 300, maxWidth: '620px', margin: '0.75rem auto 0', lineHeight: 1.8 }}>
+            Ask for availability, rates, and recce support for this set. We keep the reply process quick so your production plan keeps moving.
           </p>
         </div>
 
@@ -122,15 +122,15 @@ export default function StudioBooking({ studio }: Props) {
               </IconBadge>
               <div>
                 <div style={{ fontSize: '0.7rem', fontWeight: 600, opacity: 0.82, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>
-                  Fastest Response
+                  Fastest Route
                 </div>
-                Book via WhatsApp
+                WhatsApp the booking desk
               </div>
               <ArrowRightIcon size={18} style={{ marginLeft: 'auto' }} />
             </a>
 
             <div style={{ display: 'flex', gap: '0.7rem', flexWrap: 'wrap' }}>
-              {['Quick rate checks', 'Recce coordination', 'Crew-ready support'].map((point) => (
+              {['Fast availability checks', 'Recce scheduling', 'Crew-ready support'].map((point) => (
                 <span key={point} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 0.9rem', borderRadius: '999px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)', fontSize: '0.74rem' }}>
                   <SparkIcon size={13} />
                   {point}
@@ -232,7 +232,7 @@ export default function StudioBooking({ studio }: Props) {
                   className="form-input"
                   id="b-project"
                   name="projectBrief"
-                  placeholder={`Brief description of your project for ${studio.title}...`}
+                  placeholder={`Share the scene, campaign, or shoot requirement for ${studio.title}...`}
                   style={{ resize: 'vertical', minHeight: '80px' }}
                 />
               </Field>
@@ -240,7 +240,7 @@ export default function StudioBooking({ studio }: Props) {
               <input type="hidden" name="requestedStudio" value={studio.title} />
 
               <p style={{ fontSize: '0.72rem', color: 'var(--gray)', marginBottom: '1rem', lineHeight: 1.65 }}>
-                No advance payment for inquiry. Our team usually confirms availability within a few working hours.
+                No advance payment is required to inquire. Our team usually confirms availability and next steps within a few working hours.
               </p>
 
               <button
@@ -268,7 +268,7 @@ export default function StudioBooking({ studio }: Props) {
                   gap: '0.55rem',
                 }}
               >
-                {status === 'loading' ? 'Sending...' : 'Send Booking Request'}
+                {status === 'loading' ? 'Sending...' : 'Request Dates & Rates'}
                 {status !== 'loading' && <ArrowRightIcon size={15} />}
               </button>
 
@@ -279,7 +279,7 @@ export default function StudioBooking({ studio }: Props) {
                       <CheckIcon size={14} />
                     </IconBadge>
                   </div>
-                  Request received. We will confirm availability shortly.
+                  Request received. We will confirm availability, rates, and next steps shortly.
                 </div>
               )}
               {status === 'error' && (
@@ -316,4 +316,3 @@ function Field({ label, htmlFor, children }: { label: string; htmlFor: string; c
     </div>
   );
 }
-

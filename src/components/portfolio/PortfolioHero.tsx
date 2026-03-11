@@ -60,28 +60,28 @@ export default function PortfolioHero({ totalProductions }: Props) {
           <Link href="/" style={{ color: 'var(--gray)', transition: 'color 0.3s' }}>
             Home
           </Link>
-          <span style={{ opacity: 0.35 }}>›</span>
+          <span style={{ opacity: 0.35 }}>/</span>
           <span style={{ color: 'var(--gold)' }}>Portfolio</span>
         </div>
 
-        <div className="section-tag">Our Work</div>
+        <div className="section-tag">Production Credits</div>
 
-        <h1 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2.2rem, 5.5vw, 4.6rem)', fontWeight: 700, lineHeight: 1.06, color: 'var(--white)', maxWidth: '820px', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
-          Productions Shot at <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
+        <h1 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2.2rem, 5.5vw, 4.6rem)', fontWeight: 700, lineHeight: 1.06, color: 'var(--white)', maxWidth: '860px', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
+          Work shot at <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
         </h1>
 
-        <p style={{ fontSize: '1.1rem', color: 'var(--gray-lt)', maxWidth: '580px', fontWeight: 300, lineHeight: 1.85, marginBottom: '2.8rem' }}>
-          Discover the films, television shows, commercials, and digital productions that brought their stories to life at our studio.
+        <p style={{ fontSize: '1.1rem', color: 'var(--gray-lt)', maxWidth: '620px', fontWeight: 300, lineHeight: 1.85, marginBottom: '2.8rem' }}>
+          A portfolio view for producers, agencies, and brand teams who want to see the range of films, shows, campaigns, and digital shoots that have used the studio.
         </p>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
           <Link href="/#booking" className="btn-primary">
-            Book a Studio {'->'}
+            Check Studio Availability
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '11px 20px', background: 'rgba(212,175,55,0.07)', border: '1px solid rgba(212,175,55,0.22)', borderRadius: '100px' }}>
             <span style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.5rem', fontWeight: 700, color: 'var(--gold)' }}>{totalProductions}+</span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--gray-lt)', fontWeight: 500, letterSpacing: '0.04em' }}>Productions Filmed Here</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--gray-lt)', fontWeight: 500, letterSpacing: '0.04em' }}>Published Productions</span>
           </div>
         </div>
       </div>

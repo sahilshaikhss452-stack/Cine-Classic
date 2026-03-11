@@ -1,4 +1,4 @@
-import { loadSiteSettings } from '@/lib/sanity';
+﻿import { loadSiteSettings } from '@/lib/sanity';
 import {
   CarIcon,
   ClockIcon,
@@ -17,20 +17,26 @@ const ACCESS_POINTS = [
     icon: CarIcon,
     title: 'By Road',
     lines: [
-      'Western Express Highway access nearby',
-      'Dedicated production truck entry gate',
-      'Large vehicle parking with security',
+      'Easy approach from the Western Express Highway corridor',
+      'Dedicated entry for production vehicles and gear movement',
+      'Parking support for crew cars, vans, and trucks',
     ],
   },
   {
     icon: TrainIcon,
     title: 'By Metro',
-    lines: ['Nearest metro access in Goregaon East', 'Auto-rickshaw available at exit'],
+    lines: [
+      'Metro connectivity through the Goregaon East side of the production belt',
+      'Last-mile auto and cab access available',
+    ],
   },
   {
     icon: PlaneIcon,
     title: 'From Airport',
-    lines: ['Easy airport transfer route', 'Cab and crew transport arranged on request'],
+    lines: [
+      'Practical transfer route for out-of-town talent and crew',
+      'Cab and crew transport can be coordinated on request',
+    ],
   },
 ];
 
@@ -53,7 +59,7 @@ export default async function LocationSection() {
     <section className="mob-section" style={{ background: 'var(--dark)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-          <span className="section-tag">Find Us</span>
+          <span className="section-tag">Location & Access</span>
           <h2
             style={{
               fontFamily: 'var(--font-playfair), serif',
@@ -63,10 +69,10 @@ export default async function LocationSection() {
               margin: '1.2rem 0 1rem',
             }}
           >
-            Strategically Located in <span style={{ color: 'var(--gold)' }}>Mumbai&apos;s Film Belt</span>
+            Positioned for <span style={{ color: 'var(--gold)' }}>Mumbai production movement</span>
           </h2>
           <p style={{ color: 'var(--gray)', maxWidth: '580px', margin: '0 auto', lineHeight: 1.8 }}>
-            Minutes from Film City and the wider production corridor, with access that works for crews, equipment, and last-minute production logistics.
+            Close to Film City and the wider production corridor, with access that works for crew call times, equipment movement, and last-minute location logistics.
           </p>
         </div>
 
@@ -97,13 +103,13 @@ export default async function LocationSection() {
                     lineHeight: 1.8,
                   }}
                 >
-                  Add a Google Maps embed URL in Site Settings to show the map here.
+                  Add a Google Maps embed URL in Site Settings to show the studio location here.
                 </div>
               )}
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-              {['Near Film City', settings.city, 'Easy truck access'].filter(Boolean).map((tag) => (
+              {['Near Film City', settings.city, 'Truck-friendly access'].filter(Boolean).map((tag) => (
                 <span
                   key={tag}
                   style={{
@@ -211,7 +217,7 @@ export default async function LocationSection() {
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem' }}
                 >
                   <NavigationIcon size={15} />
-                  Get Directions
+                  Open Directions
                 </a>
               )}
               <a
@@ -236,7 +242,7 @@ export default async function LocationSection() {
                 }}
               >
                 <MessageCircleIcon size={15} />
-                WhatsApp for Directions
+                WhatsApp for Route Help
               </a>
             </div>
           </div>

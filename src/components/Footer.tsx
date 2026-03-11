@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 import { loadSiteSettings, loadStudioNavItems } from '@/lib/sanity';
 import {
@@ -12,15 +12,15 @@ import {
 } from '@/components/ui/icons';
 
 const QUICK_LINKS = [
-  { label: 'About Us', href: '#about' },
+  { label: 'Why Cine Classic', href: '#about' },
   { label: 'Studio Facilities', href: '/facilities' },
-  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Production Portfolio', href: '/portfolio' },
   { label: 'Client Reviews', href: '#testimonials' },
-  { label: 'Check Availability', href: '#booking' },
-  { label: 'Film Studio Mumbai', href: '/film-studio-rental-mumbai' },
-  { label: 'Photoshoot Studio', href: '/photoshoot-studio-mumbai' },
-  { label: 'Music Video Location', href: '/music-video-shoot-location' },
-  { label: 'Ad Film Studio', href: '/ad-film-studio' },
+  { label: 'Check Dates & Rates', href: '#booking' },
+  { label: 'Film Studio Rental Mumbai', href: '/film-studio-rental-mumbai' },
+  { label: 'Photoshoot Studio Mumbai', href: '/photoshoot-studio-mumbai' },
+  { label: 'Music Video Shoot Location', href: '/music-video-shoot-location' },
+  { label: 'Ad Film Studio Mumbai', href: '/ad-film-studio' },
 ];
 
 function getSocialBadge(platform: string) {
@@ -98,7 +98,7 @@ export default async function Footer() {
                   letterSpacing: '0.04em',
                 }}
               >
-                {settings.tagline ?? 'Production-Ready Spaces'}
+                {settings.tagline ?? 'Production-ready studio sets in Mumbai'}
               </div>
             </div>
           </Link>
@@ -113,7 +113,7 @@ export default async function Footer() {
               marginBottom: '1.5rem',
             }}
           >
-            {settings.tagline ?? `${settings.businessName} is built for working productions, with studio sets, practical logistics, and a responsive team.`}
+            {settings.tagline ?? `${settings.businessName} supports film, commercial, OTT, music video, and photoshoot teams with production-ready sets, practical logistics, and responsive coordination.`}
           </p>
 
           <div
@@ -130,7 +130,7 @@ export default async function Footer() {
               Short-notice bookings
             </div>
             <div style={{ fontSize: '0.82rem', color: 'var(--gray-lt)', lineHeight: 1.65 }}>
-              Need a studio at short notice? Call or WhatsApp us directly. Same-day options are often available depending on the set and schedule.
+              Need a studio at short notice? Call or WhatsApp us directly. Depending on the set and schedule, the team can often advise on fast-turnaround options.
             </div>
           </div>
 
@@ -183,7 +183,7 @@ export default async function Footer() {
             }}
           >
             <MessageCircleIcon size={15} />
-            Chat on WhatsApp
+            WhatsApp the Team
           </a>
         </div>
 
@@ -299,7 +299,7 @@ export default async function Footer() {
           </Link>
         </div>
         <span className="footer-tagline" style={{ color: 'rgba(212,175,55,0.6)' }}>
-          Built for the Mumbai film industry.
+          Built for Mumbai production teams.
         </span>
       </div>
     </footer>

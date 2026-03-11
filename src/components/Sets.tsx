@@ -15,7 +15,7 @@ export default function Sets({ studios, sanityError }: Props) {
   return (
     <section id="sets" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
       <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-        <div className="section-tag">Studio Spaces</div>
+        <div className="section-tag">Studio Sets</div>
         <h2
           style={{
             fontSize: 'clamp(1.85rem, 3.5vw, 2.7rem)',
@@ -24,22 +24,22 @@ export default function Sets({ studios, sanityError }: Props) {
             lineHeight: 1.14,
           }}
         >
-          {hasStudios ? `${studios.length} production-ready studio sets` : 'Studios are being updated.'}{' '}
-          <span style={{ color: 'var(--gold)' }}>Built for working shoots.</span>
+          {hasStudios ? 'Browse our production-ready studio sets' : 'Studio set catalogue is being refreshed.'}{' '}
+          <span style={{ color: 'var(--gold)' }}>Built for faster shoot decisions.</span>
         </h2>
         <p
           style={{
             fontSize: '1.02rem',
             color: 'var(--gray)',
-            maxWidth: '620px',
+            maxWidth: '660px',
             margin: '0 auto',
             fontWeight: 300,
             lineHeight: 1.78,
           }}
         >
           {hasStudios
-            ? 'Browse each set for layouts, galleries, technical specs, facilities, and the fastest route to checking availability.'
-            : 'Our studio catalogue is temporarily unavailable while content refreshes. Please use the inquiry section below and our team will guide you to the right set.'}
+            ? 'Review each set for look, layout, gallery coverage, production specs, and booking details so your team can shortlist the right studio with less back-and-forth.'
+            : 'Our studio pages are temporarily unavailable while content refreshes. Share your brief below and we will recommend the right set directly.'}
         </p>
       </div>
 
@@ -60,7 +60,10 @@ export default function Sets({ studios, sanityError }: Props) {
           <strong style={{ display: 'block', marginBottom: '0.4rem', color: 'var(--gold)' }}>
             Studio details will be back shortly
           </strong>
-          <span>{sanityError ?? 'If you need availability right away, send a booking inquiry and the team will respond directly.'}</span>
+          <span>
+            {sanityError ??
+              'If you need availability right away, send one inquiry with your shoot brief and our team will guide you to the best-fit studio.'}
+          </span>
         </div>
       )}
 
@@ -75,7 +78,7 @@ export default function Sets({ studios, sanityError }: Props) {
 
           <div style={{ textAlign: 'center' }}>
             <Link href="/studios" className="btn-outline">
-              Browse All Studios
+              Explore All Studios
               <ArrowRightIcon size={15} />
             </Link>
           </div>

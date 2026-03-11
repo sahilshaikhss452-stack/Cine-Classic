@@ -41,7 +41,7 @@ const CREW_SIZES = [
   '100+ (Crowd / Event)',
 ];
 
-const TRUST_POINTS = ['No advance payment for inquiry', 'Replies within a few hours', 'WhatsApp preferred for quick coordination'];
+const TRUST_POINTS = ['No payment to inquire', 'Fast availability checks', 'WhatsApp for urgent coordination'];
 
 interface Props {
   studios: StudioNavItem[];
@@ -102,12 +102,12 @@ export default function Booking({ studios }: Props) {
   return (
     <section id="booking" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
       <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-        <div className="section-tag">Start Your Production</div>
+        <div className="section-tag">Plan Your Shoot</div>
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '1rem' }}>
-          Check <span style={{ color: 'var(--gold)' }}>Availability and Rates</span>
+          Check <span style={{ color: 'var(--gold)' }}>availability, rates, and recce options</span>
         </h2>
-        <p style={{ color: 'var(--gray)', maxWidth: '640px', margin: '0 auto', lineHeight: 1.8 }}>
-          Share your shoot details once and our team will guide you on the right set, date options, and the fastest next step to lock your production schedule.
+        <p style={{ color: 'var(--gray)', maxWidth: '680px', margin: '0 auto', lineHeight: 1.8 }}>
+          Tell us the shoot type, preferred dates, and studio interest once. Our team will guide you on fit, availability, recce planning, and the fastest next step.
         </p>
       </div>
 
@@ -144,10 +144,10 @@ export default function Booking({ studios }: Props) {
               marginBottom: '0.8rem',
             }}
           >
-            Built for <span style={{ color: 'var(--gold)' }}>working productions</span>
+            One inquiry, <span style={{ color: 'var(--gold)' }}>practical answers</span>
           </h3>
-          <p style={{ color: 'var(--gray)', lineHeight: 1.85, marginBottom: '2rem', maxWidth: '380px' }}>
-            From ad shoots to series schedules, we help teams move from inquiry to confirmed dates with less friction and faster clarity.
+          <p style={{ color: 'var(--gray)', lineHeight: 1.85, marginBottom: '2rem', maxWidth: '420px' }}>
+            We help producers, agencies, photographers, and coordinators move from shortlist to confirmed dates with clearer logistics and less unnecessary back-and-forth.
           </p>
 
           <div
@@ -167,11 +167,11 @@ export default function Booking({ studios }: Props) {
                 <div style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>
                   Typical Response Window
                 </div>
-                <div style={{ fontSize: '0.92rem', color: 'var(--white)' }}>A few hours during working hours</div>
+                <div style={{ fontSize: '0.92rem', color: 'var(--white)' }}>Usually within a few working hours</div>
               </div>
             </div>
             <div style={{ fontSize: '0.84rem', color: 'var(--gray-lt)', lineHeight: 1.7 }}>
-              Need a faster answer? WhatsApp is the quickest route for availability checks, held dates, and recce coordination.
+              Need a faster answer? WhatsApp is the quickest route for availability checks, recce coordination, and holding dates while your team finalises the brief.
             </div>
           </div>
 
@@ -235,7 +235,7 @@ export default function Booking({ studios }: Props) {
             }}
           >
             <MessageCircleIcon size={16} />
-            WhatsApp Quick Inquiry
+            WhatsApp Booking Desk
           </a>
         </div>
 
@@ -299,7 +299,7 @@ export default function Booking({ studios }: Props) {
                 type="text"
                 id="company"
                 name="company"
-                placeholder="Excel Entertainment / Your Production House"
+                placeholder="Production house, agency, brand, or photographer name"
               />
             </FormGroup>
 
@@ -373,7 +373,7 @@ export default function Booking({ studios }: Props) {
             </FormGroup>
 
             <p style={{ fontSize: '0.78rem', color: 'var(--gray)', marginBottom: '1.2rem', lineHeight: 1.65 }}>
-              No advance payment required to inquire. We typically respond within a few hours with next-step guidance.
+              No advance payment is required to inquire. Share your brief once and we will come back with availability, rate guidance, and the next practical step.
             </p>
 
             <button
@@ -401,7 +401,7 @@ export default function Booking({ studios }: Props) {
                 gap: '0.55rem',
               }}
             >
-              {status === 'loading' ? 'Sending Inquiry...' : 'Send Availability Request'}
+              {status === 'loading' ? 'Sending Inquiry...' : 'Request Availability & Quote'}
               {status !== 'loading' && <ArrowRightIcon size={15} />}
             </button>
 
@@ -425,7 +425,7 @@ export default function Booking({ studios }: Props) {
                   Inquiry Received
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--gray)', lineHeight: 1.6 }}>
-                  Thank you. Our team will reach out within a few hours to confirm availability and share the next steps.
+                  Thank you. We will review your brief and reply with availability, rates, and next-step guidance within a few working hours.
                 </div>
               </div>
             )}
@@ -474,4 +474,3 @@ function FormGroup({ label, htmlFor, children }: { label: string; htmlFor: strin
     </div>
   );
 }
-

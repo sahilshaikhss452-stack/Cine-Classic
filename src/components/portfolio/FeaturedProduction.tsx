@@ -17,7 +17,7 @@ export default function FeaturedProduction({ production }: Props) {
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <div className="section-tag">Spotlight</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            Featured <span style={{ color: 'var(--gold)' }}>Production</span>
+            Featured <span style={{ color: 'var(--gold)' }}>production case</span>
           </h2>
         </div>
 
@@ -53,7 +53,7 @@ export default function FeaturedProduction({ production }: Props) {
               <IconBadge size={28} rounded={8} style={{ background: 'rgba(212,175,55,0.1)' }}>
                 <SparkIcon size={14} />
               </IconBadge>
-              <span>Shot at Cine Classic Studios</span>
+              <span>One example of the production standards the studio supports</span>
             </div>
           </div>
         </div>

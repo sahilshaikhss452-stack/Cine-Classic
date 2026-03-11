@@ -9,8 +9,6 @@ export default function PortfolioBookingCTA() {
       overflow: 'hidden',
       textAlign: 'center',
     }}>
-
-      {/* Ambient glow */}
       <div style={{
         position: 'absolute', top: '-20%', left: '50%',
         transform: 'translateX(-50%)',
@@ -19,16 +17,14 @@ export default function PortfolioBookingCTA() {
         pointerEvents: 'none',
       }} />
 
-      {/* Gold top border */}
       <div style={{
         position: 'absolute', top: 0, left: '10%', right: '10%', height: '1px',
         background: 'linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent)',
       }} />
 
       <div style={{ position: 'relative', maxWidth: '700px', margin: '0 auto' }}>
-
         <div className="reveal">
-          <div className="section-tag">Book Now</div>
+          <div className="section-tag">Next Step</div>
 
           <h2 style={{
             fontFamily: 'var(--font-playfair), serif',
@@ -36,8 +32,7 @@ export default function PortfolioBookingCTA() {
             fontWeight: 700, lineHeight: 1.1,
             color: 'var(--white)', marginBottom: '1.25rem',
           }}>
-            Bring Your Production{' '}
-            <span style={{ color: 'var(--gold)' }}>to Life</span>
+            Plan your next shoot with a <span style={{ color: 'var(--gold)' }}>studio built for working schedules</span>
           </h2>
 
           <p style={{
@@ -45,27 +40,24 @@ export default function PortfolioBookingCTA() {
             lineHeight: 1.85, fontWeight: 300,
             marginBottom: '2.5rem',
           }}>
-            Join filmmakers, brands, and creators who have chosen Cine Classic Studios
-            for their productions. Nine versatile sets, professional facilities,
-            and a crew that cares about your vision.
+            If the portfolio matches the kind of production you are planning, send your brief and preferred dates. We will guide you to the right set, recce flow, and booking next step.
           </p>
 
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/#booking" className="btn-primary">
-              Book Your Studio →
+              Check Dates & Rates
             </Link>
             <Link href="/studios" className="btn-outline">
               Explore Studio Sets
             </Link>
           </div>
 
-          {/* Trust line */}
           <p style={{
             marginTop: '2rem',
             fontSize: '0.8rem', color: 'var(--gray)',
             letterSpacing: '0.05em',
           }}>
-            Available 24/7 · Quick response · Professional support
+            Fast response · Recce support · Crew-friendly workflow
           </p>
         </div>
       </div>

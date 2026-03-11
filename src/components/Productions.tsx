@@ -77,12 +77,12 @@ export default function Productions({ productions }: Props) {
     return (
       <section id="productions" className="mob-section" style={{ padding: '120px 5%', background: 'var(--dark)' }}>
         <div style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}>
-          <div className="section-tag">On Screen</div>
+          <div className="section-tag">Production Credits</div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '1.1rem' }}>
-            Productions Shot at <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
+            Work shot at <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
           </h2>
           <p style={{ fontSize: '1rem', color: 'var(--gray)', lineHeight: 1.8 }}>
-            No production documents are published in Sanity yet.
+            Published production references are being refreshed in Sanity. Ask us for relevant examples when you inquire or schedule a recce.
           </p>
         </div>
       </section>
@@ -106,12 +106,12 @@ export default function Productions({ productions }: Props) {
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-          <div className="section-tag">On Screen</div>
+          <div className="section-tag">Production Credits</div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '1.1rem' }}>
-            Productions Shot at <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
+            Campaigns, shows, and films shot at <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
           </h2>
-          <p style={{ fontSize: '1.05rem', color: 'var(--gray)', maxWidth: '560px', margin: '0 auto', fontWeight: 300, lineHeight: 1.8 }}>
-            Trusted by filmmakers, production houses, and television networks across India.
+          <p style={{ fontSize: '1.05rem', color: 'var(--gray)', maxWidth: '660px', margin: '0 auto', fontWeight: 300, lineHeight: 1.8 }}>
+            A quick view of the kind of productions that trust the studio for commercial work, long-form storytelling, branded content, and fast-moving shoot schedules.
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export default function Productions({ productions }: Props) {
 
         <div className="reveal" style={{ textAlign: 'center' }}>
           <Link href="/portfolio" className="btn-outline">
-            View Full Portfolio {'->'}
+            Explore Full Portfolio
           </Link>
         </div>
       </div>

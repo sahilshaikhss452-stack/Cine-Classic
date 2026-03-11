@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useMemo, useState } from 'react';
 import type { SanityStudioCard } from '@/lib/sanity';
@@ -94,10 +94,10 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
               margin: '1.2rem 0 1rem',
             }}
           >
-            Select <span style={{ color: 'var(--gold)' }}>Preferred Shoot Dates</span>
+            Shortlist <span style={{ color: 'var(--gold)' }}>preferred shoot dates</span>
           </h2>
-          <p style={{ color: 'var(--gray)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.8 }}>
-            This is an inquiry tool, not a live availability calendar. Pick your preferred dates and our team will confirm the actual schedule.
+          <p style={{ color: 'var(--gray)', maxWidth: '600px', margin: '0 auto', lineHeight: 1.8 }}>
+            This is a planning tool for your inquiry, not a live calendar. Mark the dates that work best for your team and we will confirm actual availability or suggest the nearest options.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
                   transition: 'all 0.25s',
                 }}
               >
-                ‹
+                {'<'}
               </button>
 
               <span
@@ -168,7 +168,7 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
                   transition: 'all 0.25s',
                 }}
               >
-                ›
+                {'>'}
               </button>
             </div>
 
@@ -251,10 +251,10 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
                   marginBottom: '0.8rem',
                 }}
               >
-                Select Studio
+                Studio preference
               </label>
               <select className="form-input" value={selectedStudio} onChange={(event) => setSelectedStudio(event.target.value)}>
-                <option value="">All Studios</option>
+                <option value="">Any suitable studio</option>
                 {studios.map((studio) => (
                   <option key={studio.slug} value={studio.slug}>
                     {studio.icon} {studio.title}
@@ -282,12 +282,12 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
                   marginBottom: '1rem',
                 }}
               >
-                Selected Dates
+                Selected dates
               </div>
 
               {selectedDates.length === 0 ? (
                 <p style={{ color: 'var(--gray)', fontSize: '0.85rem', lineHeight: 1.7 }}>
-                  Click any future date to add it to your inquiry.
+                  Select one or more future dates so your inquiry reaches us with clearer scheduling intent.
                 </p>
               ) : (
                 <div>
@@ -320,23 +320,23 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
                             padding: '0 4px',
                           }}
                         >
-                          ×
+                          x
                         </button>
                       </div>
                     );
                   })}
                   <p style={{ color: 'var(--gray)', fontSize: '0.78rem', marginTop: '1rem', lineHeight: 1.6 }}>
-                    {selectedDates.length} day{selectedDates.length > 1 ? 's' : ''} selected. Add these dates in your booking inquiry so the team can confirm the real schedule.
+                    {selectedDates.length} day{selectedDates.length > 1 ? 's' : ''} selected. Add these dates to your inquiry so we can confirm availability or suggest the nearest workable options.
                   </p>
                 </div>
               )}
             </div>
 
             <a href="#booking" className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', textDecoration: 'none' }}>
-              Proceed to Booking {'->'}
+              Continue to Inquiry {'->'}
             </a>
             <p style={{ color: 'var(--gray)', fontSize: '0.75rem', textAlign: 'center', marginTop: '0.75rem' }}>
-              No payment required to make an inquiry
+              No payment is required to send an inquiry
             </p>
           </div>
         </div>

@@ -7,23 +7,23 @@ import { ArrowRightIcon, CheckIcon, SparkIcon } from '@/components/ui/icons';
 import { loadFacilities } from '@/lib/sanity';
 
 export const metadata: Metadata = {
-  title: 'Studio Facilities - Professional Infrastructure',
+  title: 'Studio Facilities | Cine Classic Studios Mumbai',
   description:
-    'Cine Classic Studios offers professional-grade infrastructure: power, lighting, support spaces, and operational amenities for film and commercial productions.',
+    'Explore the production facilities, operational support, and crew-ready infrastructure available at Cine Classic Studios in Mumbai.',
   alternates: { canonical: '/facilities' },
   openGraph: {
-    title: 'Studio Facilities - Cine Classic Studios Mumbai',
-    description: 'Professional-grade studio infrastructure for film and commercial productions in Mumbai.',
+    title: 'Studio Facilities | Cine Classic Studios Mumbai',
+    description: 'Production support and infrastructure designed for film, commercial, OTT, and photoshoot teams in Mumbai.',
   },
 };
 
 export const revalidate = 30;
 
 const STATS = [
-  { value: '200A', label: 'Power Ready' },
-  { value: '24/7', label: 'Operational Support' },
-  { value: 'Large', label: 'Truck Access' },
-  { value: 'Fast', label: 'Crew Turnaround' },
+  { value: 'Shoot-Ready', label: 'Operational Setup' },
+  { value: 'By Appointment', label: 'Visits & Recces' },
+  { value: 'On-Site', label: 'Team Support' },
+  { value: 'Mumbai', label: 'Production Access' },
 ];
 
 export default async function FacilitiesPage() {
@@ -39,20 +39,20 @@ export default async function FacilitiesPage() {
         <section style={{ padding: '160px 5% 100px', background: 'var(--dark)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-          <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-            <div className="section-tag">Infrastructure</div>
+          <div style={{ maxWidth: '920px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+            <div className="section-tag">Facilities & Support</div>
             <h1 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2.4rem, 5vw, 4rem)', fontWeight: 800, color: 'var(--white)', margin: '1.5rem 0 1.2rem', lineHeight: 1.1 }}>
-              World-class studio <span style={{ color: 'var(--gold)' }}>facilities</span>
+              Production facilities built to <span style={{ color: 'var(--gold)' }}>keep shoot days moving</span>
             </h1>
-            <p style={{ color: 'var(--gray)', fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', lineHeight: 1.8, maxWidth: '660px', margin: '0 auto 2.5rem' }}>
-              Built to the expectations of working film professionals. Every facility at Cine Classic Studios is designed to reduce production friction and support faster shoot days.
+            <p style={{ color: 'var(--gray)', fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', lineHeight: 1.8, maxWidth: '700px', margin: '0 auto 2.5rem' }}>
+              Beyond the sets themselves, Cine Classic Studios is designed to support planning, access, prep, crew flow, and the practical demands that shape a smoother production day.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">
-                Request a Studio Tour
+                Request a Recce
                 <ArrowRightIcon size={15} />
               </a>
-              <a href="/studios" className="btn-outline">View All Studios</a>
+              <a href="/studios" className="btn-outline">View Studio Sets</a>
             </div>
           </div>
         </section>
@@ -61,7 +61,7 @@ export default async function FacilitiesPage() {
           <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '2rem', textAlign: 'center' }}>
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.8rem', fontWeight: 800, color: 'var(--gold)', lineHeight: 1, marginBottom: '0.4rem' }}>{stat.value}</div>
+                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.5rem', fontWeight: 800, color: 'var(--gold)', lineHeight: 1, marginBottom: '0.4rem' }}>{stat.value}</div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--gray)', letterSpacing: '0.05em' }}>{stat.label}</div>
               </div>
             ))}
@@ -71,12 +71,12 @@ export default async function FacilitiesPage() {
         <section style={{ padding: '100px 5%', background: 'var(--dark2)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '5rem' }}>
-              <span className="section-tag">What We Offer</span>
+              <span className="section-tag">What We Support</span>
               <h2 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 700, color: 'var(--white)', margin: '1.2rem 0 1rem' }}>
-                Everything your production <span style={{ color: 'var(--gold)' }}>needs</span>
+                The practical support around <span style={{ color: 'var(--gold)' }}>every studio booking</span>
               </h2>
-              <p style={{ color: 'var(--gray)', maxWidth: '540px', margin: '0 auto', lineHeight: 1.8 }}>
-                From lighting and power to crew support and logistics, these facilities are managed from the CMS so the website can reflect real operations without guesswork.
+              <p style={{ color: 'var(--gray)', maxWidth: '620px', margin: '0 auto', lineHeight: 1.8 }}>
+                This page covers the production support systems around the sets, so clients can understand how the studio works operationally before they lock dates.
               </p>
             </div>
 
@@ -118,16 +118,16 @@ export default async function FacilitiesPage() {
 
         <section style={{ padding: '100px 5%', background: 'var(--dark)', textAlign: 'center' }}>
           <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-            <div className="section-tag">Book Your Shoot</div>
+            <div className="section-tag">Recce & Booking</div>
             <h2 style={{ fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 700, color: 'var(--white)', margin: '1.5rem 0 1.2rem' }}>
-              Tour the facility <span style={{ color: 'var(--gold)' }}>before you book</span>
+              Review the facility <span style={{ color: 'var(--gold)' }}>before you lock dates</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2.5rem' }}>
-              We invite production teams to visit before confirming dates. Our team can walk you through the spaces, answer technical questions, and help you choose the right setup.
+              Production teams are welcome to recce the studio, review operational details, and ask technical questions before confirming a booking.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/#booking" className="btn-primary">
-                Request a Studio Tour
+                Request a Recce
                 <ArrowRightIcon size={15} />
               </a>
             </div>

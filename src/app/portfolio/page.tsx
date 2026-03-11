@@ -12,9 +12,9 @@ import TrustedProductions from '@/components/portfolio/TrustedProductions';
 import { loadFeaturedProduction, loadProductions, mapProductionToUi, mapProductionsToUi } from '@/lib/sanity';
 
 export const metadata: Metadata = {
-  title: 'Portfolio – Productions Shot at Cine Classic Studios',
+  title: 'Portfolio | Productions Shot at Cine Classic Studios Mumbai',
   description:
-    'Explore films, TV shows, web series, and commercials shot at Cine Classic Studios. Trusted by filmmakers, brands, and production houses across India.',
+    'Explore films, web series, commercials, and digital productions shot at Cine Classic Studios in Mumbai.',
 };
 
 export const revalidate = 30;

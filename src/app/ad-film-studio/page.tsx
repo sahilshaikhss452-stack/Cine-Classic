@@ -1,57 +1,57 @@
-import type { Metadata } from 'next';
-import Navbar  from '@/components/Navbar';
-import Footer  from '@/components/Footer';
+﻿import type { Metadata } from 'next';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
-import RevealProvider  from '@/components/RevealProvider';
+import RevealProvider from '@/components/RevealProvider';
 import { loadSiteSettings } from '@/lib/sanity';
 
 export const metadata: Metadata = {
-  title: 'Ad Film Studio Mumbai – TVC & Commercial Shoot Location',
+  title: 'Ad Film Studio Mumbai | Cine Classic Studios',
   description:
-    'Professional ad film studio in Mumbai for TVCs, digital ads, brand films, and commercial shoots. Cine Classic Studios offers 9 dressed sets with 200A power, LED lighting rigs, and production support.',
+    'Looking for an ad film studio in Mumbai? Explore production-ready studio sets for TV commercials, digital campaigns, brand films, and product shoots.',
   keywords: [
     'ad film studio mumbai',
-    'TVC shoot location mumbai',
     'commercial shoot studio mumbai',
-    'ad film production mumbai',
+    'TVC shoot location mumbai',
     'brand film studio mumbai',
-    'TV commercial studio mumbai',
     'digital ad shoot mumbai',
-    'corporate film studio mumbai',
     'product shoot studio mumbai',
+    'corporate film studio mumbai',
+    'commercial production studio mumbai',
   ],
   alternates: { canonical: '/ad-film-studio' },
   openGraph: {
-    title: 'Ad Film Studio Mumbai – TVC & Commercial Shoots | Cine Classic Studios',
+    title: 'Ad Film Studio Mumbai | Cine Classic Studios',
     description:
-      'Book a TVC or commercial ad shoot studio in Mumbai. 9 dressed sets, pro lighting, 200A power.',
+      'Production-ready studio spaces in Mumbai for TVCs, digital campaigns, brand films, and commercial shoots.',
     type: 'website',
     locale: 'en_IN',
   },
 };
 
 const AD_TYPES = [
-  { icon: '📺', title: 'Television Commercials (TVC)', desc: 'Precision-controlled sets for 30-second and 60-second TVCs. Perfect colour accuracy, silent HVAC, and repeatable lighting setups.' },
-  { icon: '📱', title: 'Digital & Social Media Ads', desc: 'Fast-paced, high-energy shoots for Instagram reels, YouTube pre-rolls, and Facebook campaign content.' },
-  { icon: '🏷️', title: 'Brand Films', desc: 'Long-form brand storytelling with cinematic production values. Our sets add depth and authenticity to brand narratives.' },
-  { icon: '📦', title: 'Product Demonstrations', desc: 'Controlled environment shoots for electronics, FMCG, and household products. Sweep backdrops and hero product lighting available.' },
-  { icon: '💊', title: 'Pharma Commercials', desc: 'Our hospital set is a go-to for pharma, healthcare, and insurance brand films. Clinically accurate and visually credible.' },
-  { icon: '🏠', title: 'Real Estate & Home', desc: 'Living room and lifestyle sets for real estate, home appliances, and interior decor brand films.' },
+  { marker: '01', title: 'Television commercials', desc: 'A practical fit for controlled campaign shoots where timing, consistency, and studio logistics matter.' },
+  { marker: '02', title: 'Digital ad campaigns', desc: 'Useful for short-form content, social campaigns, and multi-format commercial production days.' },
+  { marker: '03', title: 'Brand films', desc: 'Strong for longer-form brand storytelling that needs a more controlled and production-friendly studio environment.' },
+  { marker: '04', title: 'Product-led shoots', desc: 'Helpful for campaign work that depends on art direction, repeatable setup, and a controlled shooting plan.' },
+  { marker: '05', title: 'Corporate and branded content', desc: 'Suitable for agency teams and internal brand units looking for reliable studio support in Mumbai.' },
+  { marker: '06', title: 'Campaign stills plus motion', desc: 'Useful when one brief needs both film and photography output within the same production schedule.' },
 ];
 
 const AD_ADVANTAGES = [
-  { title: 'No Location Permits', value: 'All 9 sets are on private studio property. No BMC permits, police permissions, or public location headaches.' },
-  { title: 'Repeatable Lighting', value: 'DMX-controlled lighting rigs can be saved and recalled identically — essential for consistency across shoot days.' },
-  { title: 'Silent Environment', value: 'Acoustically treated studios with silent HVAC. No traffic noise, ambient interruptions, or external sound bleeds.' },
-  { title: 'Quick Set Changes', value: 'Modular set elements allow rapid redressing between takes. Save time between product variations or brand segments.' },
-  { title: 'Full Power Backup', value: '200A 3-phase power with UPS backup. Critical for high-output lighting systems used in product and beauty shoots.' },
-  { title: 'Production Support', value: 'On-site studio manager coordinates floor operations. Art department, prop sourcing, and lighting technicians on request.' },
+  { title: 'Controlled studio environment', value: 'A stronger option for commercials that need more predictability, fewer location variables, and smoother day planning.' },
+  { title: 'Faster recce-to-booking flow', value: 'The team can guide agencies and production houses through set fit, dates, and practical next steps quickly.' },
+  { title: 'Useful for multi-team approvals', value: 'Commercial shoots often involve agency, client, and production stakeholders. Clearer planning helps keep decisions moving.' },
+  { title: 'Better for visual consistency', value: 'A studio setting supports repeat takes, art direction, and campaign work that needs tighter control over the frame.' },
+  { title: 'Crew-friendly production support', value: 'A practical choice for teams managing talent, wardrobe, product, props, and time-sensitive commercial schedules.' },
+  { title: 'Mumbai convenience for agencies', value: 'Useful for advertising teams looking for a reliable commercial shoot base in the cityâ€™s active production circuit.' },
 ];
 
 export default async function AdFilmStudioPage() {
   const settings = await loadSiteSettings();
   const primaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need an ad film studio in Mumbai.')}`;
   const secondaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need an ad film studio in Mumbai for a TVC shoot.')}`;
+
   return (
     <>
       <RevealProvider />
@@ -59,7 +59,6 @@ export default async function AdFilmStudioPage() {
       <Navbar />
 
       <main>
-        {/* Hero */}
         <section style={{
           padding: '160px 5% 100px',
           background: 'var(--dark)',
@@ -72,26 +71,25 @@ export default async function AdFilmStudioPage() {
             pointerEvents: 'none',
           }} />
           <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', alignItems: 'center' }}>
               <div>
-                <div className="section-tag">Mumbai's TVC Studio</div>
+                <div className="section-tag">Ad Film Studio Mumbai</div>
                 <h1 style={{
                   fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)',
                   fontWeight: 800, color: 'var(--white)',
                   margin: '1.2rem 0 1.2rem', lineHeight: 1.08,
                   letterSpacing: '-0.025em',
                 }}>
-                  Ad Film Studio{' '}
-                  <span style={{ color: 'var(--gold)' }}>Mumbai</span>
+                  Studio spaces for <span style={{ color: 'var(--gold)' }}>commercial shoots in Mumbai</span>
                 </h1>
                 <p style={{
                   color: 'var(--gray)', fontSize: '1.02rem',
-                  lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '460px',
+                  lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '500px',
                 }}>
-                  Professional commercial shoot studios for TVCs, digital campaigns, brand films, and product ads. Controlled environment, pro lighting, silent sets, and complete production support.
+                  Cine Classic Studios helps agencies, production houses, and brand teams plan TVCs, digital campaigns, and branded content shoots with more control and faster booking support.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                  <a href="/#booking" className="btn-primary">Book a Studio →</a>
+                  <a href="/#booking" className="btn-primary">Check Availability</a>
                   <a
                     href={primaryWhatsappUrl}
                     target="_blank" rel="noopener noreferrer"
@@ -103,14 +101,13 @@ export default async function AdFilmStudioPage() {
                       textDecoration: 'none', letterSpacing: '0.06em',
                     }}
                   >
-                    💬 WhatsApp Now
+                    WhatsApp Booking Desk
                   </a>
                 </div>
               </div>
 
-              {/* Right side — key advantages */}
               <div>
-                {AD_ADVANTAGES.slice(0, 4).map(adv => (
+                {AD_ADVANTAGES.slice(0, 4).map((adv) => (
                   <div key={adv.title} style={{
                     display: 'flex', gap: '1rem',
                     marginBottom: '1.2rem',
@@ -138,18 +135,17 @@ export default async function AdFilmStudioPage() {
           </div>
         </section>
 
-        {/* Ad Types */}
         <section style={{ padding: '100px 5%', background: 'var(--dark2)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span className="section-tag">Commercial Production Types</span>
+              <span className="section-tag">Commercial Formats</span>
               <h2 style={{
                 fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0 1rem',
                 letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
-                Every Format of <span style={{ color: 'var(--gold)' }}>Commercial Production</span>
+                Built for a wide range of <span style={{ color: 'var(--gold)' }}>commercial briefs</span>
               </h2>
             </div>
             <div className="seo-features-grid">
@@ -159,7 +155,7 @@ export default async function AdFilmStudioPage() {
                   className={`reveal reveal-delay-${(i % 3) + 1} fac-card`}
                   style={{ background: 'var(--dark3)' }}
                 >
-                  <div style={{ fontSize: '2rem', marginBottom: '0.8rem' }}>{item.icon}</div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold)', letterSpacing: '0.14em', marginBottom: '0.8rem' }}>{item.marker}</div>
                   <h3 style={{
                     fontSize: '1.1rem', fontWeight: 700,
                     color: 'var(--white)', marginBottom: '0.7rem',
@@ -174,59 +170,6 @@ export default async function AdFilmStudioPage() {
           </div>
         </section>
 
-        {/* Brands section */}
-        <section style={{ padding: '80px 5%', background: 'var(--dark)' }}>
-          <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-            <div className="reveal" style={{ marginBottom: '3rem' }}>
-              <span className="section-tag">Client Trust</span>
-              <h2 style={{
-                fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
-                fontWeight: 700, color: 'var(--white)',
-                margin: '1.2rem 0 1rem',
-                letterSpacing: '-0.015em', lineHeight: 1.15,
-              }}>
-                Trusted by Leading <span style={{ color: 'var(--gold)' }}>Ad Agencies & Brands</span>
-              </h2>
-              <p style={{ color: 'var(--gray)', lineHeight: 1.8, maxWidth: '600px', margin: '0 auto' }}>
-                Top advertising agencies and production houses choose Cine Classic Studios for their commercial shoots — because controlled environments and reliable infrastructure save time and reduce costs.
-              </p>
-            </div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-              gap: '1rem',
-              marginTop: '3rem',
-            }}>
-              {[
-                { cat: 'FMCG', example: 'HUL, Nestlé, Marico' },
-                { cat: 'Pharma', example: 'Sun Pharma, Cipla, Alembic' },
-                { cat: 'Telecom', example: 'Jio, Airtel, Vi' },
-                { cat: 'Real Estate', example: 'Lodha, Godrej Properties' },
-                { cat: 'Auto', example: 'Maruti, Hyundai, TVS' },
-                { cat: 'Fashion', example: 'Manyavar, Westside, Fabindia' },
-              ].map(b => (
-                <div
-                  key={b.cat}
-                  className="reveal"
-                  style={{
-                    background: 'var(--dark3)',
-                    border: '1px solid rgba(212,175,55,0.1)',
-                    borderRadius: '10px',
-                    padding: '1.3rem',
-                    textAlign: 'center',
-                  }}
-                >
-                  <div style={{ fontSize: '0.68rem', color: 'var(--gold)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.4rem', fontWeight: 600 }}>
-                    {b.cat}
-                  </div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--gray)', lineHeight: 1.5 }}>{b.example}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* All advantages */}
         <section style={{ padding: '80px 5%', background: 'var(--dark2)' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -235,7 +178,7 @@ export default async function AdFilmStudioPage() {
                 fontWeight: 700, color: 'var(--white)',
                 letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
-                Why Ad Agencies Choose <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
+                Why commercial teams choose <span style={{ color: 'var(--gold)' }}>Cine Classic Studios</span>
               </h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
@@ -269,7 +212,6 @@ export default async function AdFilmStudioPage() {
           </div>
         </section>
 
-        {/* CTA */}
         <section style={{ padding: '80px 5%', background: 'var(--dark)', textAlign: 'center' }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{
@@ -277,13 +219,13 @@ export default async function AdFilmStudioPage() {
               fontWeight: 700, color: 'var(--white)', marginBottom: '1rem',
               letterSpacing: '-0.015em', lineHeight: 1.15,
             }}>
-              Book Your <span style={{ color: 'var(--gold)' }}>Ad Film Shoot</span>
+              Need an <span style={{ color: 'var(--gold)' }}>ad film studio in Mumbai?</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2rem' }}>
-              Share your brand brief, shoot dates, and preferred set. We&apos;ll confirm availability and send a detailed studio package within hours.
+              Share your campaign brief, dates, and preferred set. We will help you move from shortlist to recce or booking with clearer next steps.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/#booking" className="btn-primary">Send a Booking Inquiry →</a>
+              <a href="/#booking" className="btn-primary">Send a Booking Inquiry</a>
               <a
                 href={secondaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
@@ -295,7 +237,7 @@ export default async function AdFilmStudioPage() {
                   textDecoration: 'none',
                 }}
               >
-                💬 WhatsApp Us
+                WhatsApp Us
               </a>
             </div>
           </div>

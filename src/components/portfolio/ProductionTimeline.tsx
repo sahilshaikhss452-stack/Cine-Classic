@@ -25,12 +25,12 @@ export default function ProductionTimeline({ productions }: Props) {
     <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-          <div className="section-tag">History</div>
+          <div className="section-tag">Timeline</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            Production <span style={{ color: 'var(--gold)' }}>Timeline</span>
+            A working history of <span style={{ color: 'var(--gold)' }}>productions at the studio</span>
           </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--gray)', maxWidth: '500px', margin: '1rem auto 0', fontWeight: 300, lineHeight: 1.8 }}>
-            A year-by-year look at the productions that have called Cine Classic Studios home.
+          <p style={{ fontSize: '1rem', color: 'var(--gray)', maxWidth: '560px', margin: '1rem auto 0', fontWeight: 300, lineHeight: 1.8 }}>
+            This timeline helps location teams and producers see the range and continuity of projects that have used Cine Classic Studios over time.
           </p>
         </div>
 

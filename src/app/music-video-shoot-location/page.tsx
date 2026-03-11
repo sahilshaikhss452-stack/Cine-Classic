@@ -1,56 +1,57 @@
 import type { Metadata } from 'next';
-import Navbar  from '@/components/Navbar';
-import Footer  from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
-import RevealProvider  from '@/components/RevealProvider';
+import RevealProvider from '@/components/RevealProvider';
 import { loadSiteSettings } from '@/lib/sanity';
 
 export const metadata: Metadata = {
-  title: 'Music Video Shoot Location Mumbai – Book a Studio Today',
+  title: 'Music Video Shoot Location Mumbai | Cine Classic Studios',
   description:
-    'Book a music video shoot location in Mumbai. Cine Classic Studios offers 9 unique sets for Bollywood and indie music videos: market, chawl, police station, court, open ground & more.',
+    'Looking for a music video shoot location in Mumbai? Explore production-ready studio sets for performance, narrative, and stylised music video shoots.',
   keywords: [
     'music video shoot location mumbai',
     'music video studio mumbai',
     'music video shoot mumbai',
-    'bollywood music video location',
     'music video set rental mumbai',
     'music video production studio mumbai',
-    'punjabi music video shoot mumbai',
+    'bollywood music video location mumbai',
     'indie music video studio mumbai',
+    'performance shoot studio mumbai',
   ],
   alternates: { canonical: '/music-video-shoot-location' },
   openGraph: {
-    title: 'Music Video Shoot Location Mumbai – Cine Classic Studios',
+    title: 'Music Video Shoot Location Mumbai | Cine Classic Studios',
     description:
-      'Unique, visually rich sets for Bollywood, indie, and regional music videos in Mumbai.',
+      'Production-ready music video locations in Mumbai for performance shoots, narrative looks, and stylised visual treatments.',
     type: 'website',
     locale: 'en_IN',
   },
 };
 
 const MV_SETS = [
-  { icon: '🏪', title: 'Market 1 — Period Bazaar', desc: 'A classic Indian bazaar with aged vendor stalls, period props, and moody practical lighting — the perfect Bollywood street song set.' },
-  { icon: '🛒', title: 'Market 2 — Urban Market', desc: 'Contemporary urban market with neon signage and modern stalls. Ideal for hip-hop, R&B, and modern Bollywood numbers.' },
-  { icon: '🏬', title: 'Market 7 — Large Scale', desc: 'Multi-lane market set for large cast, crowd sequences, and elaborate choreography. Multiple camera angles possible.' },
-  { icon: '🏚️', title: 'Chawl New — Mumbai Soul', desc: 'Two-storey Mumbai chawl — the classic storytelling set for emotional, nostalgic, and dramatic music videos.' },
-  { icon: '🚔', title: 'Police Station', desc: 'Intense, gritty aesthetics for crime-themed music videos. Interrogation room, lock-up cells, and inspector\'s office.' },
-  { icon: '🌿', title: 'Open Ground (2+ Acres)', desc: 'Expansive outdoor space for performance-style shoots, car sequences, crowd extravaganzas, and aerial shots.' },
+  { marker: '01', title: 'Marketplace looks', desc: 'Useful for songs that need layered backgrounds, crowd energy, and the visual texture of an active public-facing set.' },
+  { marker: '02', title: 'Mumbai chawl aesthetics', desc: 'A strong fit for nostalgic storytelling, dramatic performance setups, and scenes that need a recognisable urban mood.' },
+  { marker: '03', title: 'Stylised institutional sets', desc: 'Helpful for concept-driven music videos that need interrogation, courtroom, or cinematic procedural references.' },
+  { marker: '04', title: 'Open ground potential', desc: 'Suitable for performance-led visuals, group choreography, larger blocking, and wider camera movement.' },
+  { marker: '05', title: 'Narrative crossover', desc: 'Useful when a music video also needs short narrative moments, dramatic inserts, or scene-based transitions.' },
+  { marker: '06', title: 'Multiple looks in one venue', desc: 'A practical choice when the treatment needs visual variation without the cost or time pressure of multiple external locations.' },
 ];
 
 const MV_REASONS = [
-  { icon: '🎬', title: 'Distinct Visual Locations', desc: 'Each set is an immersive environment — not a plain wall. Give your music video a production design that stands out on YouTube.' },
-  { icon: '⏱️', title: 'Flexible Shoot Hours', desc: 'Need to shoot overnight? We\'re available 24/7 by appointment. Night shoots, golden hour simulations — we accommodate it all.' },
-  { icon: '💡', title: 'Creative Lighting', desc: 'Our lighting team works with your director and DOP to match the visual treatment of every song. Moody, dramatic, neon — anything goes.' },
-  { icon: '🎵', title: 'Audio Playback Setup', desc: 'In-studio audio playback systems for artist performance. Synced playback for lip-sync accuracy on every take.' },
-  { icon: '🤝', title: 'Artist & Crew Comfort', desc: 'Green rooms, makeup stations, and craft services for your artist and crew. Your talent arrives fresh and leaves happy.' },
-  { icon: '🚛', title: 'Equipment & Access', desc: 'Drive-in access for production trucks. Lighting and camera rigs can be moved in directly to the studio floor.' },
+  { marker: '01', title: 'Better control over the shoot day', desc: 'A studio environment gives directors and production teams more control over pacing, access, and the visual plan.' },
+  { marker: '02', title: 'Useful for stylised lighting', desc: 'Ideal for treatments that need performance lighting, dramatic mood shifts, or a more controlled visual setup.' },
+  { marker: '03', title: 'Supports quick turnarounds', desc: 'Helpful for music video schedules that need faster setup decisions and fewer location-change delays.' },
+  { marker: '04', title: 'Easier talent and crew movement', desc: 'A practical fit for artist teams, stylists, choreographers, and production units working on tight timelines.' },
+  { marker: '05', title: 'Recce-friendly planning', desc: 'The team can help you shortlist the most suitable set for the treatment before the shoot day gets locked.' },
+  { marker: '06', title: 'Built for video production teams', desc: 'Suitable for Bollywood, regional, branded, and independent music video work that needs controlled shooting space in Mumbai.' },
 ];
 
 export default async function MusicVideoShootLocationPage() {
   const settings = await loadSiteSettings();
   const primaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need a music video shoot location in Mumbai.')}`;
   const secondaryWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi, I need to book a music video shoot location in Mumbai.')}`;
+
   return (
     <>
       <RevealProvider />
@@ -58,7 +59,6 @@ export default async function MusicVideoShootLocationPage() {
       <Navbar />
 
       <main>
-        {/* Hero */}
         <section style={{
           padding: '160px 5% 100px',
           background: 'var(--dark)',
@@ -70,25 +70,24 @@ export default async function MusicVideoShootLocationPage() {
             background: 'radial-gradient(ellipse at 40% 60%, rgba(168,85,247,0.06) 0%, transparent 60%)',
             pointerEvents: 'none',
           }} />
-          <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-            <div className="section-tag">Mumbai's Best Music Video Locations</div>
+          <div style={{ maxWidth: '920px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+            <div className="section-tag">Music Video Shoot Location Mumbai</div>
             <h1 style={{
               fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)',
               fontWeight: 800, color: 'var(--white)',
               margin: '1.2rem 0 1.2rem', lineHeight: 1.08,
               letterSpacing: '-0.025em',
             }}>
-              Music Video Shoot{' '}
-              <span style={{ color: 'var(--gold)' }}>Mumbai</span>
+              Studio sets for <span style={{ color: 'var(--gold)' }}>music video shoots in Mumbai</span>
             </h1>
             <p style={{
               color: 'var(--gray)', fontSize: '1.05rem',
-              lineHeight: 1.85, marginBottom: '2.5rem', maxWidth: '640px', margin: '0 auto 2.5rem',
+              lineHeight: 1.85, maxWidth: '700px', margin: '0 auto 2.5rem',
             }}>
-              Give your music video an unforgettable production design. Nine unique, fully-dressed sets for Bollywood, indie, and regional artists. Crowd scenes, dramatic interiors, urban streets, outdoor grounds — all in fully equipped production spaces.
+              Cine Classic Studios helps music video teams explore performance-friendly, narrative-ready, and stylised set options without the friction of multiple external locations.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/#booking" className="btn-primary">Book a Location →</a>
+              <a href="/#booking" className="btn-primary">Check Availability</a>
               <a
                 href={primaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
@@ -100,24 +99,23 @@ export default async function MusicVideoShootLocationPage() {
                   textDecoration: 'none', letterSpacing: '0.06em',
                 }}
               >
-                💬 WhatsApp Now
+                WhatsApp Booking Desk
               </a>
             </div>
           </div>
         </section>
 
-        {/* Sets showcase */}
         <section style={{ padding: '100px 5%', background: 'var(--dark2)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span className="section-tag">Locations for Music Videos</span>
+              <span className="section-tag">Set Exploration</span>
               <h2 style={{
                 fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0 1rem',
                 letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
-                Sets That Tell Your <span style={{ color: 'var(--gold)' }}>Song&apos;s Story</span>
+                Studio looks that help <span style={{ color: 'var(--gold)' }}>sell the treatment</span>
               </h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
@@ -133,7 +131,7 @@ export default async function MusicVideoShootLocationPage() {
                     transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s',
                   }}
                 >
-                  <div style={{ fontSize: '2rem', marginBottom: '0.8rem' }}>{set.icon}</div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold)', letterSpacing: '0.14em', marginBottom: '0.8rem' }}>{set.marker}</div>
                   <h3 style={{
                     fontSize: '1.1rem', fontWeight: 700,
                     color: 'var(--white)', marginBottom: '0.7rem',
@@ -150,18 +148,17 @@ export default async function MusicVideoShootLocationPage() {
           </div>
         </section>
 
-        {/* Why choose */}
         <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span className="section-tag">Why Book With Us</span>
+              <span className="section-tag">Why It Helps</span>
               <h2 style={{
                 fontSize: 'clamp(1.75rem, 3.3vw, 2.5rem)',
                 fontWeight: 700, color: 'var(--white)',
                 margin: '1.2rem 0',
                 letterSpacing: '-0.015em', lineHeight: 1.15,
               }}>
-                Built for <span style={{ color: 'var(--gold)' }}>Music Video Productions</span>
+                Built for <span style={{ color: 'var(--gold)' }}>music video production realities</span>
               </h2>
             </div>
             <div className="seo-features-grid">
@@ -171,7 +168,7 @@ export default async function MusicVideoShootLocationPage() {
                   className={`reveal reveal-delay-${(i % 3) + 1} fac-card`}
                   style={{ background: 'var(--dark3)' }}
                 >
-                  <div style={{ fontSize: '1.8rem', marginBottom: '0.8rem' }}>{item.icon}</div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold)', letterSpacing: '0.14em', marginBottom: '0.8rem' }}>{item.marker}</div>
                   <h3 style={{
                     fontSize: '1.05rem', fontWeight: 700,
                     color: 'var(--white)', marginBottom: '0.6rem',
@@ -184,7 +181,6 @@ export default async function MusicVideoShootLocationPage() {
           </div>
         </section>
 
-        {/* CTA */}
         <section style={{ padding: '80px 5%', background: 'var(--dark2)', textAlign: 'center' }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{
@@ -192,13 +188,13 @@ export default async function MusicVideoShootLocationPage() {
               fontWeight: 700, color: 'var(--white)', marginBottom: '1rem',
               letterSpacing: '-0.015em', lineHeight: 1.15,
             }}>
-              Book Your <span style={{ color: 'var(--gold)' }}>Music Video</span> Location
+              Need a <span style={{ color: 'var(--gold)' }}>music video location in Mumbai?</span>
             </h2>
             <p style={{ color: 'var(--gray)', lineHeight: 1.8, marginBottom: '2rem' }}>
-              Share your track, treatment brief, and preferred shoot dates. Our team will suggest the best sets and confirm availability within hours.
+              Share the treatment, dates, and the kind of visual look you are after. We will help you shortlist the most suitable set quickly.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/#booking" className="btn-primary">Get a Quote →</a>
+              <a href="/#booking" className="btn-primary">Send a Booking Inquiry</a>
               <a
                 href={secondaryWhatsappUrl}
                 target="_blank" rel="noopener noreferrer"
@@ -210,7 +206,7 @@ export default async function MusicVideoShootLocationPage() {
                   textDecoration: 'none',
                 }}
               >
-                💬 WhatsApp Us
+                WhatsApp Us
               </a>
             </div>
           </div>

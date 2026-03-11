@@ -1,38 +1,32 @@
-const COMPANIES = [
-  { name: 'Netflix India',          emoji: '🎬', desc: 'Streaming Giant' },
-  { name: 'Amazon Prime Video',     emoji: '📺', desc: 'Digital Platform' },
-  { name: 'Excel Entertainment',    emoji: '🎞️', desc: 'Production House' },
-  { name: 'Dharma Productions',     emoji: '🌟', desc: 'Bollywood Studio' },
-  { name: 'T-Series Films',         emoji: '🎵', desc: 'Music & Films' },
-  { name: 'Applause Entertainment', emoji: '🏆', desc: 'Content Studio' },
-  { name: 'Reliance Entertainment', emoji: '💼', desc: 'Media Conglomerate' },
-  { name: 'Balaji Telefilms',       emoji: '📡', desc: 'TV Productions' },
-  { name: 'Star Network',           emoji: '⭐', desc: 'Media Network' },
+const COMPANY_TYPES = [
+  { name: 'OTT & Streaming Teams', marker: '01', desc: 'Series blocks, promos, and platform-first campaigns' },
+  { name: 'Feature Film Productions', marker: '02', desc: 'Narrative shoots that need controlled studio logistics' },
+  { name: 'Advertising Agencies', marker: '03', desc: 'Commercial films, branded content, and digital ad campaigns' },
+  { name: 'Television Producers', marker: '04', desc: 'Promo shoots, episodic work, and high-volume schedules' },
+  { name: 'Music Video Teams', marker: '05', desc: 'Performance-led shoots, stylised sets, and quick changeovers' },
+  { name: 'Independent Creators', marker: '06', desc: 'Photography, branded content, and agile production crews' },
 ];
 
 export default function ProductionCompanies() {
   return (
     <section style={{ padding: '100px 5%', background: 'var(--dark)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <div className="section-tag">Partners</div>
+          <div className="section-tag">Who We Serve</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-            Production Companies That Have{' '}
-            <span style={{ color: 'var(--gold)' }}>Worked With Us</span>
+            Built for <span style={{ color: 'var(--gold)' }}>production teams across formats</span>
           </h2>
           <p style={{
             fontSize: '1rem', color: 'var(--gray)',
-            maxWidth: '520px', margin: '1rem auto 0',
+            maxWidth: '620px', margin: '1rem auto 0',
             fontWeight: 300, lineHeight: 1.8,
           }}>
-            India's most respected production houses and streaming platforms trust
-            Cine Classic Studios for their most ambitious projects.
+            The studio is used by teams who care about timing, practical set logistics, and faster decision-making once the brief is ready.
           </p>
         </div>
 
         <div className="pf-companies-grid reveal">
-          {COMPANIES.map((co) => (
+          {COMPANY_TYPES.map((co) => (
             <div
               key={co.name}
               className="pf-company-card"
@@ -52,9 +46,9 @@ export default function ProductionCompanies() {
                 background: 'rgba(212,175,55,0.08)',
                 border: '1px solid rgba(212,175,55,0.15)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1.3rem', flexShrink: 0,
+                fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold)', flexShrink: 0,
               }}>
-                {co.emoji}
+                {co.marker}
               </div>
               <div>
                 <div style={{
@@ -65,8 +59,8 @@ export default function ProductionCompanies() {
                   {co.name}
                 </div>
                 <div style={{
-                  fontSize: '0.7rem', color: 'var(--gray)',
-                  marginTop: '2px', letterSpacing: '0.05em',
+                  fontSize: '0.74rem', color: 'var(--gray)',
+                  marginTop: '4px', letterSpacing: '0.02em', lineHeight: 1.5,
                 }}>
                   {co.desc}
                 </div>
@@ -80,7 +74,7 @@ export default function ProductionCompanies() {
           fontSize: '0.85rem', color: 'var(--gray)',
           fontStyle: 'italic',
         }}>
-          + many more independent filmmakers, advertising agencies, and content creators
+          If your team needs a fast shortlist, the booking desk can recommend the most suitable studio options for your format.
         </div>
       </div>
     </section>

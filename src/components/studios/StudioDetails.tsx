@@ -135,12 +135,12 @@ export default async function StudioDetails({ studio }: Props) {
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 5%' }}>
         <div className="reveal" style={{ marginBottom: '3rem' }}>
-          <div className="section-tag">Studio Details</div>
+          <div className="section-tag">Production Specifications</div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', marginBottom: '0.8rem' }}>
-            Everything your <span style={{ color: 'var(--gold)' }}>production team</span> needs to know
+            Key planning details for your <span style={{ color: 'var(--gold)' }}>recce and shoot day</span>
           </h2>
-          <p style={{ maxWidth: '620px', color: 'var(--gray)', lineHeight: 1.8 }}>
-            Technical specs, operational support, and the practical details that help producers decide faster and schedule more confidently.
+          <p style={{ maxWidth: '660px', color: 'var(--gray)', lineHeight: 1.8 }}>
+            Review the working specs, facilities, and operational notes producers usually need before locking dates, planning movement, and confirming crew requirements.
           </p>
         </div>
 
@@ -150,11 +150,11 @@ export default async function StudioDetails({ studio }: Props) {
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
                 <div style={{ width: '3px', height: '18px', background: 'var(--gold)', borderRadius: '2px', flexShrink: 0 }} />
                 <h3 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', margin: 0 }}>
-                  About This Set
+                  Set Overview
                 </h3>
               </div>
               <p className="studio-details-description" style={{ fontSize: '0.97rem', color: 'var(--gray-lt)', fontWeight: 300, lineHeight: 1.9 }}>
-                {studio.description ?? ''}
+                {studio.description ?? `${studio.title} is suited for teams that need a controlled studio environment, practical logistics, and faster production planning in Mumbai.`}
               </p>
             </div>
 
@@ -163,7 +163,7 @@ export default async function StudioDetails({ studio }: Props) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
                   <div style={{ width: '3px', height: '18px', background: 'var(--gold)', borderRadius: '2px', flexShrink: 0 }} />
                   <h3 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', margin: 0 }}>
-                    Suitable For
+                    Works Well For
                   </h3>
                 </div>
                 <div className="use-case-scroll" style={{ display: 'flex', gap: '0.625rem', overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: '4px', flexWrap: 'wrap', maxWidth: '100%' }}>
@@ -199,7 +199,7 @@ export default async function StudioDetails({ studio }: Props) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
                   <div style={{ width: '3px', height: '18px', background: 'var(--gold)', borderRadius: '2px', flexShrink: 0 }} />
                   <h3 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', margin: 0 }}>
-                    Filmed Here
+                    Reference Productions
                   </h3>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -219,7 +219,7 @@ export default async function StudioDetails({ studio }: Props) {
               <div style={{ padding: '14px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CheckIcon size={13} style={{ color: 'var(--gold)' }} />
                 <span style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--gold)' }}>
-                  Facilities Included
+                  Included Support
                 </span>
               </div>
 
@@ -237,12 +237,12 @@ export default async function StudioDetails({ studio }: Props) {
 
             <div style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.07), rgba(212,175,55,0.03))', border: '1px solid rgba(212,175,55,0.18)', borderRadius: '14px', padding: '1.5rem', textAlign: 'center' }}>
               <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '6px' }}>
-                Ready to book?
+                Need a quote?
               </div>
               <p style={{ fontSize: '0.82rem', color: 'var(--gray-lt)', fontWeight: 300, marginBottom: '1.125rem', lineHeight: 1.7 }}>
-                From {rateFrom}{rateUnit}
+                Starting from {rateFrom}{rateUnit}
                 {minBooking ? ` | Minimum ${minBooking}` : ''}
-                {' | '}Fast availability confirmation from the Cine Classic team
+                {' | '}Fast availability guidance from the Cine Classic team
               </p>
               <div className="details-cta-row" style={{ display: 'flex', gap: '0.625rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <a
@@ -265,7 +265,7 @@ export default async function StudioDetails({ studio }: Props) {
                     transition: 'all 0.3s',
                   }}
                 >
-                  Check Availability
+                  Request Availability
                   <ArrowRightIcon size={14} />
                 </a>
                 <a
@@ -290,7 +290,7 @@ export default async function StudioDetails({ studio }: Props) {
                   }}
                 >
                   <MessageCircleIcon size={14} />
-                  WhatsApp
+                  WhatsApp Now
                 </a>
               </div>
             </div>
