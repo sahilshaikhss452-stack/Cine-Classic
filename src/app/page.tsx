@@ -1,10 +1,8 @@
 import About from '@/components/About';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
-import BehindScenes from '@/components/BehindScenes';
 import Booking from '@/components/Booking';
 import FloatingButtons from '@/components/FloatingButtons';
 import Footer from '@/components/Footer';
-import Gallery from '@/components/Gallery';
 import Hero from '@/components/Hero';
 import LocationSection from '@/components/LocationSection';
 import Navbar from '@/components/Navbar';
@@ -56,14 +54,6 @@ export default async function HomePage() {
 
         <MotionSection>
           <Productions productions={productions} />
-        </MotionSection>
-
-        <MotionSection>
-          <BehindScenes />
-        </MotionSection>
-
-        <MotionSection>
-          <Gallery />
         </MotionSection>
 
         <MotionSection>
