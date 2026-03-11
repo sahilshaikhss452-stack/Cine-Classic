@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     url: '/about',
     type: 'website',
   },
+  twitter: {
+    title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
+    description:
+      'A production-focused studio rental business in Mumbai built for faster recces, clearer planning, and confident shoot bookings.',
+  },
 };
 
 export const revalidate = 30;
@@ -331,3 +336,4 @@ export default async function AboutPage() {
     </>
   );
 }
+
