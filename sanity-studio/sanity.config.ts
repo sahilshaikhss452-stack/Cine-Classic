@@ -7,6 +7,14 @@ import { getStudioSanityDataset, getStudioSanityProjectId } from '../src/lib/san
 const SINGLETON_TYPES = new Set(['siteSettings', 'homePage']);
 const SINGLETON_ACTIONS = new Set(['publish', 'discardChanges', 'restore']);
 
+const BOOKING_STATUS_FILTERS = [
+  { title: 'New', value: 'new' },
+  { title: 'Contacted', value: 'contacted' },
+  { title: 'Follow-Up', value: 'follow-up' },
+  { title: 'Booked', value: 'booked' },
+  { title: 'Closed', value: 'closed' },
+] as const;
+
 export default defineConfig({
   projectId: getStudioSanityProjectId(),
   dataset: getStudioSanityDataset(),
@@ -38,7 +46,33 @@ export default defineConfig({
             S.listItem().title('Testimonials').child(S.documentTypeList('testimonial')),
             S.listItem().title('Facilities').child(S.documentTypeList('facility')),
             S.listItem().title('FAQs').child(S.documentTypeList('faq')),
-            S.listItem().title('Booking Inquiries').child(S.documentTypeList('bookingInquiry')),
+            S.listItem()
+              .title('Booking Inquiries')
+              .child(
+                S.list()
+                  .title('Booking Inquiries')
+                  .items([
+                    S.listItem()
+                      .title('All inquiries')
+                      .child(
+                        S.documentTypeList('bookingInquiry')
+                          .defaultOrdering([{ field: 'createdAt', direction: 'desc' }]),
+                      ),
+                    S.divider(),
+                    ...BOOKING_STATUS_FILTERS.map((status) =>
+                      S.listItem()
+                        .title(status.title)
+                        .child(
+                          S.documentList()
+                            .title(`${status.title} inquiries`)
+                            .schemaType('bookingInquiry')
+                            .filter('_type == "bookingInquiry" && status == $status')
+                            .params({ status: status.value })
+                            .defaultOrdering([{ field: 'createdAt', direction: 'desc' }]),
+                        ),
+                    ),
+                  ]),
+              ),
           ]),
     }),
     visionTool(),
@@ -55,5 +89,3 @@ export default defineConfig({
         : previousOptions,
   },
 });
-
-

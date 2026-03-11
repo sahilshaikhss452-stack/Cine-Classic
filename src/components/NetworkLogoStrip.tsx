@@ -22,10 +22,10 @@ export default function NetworkLogoStrip() {
   return (
     <div
       style={{
-        background: 'var(--dark2)',
+        background: 'linear-gradient(180deg, rgba(9,9,9,0.98) 0%, var(--dark2) 100%)',
         borderTop: '1px solid rgba(255,255,255,0.04)',
         borderBottom: '1px solid rgba(255,255,255,0.04)',
-        padding: '1.5rem 5%',
+        padding: '1.25rem 5%',
         overflow: 'hidden',
       }}
     >
@@ -35,7 +35,7 @@ export default function NetworkLogoStrip() {
           margin: '0 auto',
           display: 'flex',
           alignItems: 'center',
-          gap: '1.5rem',
+          gap: '1rem',
           flexWrap: 'wrap',
           justifyContent: 'center',
         }}
@@ -43,31 +43,22 @@ export default function NetworkLogoStrip() {
         <span
           style={{
             fontSize: '0.65rem',
-            fontWeight: 600,
+            fontWeight: 700,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.28)',
+            color: 'rgba(255,255,255,0.35)',
             flexShrink: 0,
             whiteSpace: 'nowrap',
           }}
         >
-          Featured on
+          Featured Clients
         </span>
-
-        <span
-          style={{
-            width: '1px',
-            height: '20px',
-            background: 'rgba(255,255,255,0.1)',
-            flexShrink: 0,
-          }}
-        />
 
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.75rem',
+            gap: '0.7rem',
             flexWrap: 'wrap',
             justifyContent: 'center',
           }}
@@ -78,29 +69,28 @@ export default function NetworkLogoStrip() {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '6px',
-                padding: '5px 14px',
+                gap: '7px',
+                padding: '6px 13px',
                 borderRadius: '100px',
-                background: 'rgba(255,255,255,0.04)',
+                background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.07)',
                 fontSize: '0.72rem',
                 fontWeight: 600,
                 letterSpacing: '0.05em',
-                color: 'rgba(255,255,255,0.52)',
+                color: 'rgba(255,255,255,0.62)',
                 whiteSpace: 'nowrap',
-                transition: 'color 0.2s ease, border-color 0.2s ease',
               }}
             >
               <span
                 style={{
-                  width: '16px',
-                  height: '16px',
-                  borderRadius: '4px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '5px',
                   background: 'linear-gradient(135deg, var(--gold-dk), var(--gold))',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.52rem',
+                  fontSize: '0.54rem',
                   fontWeight: 800,
                   color: 'var(--dark)',
                   flexShrink: 0,
@@ -117,3 +107,4 @@ export default function NetworkLogoStrip() {
     </div>
   );
 }
+

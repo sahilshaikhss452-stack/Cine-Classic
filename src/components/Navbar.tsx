@@ -1,17 +1,41 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowRightIcon } from '@/components/ui/icons';
 
-const HOME_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#sets', label: 'Studios' },
-  { href: '#gallery', label: 'Gallery' },
-  { href: '#testimonials', label: 'Reviews' },
-];
+const NAV_ITEMS = [
+  {
+    label: 'Studios',
+    homeHref: '#sets',
+    awayHref: '/studios',
+    sectionId: 'sets',
+    matchesPath: (pathname: string) => pathname.startsWith('/studios'),
+  },
+  {
+    label: 'Productions',
+    homeHref: '#productions',
+    awayHref: '/portfolio',
+    sectionId: 'productions',
+    matchesPath: (pathname: string) => pathname.startsWith('/portfolio'),
+  },
+  {
+    label: 'Reviews',
+    homeHref: '#testimonials',
+    awayHref: '/#testimonials',
+    sectionId: 'testimonials',
+    matchesPath: () => false,
+  },
+  {
+    label: 'Contact',
+    homeHref: '#booking',
+    awayHref: '/#booking',
+    sectionId: 'booking',
+    matchesPath: () => false,
+  },
+] as const;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,15 +52,20 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!isHome) return;
-    const sections = document.querySelectorAll<HTMLElement>('section[id]');
+
+    const sections = ['home', ...NAV_ITEMS.map((item) => item.sectionId)]
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section instanceof HTMLElement);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) setActiveId(entry.target.id);
         });
       },
-      { threshold: 0.3 },
+      { threshold: 0.35 },
     );
+
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [isHome]);
@@ -45,17 +74,26 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = mobileOpen ? 'hidden' : previousOverflow;
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen]);
+
   const closeMenu = () => setMobileOpen(false);
-  const isStudiosActive = pathname.startsWith('/studios');
 
   const linkStyle = (active: boolean): React.CSSProperties => ({
-    fontSize: '0.88rem',
-    fontWeight: 500,
-    letterSpacing: '0.01em',
+    fontSize: '0.84rem',
+    fontWeight: 600,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
     color: active ? 'var(--white)' : 'var(--gray)',
     transition: 'color 0.4s cubic-bezier(0.22,1,0.36,1)',
     position: 'relative',
-    paddingBottom: '4px',
+    paddingBottom: '6px',
     textDecoration: 'none',
   });
 
@@ -73,56 +111,65 @@ export default function Navbar() {
           justifyContent: 'space-between',
           padding: '0 5%',
           height: scrolled ? '64px' : '76px',
-          background: scrolled ? 'rgba(6,6,6,0.95)' : 'rgba(6,6,6,0.8)',
+          background: scrolled ? 'rgba(6,6,6,0.96)' : 'rgba(6,6,6,0.82)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-          boxShadow: scrolled ? '0 1px 40px rgba(0,0,0,0.5)' : 'none',
+          borderBottom: '1px solid rgba(255,255,255,0.05)',
+          boxShadow: scrolled ? '0 10px 40px rgba(0,0,0,0.34)' : 'none',
           transition: 'height 0.4s cubic-bezier(0.22,1,0.36,1), background 0.4s cubic-bezier(0.22,1,0.36,1)',
         }}
       >
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', whiteSpace: 'nowrap', textDecoration: 'none' }}>
+        <Link
+          href="/"
+          style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', whiteSpace: 'nowrap', textDecoration: 'none' }}
+        >
           <Image
             src="/images/logo.jpg"
             alt="Cine Classic Studios Logo"
             width={44}
             height={44}
-            style={{ borderRadius: '6px', objectFit: 'contain' }}
+            style={{ borderRadius: '8px', objectFit: 'contain', boxShadow: '0 10px 28px rgba(0,0,0,0.22)' }}
             priority
           />
           <div>
-            <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.2rem', fontWeight: 700, color: 'var(--gold)', letterSpacing: '0.02em', lineHeight: 1.1 }}>
+            <div
+              style={{
+                fontFamily: 'var(--font-playfair), serif',
+                fontSize: '1.2rem',
+                fontWeight: 700,
+                color: 'var(--gold)',
+                letterSpacing: '0.01em',
+                lineHeight: 1.1,
+              }}
+            >
               Cine Classic
             </div>
-            <div style={{ color: 'var(--white2)', fontSize: '0.74rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+            <div
+              style={{
+                color: 'rgba(255,255,255,0.68)',
+                fontSize: '0.72rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+              }}
+            >
               Mumbai Film Sets
             </div>
           </div>
         </Link>
 
-        <ul className="nav-desktop" style={{ alignItems: 'center', gap: '2rem', listStyle: 'none', margin: 0, padding: 0 }}>
-          <li>
-            <Link href="/" style={linkStyle(isHome && activeId === 'home')}>
-              Home
-              {isHome && activeId === 'home' && <ActiveBar />}
-            </Link>
-          </li>
+        <ul className="nav-desktop" style={{ alignItems: 'center', gap: '1.55rem', listStyle: 'none', margin: 0, padding: 0 }}>
+          {NAV_ITEMS.map((item) => {
+            const isActive = isHome ? activeId === item.sectionId : item.matchesPath(pathname);
 
-          {HOME_LINKS.map(({ href, label }) => (
-            <li key={href}>
-              <a href={isHome ? href : `/${href}`} style={linkStyle(isHome && activeId === href.slice(1))}>
-                {label}
-                {isHome && activeId === href.slice(1) && <ActiveBar />}
-              </a>
-            </li>
-          ))}
-
-          <li>
-            <Link href="/studios" style={linkStyle(isStudiosActive)}>
-              All Studios
-              {isStudiosActive && <ActiveBar />}
-            </Link>
-          </li>
+            return (
+              <li key={item.label}>
+                <a href={isHome ? item.homeHref : item.awayHref} style={linkStyle(isActive)}>
+                  {item.label}
+                  {isActive && <ActiveBar />}
+                </a>
+              </li>
+            );
+          })}
 
           <li>
             <a
@@ -130,12 +177,13 @@ export default function Navbar() {
               style={{
                 background: 'var(--gold)',
                 color: 'var(--dark)',
-                padding: '10px 18px',
+                padding: '11px 18px',
                 borderRadius: '100px',
-                fontSize: '0.88rem',
+                fontSize: '0.83rem',
                 fontWeight: 700,
-                letterSpacing: '0.01em',
-                boxShadow: '0 2px 12px rgba(212,175,55,0.25)',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                boxShadow: '0 8px 24px rgba(212,175,55,0.24)',
                 transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -151,6 +199,7 @@ export default function Navbar() {
 
         <button
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((value) => !value)}
           className="nav-hamburger"
           style={{ flexDirection: 'column', gap: '5px', cursor: 'pointer', padding: '4px', background: 'none', border: 'none' }}
@@ -182,7 +231,7 @@ export default function Navbar() {
         <div
           style={{
             position: 'fixed',
-            top: '76px',
+            top: scrolled ? '64px' : '76px',
             left: 0,
             right: 0,
             bottom: 0,
@@ -194,15 +243,38 @@ export default function Navbar() {
             flexDirection: 'column',
           }}
         >
-          <div style={{ marginBottom: '1.4rem', padding: '0.95rem 1rem', borderRadius: '16px', background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.14)', color: 'var(--gray-lt)', lineHeight: 1.7 }}>
-            Browse the sets, review the details, and send one inquiry when you are ready to confirm dates.
+          <div
+            style={{
+              marginBottom: '1.5rem',
+              padding: '1rem 1.05rem',
+              borderRadius: '18px',
+              background: 'rgba(212,175,55,0.06)',
+              border: '1px solid rgba(212,175,55,0.14)',
+              color: 'var(--gray-lt)',
+              lineHeight: 1.7,
+            }}
+          >
+            Start with the studio sets, review real productions and client feedback, then send one inquiry when you are ready to hold dates.
           </div>
-          <Link href="/" onClick={closeMenu} style={mobileLinkStyle}>Home</Link>
-          <a href={isHome ? '#about' : '/#about'} onClick={closeMenu} style={mobileLinkStyle}>About</a>
-          <a href={isHome ? '#sets' : '/#sets'} onClick={closeMenu} style={mobileLinkStyle}>Studios</a>
-          <a href={isHome ? '#gallery' : '/#gallery'} onClick={closeMenu} style={mobileLinkStyle}>Gallery</a>
-          <a href={isHome ? '#testimonials' : '/#testimonials'} onClick={closeMenu} style={mobileLinkStyle}>Reviews</a>
-          <Link href="/studios" onClick={closeMenu} style={{ ...mobileLinkStyle, color: 'var(--gold)' }}>All Studios</Link>
+
+          {NAV_ITEMS.map((item) => {
+            const isActive = isHome ? activeId === item.sectionId : item.matchesPath(pathname);
+
+            return (
+              <a
+                key={item.label}
+                href={isHome ? item.homeHref : item.awayHref}
+                onClick={closeMenu}
+                style={{
+                  ...mobileLinkStyle,
+                  color: isActive ? 'var(--white)' : mobileLinkStyle.color,
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+
           <a
             href={isHome ? '#booking' : '/#booking'}
             onClick={closeMenu}
@@ -246,9 +318,9 @@ function ActiveBar() {
 }
 
 const mobileLinkStyle: React.CSSProperties = {
-  fontSize: '0.98rem',
-  fontWeight: 500,
-  letterSpacing: '0.06em',
+  fontSize: '0.92rem',
+  fontWeight: 600,
+  letterSpacing: '0.12em',
   textTransform: 'uppercase',
   color: 'var(--gray)',
   padding: '1rem 0',
@@ -257,3 +329,4 @@ const mobileLinkStyle: React.CSSProperties = {
   textDecoration: 'none',
   display: 'block',
 };
+
