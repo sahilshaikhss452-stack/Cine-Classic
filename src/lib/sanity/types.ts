@@ -136,7 +136,11 @@ export interface ProductionDocument {
   network: string | null;
   description: string | null;
   posterImage: string | null;
+  videoUrl: string | null;
   featured: boolean;
+  showOnMoviesTvCarousel?: boolean;
+  showOnMusicAdsCarousel?: boolean;
+  showOnHome?: boolean;
   order: number;
 }
 

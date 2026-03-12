@@ -13,9 +13,10 @@ const VIEWPORT_H = 665;
 
 interface Props {
   productions: Production[];
+  onPlayProduction?: (production: Production) => void;
 }
 
-export default function ProductionsDesktopCarousel({ productions }: Props) {
+export default function ProductionsDesktopCarousel({ productions, onPlayProduction }: Props) {
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [lHover, setLHover] = useState(false);
@@ -95,6 +96,7 @@ export default function ProductionsDesktopCarousel({ productions }: Props) {
           const isVisible = Math.abs(offset) <= 1;
           const scale = isCenter ? 1 : SIDE_SCALE;
           const opacity = isCenter ? 1 : isSide ? SIDE_OPACITY : 0;
+          const hasPlayableVideo = !!onPlayProduction && !!prod.videoUrl;
 
           return (
             <div
@@ -146,6 +148,57 @@ export default function ProductionsDesktopCarousel({ productions }: Props) {
                     pointerEvents: 'none',
                   }}
                 />
+
+                {hasPlayableVideo && isCenter && (
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onPlayProduction?.(prod);
+                    }}
+                    aria-label={`Play video for ${prod.title}`}
+                    style={{
+                      position: 'absolute',
+                      top: '0.75rem',
+                      left: '0.75rem',
+                      zIndex: 2,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      background: 'rgba(0,0,0,0.74)',
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(212,175,55,0.24)',
+                      borderRadius: '999px',
+                      padding: '6px 12px 6px 8px',
+                      color: 'var(--white)',
+                      fontSize: '0.68rem',
+                      fontWeight: 600,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: '22px',
+                        height: '22px',
+                        borderRadius: '50%',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'rgba(212,175,55,0.18)',
+                        color: 'var(--gold)',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                        <path d="M3 2.3v7.4L9.2 6 3 2.3Z" />
+                      </svg>
+                    </span>
+                    Play video
+                  </button>
+                )}
 
                 {prod.network && (
                   <div
@@ -214,6 +267,7 @@ export default function ProductionsDesktopCarousel({ productions }: Props) {
       {total > 1 && (
         <>
           <button
+            type="button"
             onClick={goPrev}
             onMouseEnter={() => setLHover(true)}
             onMouseLeave={() => setLHover(false)}
@@ -247,6 +301,7 @@ export default function ProductionsDesktopCarousel({ productions }: Props) {
           </button>
 
           <button
+            type="button"
             onClick={goNext}
             onMouseEnter={() => setRHover(true)}
             onMouseLeave={() => setRHover(false)}
@@ -283,6 +338,7 @@ export default function ProductionsDesktopCarousel({ productions }: Props) {
             {productions.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setActive(index)}
                 aria-label={`Go to production ${index + 1}`}
                 style={{

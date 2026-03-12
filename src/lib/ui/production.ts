@@ -13,6 +13,7 @@ export interface Production {
   network?: string;
   description?: string;
   posterImage?: string;
+  videoUrl?: string;
   gradient: string;
   typeColor: string;
 }

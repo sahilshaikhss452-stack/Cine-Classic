@@ -20,6 +20,7 @@ export function mapProductionToUi(doc: ProductionDocument): Production {
     network: doc.network ?? undefined,
     description: doc.description ?? undefined,
     posterImage: doc.posterImage ?? undefined,
+    videoUrl: doc.videoUrl ?? undefined,
     gradient: PRODUCTION_GRADIENTS[doc.type],
     typeColor: TYPE_COLORS[doc.type],
   };

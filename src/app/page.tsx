@@ -15,8 +15,9 @@ import ShootTimeline from '@/components/ShootTimeline';
 import Testimonials from '@/components/Testimonials';
 import MotionSection from '@/components/motion/MotionSection';
 import {
+  loadHomeMoviesTvProductions,
+  loadHomeMusicAdsProductions,
   loadHomePage,
-  loadHomeProductions,
   loadStudioCards,
   loadStudioNavItems,
   loadTestimonials,
@@ -27,15 +28,17 @@ import {
 export const revalidate = 30;
 
 export default async function HomePage() {
-  const [homePage, studios, studioNavItems, productionDocs, testimonialDocs] = await Promise.all([
+  const [homePage, studios, studioNavItems, moviesTvDocs, musicAdsDocs, testimonialDocs] = await Promise.all([
     loadHomePage(),
     loadStudioCards(),
     loadStudioNavItems(),
-    loadHomeProductions(),
+    loadHomeMoviesTvProductions(),
+    loadHomeMusicAdsProductions(),
     loadTestimonials(),
   ]);
 
-  const productions = mapProductionsToUi(productionDocs);
+  const moviesTvProductions = mapProductionsToUi(moviesTvDocs);
+  const musicAdsProductions = mapProductionsToUi(musicAdsDocs);
   const testimonials = mapTestimonialsToUi(testimonialDocs);
 
   return (
@@ -53,7 +56,24 @@ export default async function HomePage() {
         </MotionSection>
 
         <MotionSection>
-          <Productions productions={productions} />
+          <Productions
+            productions={moviesTvProductions}
+            heading="Movies, TV shows, and web series shot at Cine Classic Studios"
+            headingHighlight="Cine Classic Studios"
+            description="A quick view of long-form storytelling and episodic productions that trust the studio for controlled builds, recurring schedules, and production-ready set support."
+          />
+        </MotionSection>
+
+        <MotionSection>
+          <Productions
+            productions={musicAdsProductions}
+            sectionId="productions-music-ads"
+            heading="Music videos and ad campaigns shot at Cine Classic Studios"
+            headingHighlight="Cine Classic Studios"
+            description="A focused reel of commercial campaigns and music-led shoots that rely on the studio for art direction, polished frames, and fast-moving production days."
+            emptyDescription="Publish Music Video or Advertisement productions with a video URL in Sanity to populate this playable homepage rail."
+            enableVideoPlayback
+          />
         </MotionSection>
 
         <MotionSection>

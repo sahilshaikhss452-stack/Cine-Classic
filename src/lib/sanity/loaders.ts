@@ -4,6 +4,8 @@ import {
   FAQS_BY_PLACEMENT_QUERY,
   FACILITIES_QUERY,
   FEATURED_PRODUCTION_QUERY,
+  HOME_MOVIES_TV_PRODUCTIONS_QUERY,
+  HOME_MUSIC_ADS_PRODUCTIONS_QUERY,
   HOME_PAGE_QUERY,
   HOME_PRODUCTIONS_QUERY,
   PRODUCTIONS_QUERY,
@@ -123,6 +125,14 @@ export const loadStudioBySlug = cache(async (slug: string): Promise<Studio | nul
 
 export const loadHomeProductions = cache(async (): Promise<ProductionDocument[]> => {
   return sanityFetch<ProductionDocument[]>(HOME_PRODUCTIONS_QUERY);
+});
+
+export const loadHomeMoviesTvProductions = cache(async (): Promise<ProductionDocument[]> => {
+  return sanityFetch<ProductionDocument[]>(HOME_MOVIES_TV_PRODUCTIONS_QUERY);
+});
+
+export const loadHomeMusicAdsProductions = cache(async (): Promise<ProductionDocument[]> => {
+  return sanityFetch<ProductionDocument[]>(HOME_MUSIC_ADS_PRODUCTIONS_QUERY);
 });
 
 export const loadProductions = cache(async (): Promise<ProductionDocument[]> => {

@@ -140,48 +140,78 @@ export const STUDIO_DETAIL_QUERY = `
   }
 `;
 
-export const PRODUCTIONS_QUERY = `
-  *[_type == "production" && coalesce(isActive, true)]
-    | order(year desc, coalesce(order, 999) asc, title asc) {
+const PRODUCTION_FIELDS = `
     _id,
     title,
     type,
     year,
     network,
     description,
+    videoUrl,
     "posterImage": posterImage.asset->url,
     "featured": coalesce(featured, false),
+    "showOnMoviesTvCarousel": showOnMoviesTvCarousel,
+    "showOnMusicAdsCarousel": showOnMusicAdsCarousel,
+    "showOnHome": showOnHome,
     "order": coalesce(order, 999)
+`;
+
+export const PRODUCTIONS_QUERY = `
+  *[_type == "production" && coalesce(isActive, true)]
+    | order(year desc, coalesce(order, 999) asc, title asc) {
+${PRODUCTION_FIELDS}
   }
 `;
 
 export const HOME_PRODUCTIONS_QUERY = `
-  *[_type == "production" && coalesce(isActive, true) && coalesce(showOnHome, true)]
+  *[
+    _type == "production" &&
+    coalesce(isActive, true) &&
+    (
+      (defined(showOnMoviesTvCarousel) && showOnMoviesTvCarousel == true) ||
+      (defined(showOnMusicAdsCarousel) && showOnMusicAdsCarousel == true) ||
+      (!defined(showOnMoviesTvCarousel) && !defined(showOnMusicAdsCarousel) && coalesce(showOnHome, true))
+    )
+  ]
     | order(coalesce(order, 999) asc, year desc, title asc) {
-    _id,
-    title,
-    type,
-    year,
-    network,
-    description,
-    "posterImage": posterImage.asset->url,
-    "featured": coalesce(featured, false),
-    "order": coalesce(order, 999)
+${PRODUCTION_FIELDS}
+  }
+`;
+
+export const HOME_MOVIES_TV_PRODUCTIONS_QUERY = `
+  *[
+    _type == "production" &&
+    coalesce(isActive, true) &&
+    type in ["Film", "TV Series", "Web Series"] &&
+    (
+      (defined(showOnMoviesTvCarousel) && showOnMoviesTvCarousel == true) ||
+      (!defined(showOnMoviesTvCarousel) && coalesce(showOnHome, true))
+    )
+  ]
+    | order(coalesce(order, 999) asc, year desc, title asc) {
+${PRODUCTION_FIELDS}
+  }
+`;
+
+export const HOME_MUSIC_ADS_PRODUCTIONS_QUERY = `
+  *[
+    _type == "production" &&
+    coalesce(isActive, true) &&
+    type in ["Advertisement", "Music Video"] &&
+    (
+      (defined(showOnMusicAdsCarousel) && showOnMusicAdsCarousel == true) ||
+      (!defined(showOnMusicAdsCarousel) && coalesce(showOnHome, true))
+    )
+  ]
+    | order(coalesce(order, 999) asc, year desc, title asc) {
+${PRODUCTION_FIELDS}
   }
 `;
 
 export const FEATURED_PRODUCTION_QUERY = `
   *[_type == "production" && coalesce(isActive, true) && featured == true]
     | order(coalesce(order, 999) asc, year desc)[0] {
-    _id,
-    title,
-    type,
-    year,
-    network,
-    description,
-    "posterImage": posterImage.asset->url,
-    "featured": coalesce(featured, false),
-    "order": coalesce(order, 999)
+${PRODUCTION_FIELDS}
   }
 `;
 
