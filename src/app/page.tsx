@@ -1,3 +1,4 @@
+import CinematicHero from '@/components/CinematicHero';
 import About from '@/components/About';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import Booking from '@/components/Booking';
@@ -48,6 +49,10 @@ export default async function HomePage() {
       <Navbar />
 
       <main>
+        {/* ── Cinematic scrollytelling hero (new) ── */}
+        <CinematicHero />
+
+        {/* ── Original hero section (preserved, moved below) ── */}
         <Hero content={homePage} />
         <NetworkLogoStrip />
 
