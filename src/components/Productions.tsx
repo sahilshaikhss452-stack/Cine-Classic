@@ -1,12 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import AutoScrollCarousel from '@/components/motion/AutoScrollCarousel';
-import ProductionsDesktopCarousel from '@/components/motion/ProductionsDesktopCarousel';
+import HomeProductionsRail from '@/components/HomeProductionsRail';
 import type { Production } from '@/lib/ui/production';
-import { TYPE_ICONS } from '@/lib/ui/production';
 
 function renderHeading(heading: string, highlight?: string) {
   if (!highlight || !heading.includes(highlight)) {
@@ -73,56 +70,6 @@ function resolveVideoSource(videoUrl: string): VideoSource {
   }
 
   return { kind: 'external', src: videoUrl };
-}
-
-function VideoPlayButton({ label, onClick }: { label: string; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      style={{
-        position: 'absolute',
-        top: '0.75rem',
-        left: '0.75rem',
-        zIndex: 2,
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '0.45rem',
-        background: 'rgba(0,0,0,0.74)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-        border: '1px solid rgba(212,175,55,0.24)',
-        borderRadius: '999px',
-        padding: '6px 12px 6px 8px',
-        color: 'var(--white)',
-        fontSize: '0.68rem',
-        fontWeight: 600,
-        letterSpacing: '0.08em',
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-      }}
-    >
-      <span
-        style={{
-          width: '22px',
-          height: '22px',
-          borderRadius: '50%',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'rgba(212,175,55,0.18)',
-          color: 'var(--gold)',
-          flexShrink: 0,
-        }}
-      >
-        <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
-          <path d="M3 2.3v7.4L9.2 6 3 2.3Z" />
-        </svg>
-      </span>
-      Play video
-    </button>
-  );
 }
 
 function ProductionVideoModal({ production, onClose }: { production: Production; onClose: () => void }) {
@@ -276,71 +223,6 @@ function ProductionVideoModal({ production, onClose }: { production: Production;
   );
 }
 
-function ProductionCard({ prod, index, onPlay }: { prod: Production; index: number; onPlay?: () => void }) {
-  const delayClass = index > 0 ? ` reveal-delay-${Math.min((index % 4) + 1, 4)}` : '';
-
-  return (
-    <div className={`prod-card reveal${delayClass}`}>
-      <div className="prod-img-wrap">
-        <div className="prod-img-inner">
-          {prod.posterImage ? (
-            <Image
-              src={prod.posterImage}
-              alt={`${prod.title} poster`}
-              fill
-              sizes="(max-width:600px) 100vw, (max-width:1024px) 50vw, 25vw"
-              style={{ objectFit: 'cover' }}
-            />
-          ) : (
-            <div style={{ width: '100%', height: '100%', background: prod.gradient }} />
-          )}
-        </div>
-
-        <div className="prod-vignette" />
-        <div className="prod-overlay" />
-
-        {!prod.posterImage && <div className="prod-icon">{TYPE_ICONS[prod.type]}</div>}
-
-        {onPlay ? <VideoPlayButton label={`Play video for ${prod.title}`} onClick={onPlay} /> : null}
-
-        {prod.network && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '0.75rem',
-              right: '0.75rem',
-              background: 'rgba(0,0,0,0.65)',
-              backdropFilter: 'blur(6px)',
-              WebkitBackdropFilter: 'blur(6px)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '6px',
-              padding: '3px 8px',
-              fontSize: '0.6rem',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.7)',
-            }}
-          >
-            {prod.network}
-          </div>
-        )}
-      </div>
-
-      <div className="prod-info">
-        <div className="prod-title">{prod.title}</div>
-        <div className="prod-meta">
-          <span className="prod-badge" style={{ color: prod.typeColor, borderColor: prod.typeColor }}>
-            {prod.type}
-          </span>
-          <span className="prod-dot" />
-          <span className="prod-year">{prod.year}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 interface Props {
   productions: Production[];
   sectionId?: string;
@@ -413,17 +295,12 @@ export default function Productions({
             <p style={{ fontSize: '1.05rem', color: 'var(--gray)', maxWidth: '660px', margin: '0 auto', fontWeight: 300, lineHeight: 1.8 }}>{description}</p>
           </div>
 
-          <div className="lg:hidden">
-            <p className="swipe-hint">swipe to browse {'>'}</p>
-            <AutoScrollCarousel className="productions-grid" style={{ marginBottom: '3.5rem' }}>
-              {productions.map((prod, index) => (
-                <ProductionCard key={prod.id} prod={prod} index={index} onPlay={enableVideoPlayback && prod.videoUrl ? () => openVideo(prod) : undefined} />
-              ))}
-            </AutoScrollCarousel>
-          </div>
-
-          <div className="hidden lg:block" style={{ marginBottom: '3rem' }}>
-            <ProductionsDesktopCarousel productions={productions} onPlayProduction={enableVideoPlayback ? openVideo : undefined} />
+          <div className="reveal" style={{ marginBottom: '3rem' }}>
+            <HomeProductionsRail
+              productions={productions}
+              ariaLabel={heading}
+              onPlayProduction={enableVideoPlayback ? openVideo : undefined}
+            />
           </div>
 
           <div className="reveal" style={{ textAlign: 'center' }}>
