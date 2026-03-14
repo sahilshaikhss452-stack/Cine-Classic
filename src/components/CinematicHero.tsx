@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const TOTAL_FRAMES = 240;
+const TOTAL_FRAMES = 192;
 const SCROLL_MULTIPLIER = 5; // 500vh total scroll distance
 
 function frameSrc(index: number): string {
-  const n = String(index + 1).padStart(3, '0');
-  return `/images/hero-frames/ezgif-frame-${n}.jpg`;
+  const n = String(index + 1).padStart(4, '0');
+  return `/images/hero-frames/frame_${n}.jpg`;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
