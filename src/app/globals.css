@@ -862,15 +862,15 @@ select.form-input option { background: var(--dark3); }
 /* ─── Section padding (overrides inline 120px 5%) ────────── */
 @media (max-width: 768px) {
   .mob-section {
-    padding-top:    72px !important;
-    padding-bottom: 72px !important;
+    padding-top:    clamp(4.5rem, 8vw, 6.5rem) !important;
+    padding-bottom: clamp(4.5rem, 8vw, 6.5rem) !important;
   }
   .mob-header-mb { margin-bottom: 2.5rem !important; }
 }
 @media (max-width: 480px) {
   .mob-section {
-    padding-top:    60px !important;
-    padding-bottom: 60px !important;
+    padding-top:    clamp(3.8rem, 7vw, 5.5rem) !important;
+    padding-bottom: clamp(3.8rem, 7vw, 5.5rem) !important;
   }
 }
 
@@ -900,10 +900,11 @@ select.form-input option { background: var(--dark3); }
 }
 
 /* ─── Hero CTA group ─────────────────────────────────────── */
-@media (max-width: 380px) {
+@media (max-width: 640px) {
   .hero-cta-group {
     flex-direction: column !important;
     align-items:    stretch   !important;
+    gap:            0.8rem    !important;
   }
   .hero-cta-group a {
     text-align:      center !important;
@@ -978,6 +979,15 @@ div:hover > .gallery-overlay  { opacity: 1 !important; }
 }
 @media (max-width: 560px) {
   .form-row-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .form-input,
+  .form-select,
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
 }
 
 /* ─── Booking layout ─────────────────────────────────────── */

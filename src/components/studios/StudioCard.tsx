@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRightIcon, GridIcon, IconBadge } from '@/components/ui/icons';
 import type { SanityStudioCard } from '@/lib/sanity';
 import { fmtSize } from '@/lib/studio-utils';
@@ -27,7 +28,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
       }}
     >
       <div
-        className="studio-card-thumb"
+        className="studio-card-thumb studio-card-img-wrap"
         style={{
           aspectRatio: '16/9',
           background: studio.gradient ?? 'linear-gradient(135deg, #1a1a1a, #2a2a2a)',
@@ -40,16 +41,40 @@ export default function StudioCard({ studio, index = 0 }: Props) {
           overflow: 'hidden',
         }}
       >
-        <IconBadge size={72} rounded={22} style={{ color: 'rgba(255,255,255,0.9)', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.16)' }}>
-          <GridIcon size={28} />
-        </IconBadge>
+        {studio.heroImage ? (
+          <>
+            <Image
+              src={studio.heroImage}
+              alt={studio.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              style={{ objectFit: 'cover' }}
+            />
+            <div
+              className="studio-card-gradient"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(6,6,6,0.85) 0%, rgba(6,6,6,0.3) 60%, rgba(6,6,6,0.1) 100%)',
+                zIndex: 1,
+              }}
+            />
+          </>
+        ) : (
+          <IconBadge size={72} rounded={22} style={{ color: 'rgba(255,255,255,0.9)', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.16)' }}>
+            <GridIcon size={28} />
+          </IconBadge>
+        )}
+
         <span
           style={{
             fontSize: '0.65rem',
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.28)',
+            color: studio.heroImage ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.28)',
             fontFamily: 'var(--font-inter), sans-serif',
+            zIndex: 2,
+            textShadow: studio.heroImage ? '0 2px 4px rgba(0,0,0,0.5)' : 'none',
           }}
         >
           {studio.title}
@@ -64,6 +89,7 @@ export default function StudioCard({ studio, index = 0 }: Props) {
             height: '3px',
             background: `linear-gradient(90deg, transparent, ${studio.accentColor ?? '#d4af37'}, transparent)`,
             opacity: 0.7,
+            zIndex: 2,
           }}
         />
       </div>

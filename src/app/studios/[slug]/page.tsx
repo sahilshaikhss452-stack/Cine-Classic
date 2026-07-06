@@ -10,6 +10,7 @@ import StudioDetails from '@/components/studios/StudioDetails';
 import StudioGallery from '@/components/studios/StudioGallery';
 import StudioHero from '@/components/studios/StudioHero';
 import StudioSubNav from '@/components/studios/StudioSubNav';
+import SetLayout from '@/components/studios/SetLayout';
 import { loadStudioBySlug, loadStudioCards, loadStudioSlugs } from '@/lib/sanity';
 
 export const revalidate = 30;
@@ -74,6 +75,7 @@ export default async function StudioPage({ params }: Props) {
       <main>
         <StudioHero studio={studio} />
         <StudioGallery studio={studio} />
+        <SetLayout studio={studio} />
         <StudioDetails studio={studio} />
         <StudioBooking studio={studio} />
 

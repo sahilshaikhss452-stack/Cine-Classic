@@ -238,76 +238,81 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {mobileOpen && (
+      <div
+        style={{
+          position: 'fixed',
+          top: scrolled ? '64px' : '76px',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(6,6,6,0.98)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          zIndex: 999,
+          padding: '2rem 5%',
+          display: 'flex',
+          flexDirection: 'column',
+          opacity: mobileOpen ? 1 : 0,
+          transform: mobileOpen ? 'translateY(0)' : 'translateY(-12px)',
+          pointerEvents: mobileOpen ? 'auto' : 'none',
+          transition: 'opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
+      >
         <div
           style={{
-            position: 'fixed',
-            top: scrolled ? '64px' : '76px',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(6,6,6,0.98)',
-            backdropFilter: 'blur(24px)',
-            zIndex: 999,
-            padding: '2rem 5%',
-            display: 'flex',
-            flexDirection: 'column',
+            marginBottom: '1.5rem',
+            padding: '1rem 1.05rem',
+            borderRadius: '18px',
+            background: 'rgba(212,175,55,0.06)',
+            border: '1px solid rgba(212,175,55,0.14)',
+            color: 'var(--gray-lt)',
+            lineHeight: 1.7,
           }}
         >
-          <div
-            style={{
-              marginBottom: '1.5rem',
-              padding: '1rem 1.05rem',
-              borderRadius: '18px',
-              background: 'rgba(212,175,55,0.06)',
-              border: '1px solid rgba(212,175,55,0.14)',
-              color: 'var(--gray-lt)',
-              lineHeight: 1.7,
-            }}
-          >
-            Browse the sets, understand how the studio supports production teams, and send one inquiry when you are ready to hold dates.
-          </div>
-
-          {NAV_ITEMS.map((item) => {
-            const isActive = isHome ? activeId === item.sectionId : item.matchesPath(pathname);
-
-            return (
-              <a
-                key={item.label}
-                href={isHome ? item.homeHref : item.awayHref}
-                onClick={closeMenu}
-                style={{
-                  ...mobileLinkStyle,
-                  color: isActive ? 'var(--white)' : mobileLinkStyle.color,
-                }}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-
-          <a
-            href={isHome ? '#booking' : '/#booking'}
-            onClick={closeMenu}
-            style={{
-              ...mobileLinkStyle,
-              color: 'var(--dark)',
-              background: 'var(--gold)',
-              borderRadius: '999px',
-              padding: '1rem 1.2rem',
-              marginTop: '1rem',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              borderBottom: 'none',
-            }}
-          >
-            Check Availability
-            <ArrowRightIcon size={16} />
-          </a>
+          Browse the sets, understand how the studio supports production teams, and send one inquiry when you are ready to hold dates.
         </div>
-      )}
+
+        {NAV_ITEMS.map((item) => {
+          const isActive = isHome ? activeId === item.sectionId : item.matchesPath(pathname);
+
+          return (
+            <a
+              key={item.label}
+              href={isHome ? item.homeHref : item.awayHref}
+              onClick={closeMenu}
+              style={{
+                ...mobileLinkStyle,
+                color: isActive ? 'var(--white)' : mobileLinkStyle.color,
+                padding: '1.15rem 0.5rem', // Taller touch target
+              }}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+
+        <a
+          href={isHome ? '#booking' : '/#booking'}
+          onClick={closeMenu}
+          style={{
+            ...mobileLinkStyle,
+            color: 'var(--dark)',
+            background: 'var(--gold)',
+            borderRadius: '999px',
+            padding: '1.05rem 1.3rem',
+            marginTop: '1.5rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            borderBottom: 'none',
+            boxShadow: '0 8px 24px rgba(212, 175, 55, 0.25)',
+          }}
+        >
+          Check Availability
+          <ArrowRightIcon size={16} />
+        </a>
+      </div>
     </>
   );
 }
