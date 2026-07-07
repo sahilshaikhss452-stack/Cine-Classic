@@ -4,13 +4,14 @@ import { startTransition, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent } from 'react';
 import Image from 'next/image';
 import type { Production } from '@/lib/ui/production';
-import { TYPE_ICONS } from '@/lib/ui/production';
+import { TYPE_ICONS, getYoutubeId } from '@/lib/ui/production';
 import styles from './HomeProductionsRail.module.css';
 
 interface HomeProductionsRailProps {
   productions: Production[];
   ariaLabel: string;
   onPlayProduction?: (production: Production) => void;
+  isPaused?: boolean;
 }
 
 function getCenteredIndex(viewport: HTMLDivElement, cards: Array<HTMLElement | null>) {
@@ -88,12 +89,14 @@ export default function HomeProductionsRail({
   productions,
   ariaLabel,
   onPlayProduction,
+  isPaused = false,
 }: HomeProductionsRailProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isManualPaused, setIsManualPaused] = useState(false);
 
   useEffect(() => {
     cardRefs.current = cardRefs.current.slice(0, productions.length);
@@ -159,7 +162,7 @@ export default function HomeProductionsRail({
   }, [productions.length]);
 
   useEffect(() => {
-    if (productions.length < 2 || !isVisible || isHovered) {
+    if (productions.length < 2 || !isVisible || isHovered || isPaused || isManualPaused) {
       return;
     }
 
@@ -184,7 +187,7 @@ export default function HomeProductionsRail({
     }, 5200);
 
     return () => window.clearInterval(intervalId);
-  }, [activeIndex, isHovered, isVisible, productions.length]);
+  }, [activeIndex, isHovered, isVisible, productions.length, isPaused, isManualPaused]);
 
   if (productions.length === 0) {
     return null;
@@ -252,6 +255,9 @@ export default function HomeProductionsRail({
             {productions.map((production, index) => {
               const isActive = index === activeIndex;
               const hasVideoPreview = !!onPlayProduction && !!production.videoUrl;
+              const youtubeId = production.videoUrl ? getYoutubeId(production.videoUrl) : null;
+              const youtubeThumbnailUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : null;
+              const displayImage = production.posterImage || youtubeThumbnailUrl;
 
               return (
                 <div key={production.id} className={styles.cardSlot}>
@@ -261,9 +267,11 @@ export default function HomeProductionsRail({
                     }}
                     className={styles.card}
                     data-active={isActive ? 'true' : 'false'}
+                    onClick={hasVideoPreview ? () => onPlayProduction?.(production) : undefined}
                     style={
                       {
                         '--card-gradient': production.gradient,
+                        cursor: hasVideoPreview ? 'pointer' : 'default',
                       } as CSSProperties
                     }
                     aria-current={isActive}
@@ -271,9 +279,9 @@ export default function HomeProductionsRail({
                     <div className={styles.media}>
                       <div className={styles.mediaBase} />
 
-                      {production.posterImage ? (
+                      {displayImage ? (
                         <Image
-                          src={production.posterImage}
+                          src={displayImage}
                           alt={`${production.title} poster`}
                           fill
                           sizes="(max-width: 767px) 82vw, (max-width: 1023px) 62vw, 30vw"
@@ -284,6 +292,15 @@ export default function HomeProductionsRail({
                       )}
 
                       <div className={styles.mediaMesh} />
+                      {hasVideoPreview && (
+                        <div className={styles.playOverlay}>
+                          <span className={styles.playOverlayIcon}>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </span>
+                        </div>
+                      )}
                       <div className={styles.mediaGlow} />
                     </div>
 
@@ -366,31 +383,50 @@ export default function HomeProductionsRail({
           <span className={styles.activeTitle}>{activeProduction.title}</span>
         </div>
 
-        {productions.length > 1 ? (
-          <div className={styles.navGroup}>
-            <button
-              type="button"
-              className={styles.navButton}
-              onClick={() => goToIndex(activeIndex - 1)}
-              aria-label="Show previous production"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <path d="M15 18 9 12l6-6" />
+        <div className={styles.actionGroup}>
+          <button
+            type="button"
+            className={styles.pauseButton}
+            onClick={() => setIsManualPaused((prev) => !prev)}
+            aria-label={isManualPaused ? 'Play carousel' : 'Pause carousel'}
+          >
+            {isManualPaused ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
               </svg>
-            </button>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              </svg>
+            )}
+          </button>
 
-            <button
-              type="button"
-              className={styles.navButton}
-              onClick={() => goToIndex(activeIndex + 1)}
-              aria-label="Show next production"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </button>
-          </div>
-        ) : null}
+          {productions.length > 1 ? (
+            <div className={styles.navGroup}>
+              <button
+                type="button"
+                className={styles.navButton}
+                onClick={() => goToIndex(activeIndex - 1)}
+                aria-label="Show previous production"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <path d="M15 18 9 12l6-6" />
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                className={styles.navButton}
+                onClick={() => goToIndex(activeIndex + 1)}
+                aria-label="Show next production"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

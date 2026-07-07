@@ -61,6 +61,7 @@ export default async function HomePage() {
             heading="Movies, TV shows, and web series shot at Cine Classic Studios"
             headingHighlight="Cine Classic Studios"
             description="A quick view of long-form storytelling and episodic productions that trust the studio for controlled builds, recurring schedules, and production-ready set support."
+            enableVideoPlayback
           />
         </MotionSection>
 

@@ -661,3 +661,71 @@
     transition: none;
   }
 }
+
+/* ─── Center Play Button Overlay ─── */
+.playOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.playOverlayIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.95);
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+  transform: scale(0.9);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card[data-active='true'] .playOverlay,
+.card:hover .playOverlay {
+  opacity: 1;
+}
+
+.card[data-active='true'] .playOverlayIcon,
+.card:hover .playOverlayIcon {
+  transform: scale(1);
+}
+
+/* ─── Golden Pause/Play Controls ─── */
+.actionGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.pauseButton {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  background: rgba(14, 14, 14, 0.72);
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.pauseButton:hover {
+  transform: translateY(-1px);
+  background: rgba(22, 22, 22, 0.88);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+}

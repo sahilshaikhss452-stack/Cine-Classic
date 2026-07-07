@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { IconBadge, SparkIcon } from '@/components/ui/icons';
 import type { Production, ProductionType } from '@/lib/ui/production';
-import { TYPE_ICONS } from '@/lib/ui/production';
+import { TYPE_ICONS, getYoutubeId } from '@/lib/ui/production';
 
 type FilterValue = 'All' | ProductionType;
 
@@ -26,12 +26,16 @@ function NetworkBadge({ name }: { name: string }) {
 }
 
 function ProductionCard({ prod, index, onClick }: { prod: Production; index: number; onClick: () => void }) {
+  const youtubeId = prod.videoUrl ? getYoutubeId(prod.videoUrl) : null;
+  const youtubeThumbnailUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : null;
+  const displayImage = prod.posterImage || youtubeThumbnailUrl;
+
   return (
     <div className="prod-card" role="button" tabIndex={0} onClick={onClick} onKeyDown={(event) => event.key === 'Enter' && onClick()} style={{ animationDelay: `${(index % 4) * 0.07}s` }}>
       <div className="prod-img-wrap">
         <div className="prod-img-inner">
-          {prod.posterImage ? (
-            <Image src={prod.posterImage} alt={`${prod.title} poster`} fill sizes="(max-width:600px) 100vw, (max-width:1024px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
+          {displayImage ? (
+            <Image src={displayImage} alt={`${prod.title} poster`} fill sizes="(max-width:600px) 100vw, (max-width:1024px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
           ) : (
             <div style={{ width: '100%', height: '100%', background: prod.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.22)', fontSize: '2rem', fontWeight: 700, letterSpacing: '0.14em' }}>{TYPE_ICONS[prod.type]}</div>
           )}
@@ -58,36 +62,10 @@ type VideoSource =
   | { kind: 'direct'; src: string }
   | { kind: 'external'; src: string };
 
-function getYoutubeEmbedUrl(videoUrl: string) {
-  try {
-    const url = new URL(videoUrl);
-    const hostname = url.hostname.replace(/^www\./, '');
-
-    if (hostname === 'youtu.be') {
-      const id = url.pathname.split('/').filter(Boolean)[0];
-      return id ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1` : null;
-    }
-
-    if (hostname.endsWith('youtube.com')) {
-      const watchId = url.searchParams.get('v');
-      if (watchId) {
-        return `https://www.youtube-nocookie.com/embed/${watchId}?autoplay=1&rel=0&modestbranding=1`;
-      }
-
-      const segments = url.pathname.split('/').filter(Boolean);
-      const candidate = segments[0] === 'embed' || segments[0] === 'shorts' || segments[0] === 'live' ? segments[1] : null;
-      return candidate ? `https://www.youtube-nocookie.com/embed/${candidate}?autoplay=1&rel=0&modestbranding=1` : null;
-    }
-  } catch {
-    return null;
-  }
-  return null;
-}
-
 function resolveVideoSource(videoUrl: string): VideoSource {
-  const youtubeEmbedUrl = getYoutubeEmbedUrl(videoUrl);
-  if (youtubeEmbedUrl) {
-    return { kind: 'youtube', src: youtubeEmbedUrl };
+  const id = getYoutubeId(videoUrl);
+  if (id) {
+    return { kind: 'youtube', src: `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1` };
   }
 
   try {
@@ -103,7 +81,11 @@ function resolveVideoSource(videoUrl: string): VideoSource {
 }
 
 function ProductionModal({ prod, onClose }: { prod: Production; onClose: () => void }) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
+
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
     };
@@ -131,6 +113,8 @@ function ProductionModal({ prod, onClose }: { prod: Production; onClose: () => v
         alignItems: 'center',
         justifyContent: 'center',
         padding: '1.25rem',
+        opacity: mounted ? 1 : 0,
+        transition: 'opacity 0.3s ease',
       }}
     >
       <div
@@ -143,6 +127,8 @@ function ProductionModal({ prod, onClose }: { prod: Production; onClose: () => v
           boxShadow: '0 40px 120px rgba(0,0,0,0.7)',
           overflow: 'hidden',
           position: 'relative',
+          transform: mounted ? 'scale(1)' : 'scale(0.95)',
+          transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         <button

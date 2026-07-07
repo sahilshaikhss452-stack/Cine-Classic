@@ -147,7 +147,7 @@ const PRODUCTION_FIELDS = `
     year,
     network,
     description,
-    // videoUrl,
+    videoUrl,
     "posterImage": posterImage.asset->url,
     "featured": coalesce(featured, false),
     "showOnMoviesTvCarousel": showOnMoviesTvCarousel,

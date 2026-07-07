@@ -43,13 +43,13 @@ export const productionSchema = defineType({
       type: 'image',
       options: { hotspot: true },
     }),
-    /* defineField({
+    defineField({
       name: 'videoUrl',
       title: 'YouTube / video URL',
       type: 'url',
-      description: 'Optional. Used for playable homepage carousels, especially the Music Videos / Ads rail.',
+      description: 'Optional YouTube link. If added, this production card can open a video modal on the homepage.',
       validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }),
-    }), */
+    }),
     defineField({
       name: 'featured',
       title: 'Featured production',

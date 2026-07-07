@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import HomeProductionsRail from '@/components/HomeProductionsRail';
 import type { Production } from '@/lib/ui/production';
+import { getYoutubeId } from '@/lib/ui/production';
 
 function renderHeading(heading: string, highlight?: string) {
   if (!highlight || !heading.includes(highlight)) {
@@ -27,37 +29,10 @@ type VideoSource =
   | { kind: 'direct'; src: string }
   | { kind: 'external'; src: string };
 
-function getYoutubeEmbedUrl(videoUrl: string) {
-  try {
-    const url = new URL(videoUrl);
-    const hostname = url.hostname.replace(/^www\./, '');
-
-    if (hostname === 'youtu.be') {
-      const id = url.pathname.split('/').filter(Boolean)[0];
-      return id ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1` : null;
-    }
-
-    if (hostname.endsWith('youtube.com')) {
-      const watchId = url.searchParams.get('v');
-      if (watchId) {
-        return `https://www.youtube-nocookie.com/embed/${watchId}?autoplay=1&rel=0&modestbranding=1`;
-      }
-
-      const segments = url.pathname.split('/').filter(Boolean);
-      const candidate = segments[0] === 'embed' || segments[0] === 'shorts' || segments[0] === 'live' ? segments[1] : null;
-      return candidate ? `https://www.youtube-nocookie.com/embed/${candidate}?autoplay=1&rel=0&modestbranding=1` : null;
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-}
-
 function resolveVideoSource(videoUrl: string): VideoSource {
-  const youtubeEmbedUrl = getYoutubeEmbedUrl(videoUrl);
-  if (youtubeEmbedUrl) {
-    return { kind: 'youtube', src: youtubeEmbedUrl };
+  const id = getYoutubeId(videoUrl);
+  if (id) {
+    return { kind: 'youtube', src: `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1` };
   }
 
   try {
@@ -73,7 +48,11 @@ function resolveVideoSource(videoUrl: string): VideoSource {
 }
 
 function ProductionVideoModal({ production, onClose }: { production: Production; onClose: () => void }) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
@@ -109,6 +88,8 @@ function ProductionVideoModal({ production, onClose }: { production: Production;
         alignItems: 'center',
         justifyContent: 'center',
         padding: '1.25rem',
+        opacity: mounted ? 1 : 0,
+        transition: 'opacity 0.3s ease',
       }}
     >
       <div
@@ -121,6 +102,8 @@ function ProductionVideoModal({ production, onClose }: { production: Production;
           boxShadow: '0 40px 120px rgba(0,0,0,0.7)',
           overflow: 'hidden',
           position: 'relative',
+          transform: mounted ? 'scale(1)' : 'scale(0.95)',
+          transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         <button
@@ -300,6 +283,7 @@ export default function Productions({
               productions={productions}
               ariaLabel={heading}
               onPlayProduction={enableVideoPlayback ? openVideo : undefined}
+              isPaused={!!selectedProduction}
             />
           </div>
 

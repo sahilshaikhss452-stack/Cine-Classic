@@ -33,3 +33,30 @@ export const TYPE_ICONS: Record<ProductionType, string> = {
   Advertisement: 'AD',
   'Music Video': 'MV',
 };
+
+export function getYoutubeId(videoUrl: string): string | null {
+  try {
+    const url = new URL(videoUrl);
+    const hostname = url.hostname.replace(/^www\./, '');
+
+    if (hostname === 'youtu.be') {
+      return url.pathname.split('/').filter(Boolean)[0] ?? null;
+    }
+
+    if (hostname.endsWith('youtube.com')) {
+      const watchId = url.searchParams.get('v');
+      if (watchId) {
+        return watchId;
+      }
+
+      const segments = url.pathname.split('/').filter(Boolean);
+      if (segments[0] === 'embed' || segments[0] === 'shorts' || segments[0] === 'live') {
+        return segments[1] ?? null;
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
