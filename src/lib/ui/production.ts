@@ -35,8 +35,14 @@ export const TYPE_ICONS: Record<ProductionType, string> = {
 };
 
 export function getYoutubeId(videoUrl: string): string | null {
+  if (!videoUrl) return null;
+
   try {
-    const url = new URL(videoUrl);
+    let urlStr = videoUrl.trim();
+    if (!/^https?:\/\//i.test(urlStr)) {
+      urlStr = `https://${urlStr}`;
+    }
+    const url = new URL(urlStr);
     const hostname = url.hostname.replace(/^www\./, '');
 
     if (hostname === 'youtu.be') {
