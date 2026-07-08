@@ -1,26 +1,15 @@
 .shell {
-  --rail-card-width: clamp(18.5rem, 30vw, 24rem);
+  --rail-card-width: clamp(21rem, 26vw, 27rem);
   position: relative;
   overflow: hidden;
-  border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    radial-gradient(circle at 18% 18%, rgba(212, 175, 55, 0.16), transparent 36%),
-    radial-gradient(circle at 84% 14%, rgba(255, 255, 255, 0.06), transparent 20%),
-    linear-gradient(180deg, rgba(18, 18, 18, 0.94) 0%, rgba(8, 8, 8, 0.98) 100%);
-  box-shadow:
-    0 34px 110px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  padding: clamp(1rem, 1.7vw, 1.4rem);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
 }
 
 .shell::before {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  border-radius: calc(2rem - 1px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  pointer-events: none;
+  display: none;
 }
 
 .viewportWrap {
@@ -79,7 +68,7 @@
 
 .card {
   position: relative;
-  min-height: clamp(29rem, 56vw, 40rem);
+  min-height: clamp(30rem, 36vw, 38rem);
   height: 100%;
   border-radius: 1.75rem;
   overflow: hidden;
@@ -509,17 +498,21 @@
 
 @media (max-width: 1023px) {
   .shell {
-    --rail-card-width: clamp(18rem, 62vw, 24rem);
-    border-radius: 1.7rem;
-    padding: 0.95rem;
+    --rail-card-width: clamp(19rem, 45vw, 23rem);
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
   }
 
   .shell::before {
-    border-radius: calc(1.7rem - 1px);
+    display: none;
   }
 
   .card {
-    min-height: clamp(27rem, 90vw, 38rem);
+    border-radius: 1.6rem;
+    min-height: clamp(26rem, 60vw, 32rem);
     opacity: 1;
     transform: none;
   }
