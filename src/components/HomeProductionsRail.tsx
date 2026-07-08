@@ -269,6 +269,33 @@ export default function HomeProductionsRail({
         <div className={`${styles.edgeFade} ${styles.edgeFadeLeft}`} />
         <div className={`${styles.edgeFade} ${styles.edgeFadeRight}`} />
 
+        {/* Floating Side Navigation Arrows */}
+        {productions.length > 1 ? (
+          <>
+            <button
+              type="button"
+              className={`${styles.floatingArrow} ${styles.arrowLeft}`}
+              onClick={() => goToIndex(activeIndex - 1)}
+              aria-label="Show previous production"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M15 18 9 12l6-6" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className={`${styles.floatingArrow} ${styles.arrowRight}`}
+              onClick={() => goToIndex(activeIndex + 1)}
+              aria-label="Show next production"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </>
+        ) : null}
+
         <div
           ref={viewportRef}
           className={styles.viewport}
@@ -293,103 +320,82 @@ export default function HomeProductionsRail({
 
               return (
                 <div key={production.id} className={styles.cardSlot}>
-                  <article
-                    ref={(node) => {
-                      cardRefs.current[index] = node;
-                    }}
-                    className={styles.card}
-                    data-active={isActive ? 'true' : 'false'}
+                  <div
+                    className={styles.cardWrapper}
                     onClick={hasVideoPreview ? () => onPlayProduction?.(production) : undefined}
-                    style={
-                      {
-                        '--card-gradient': production.gradient,
-                        cursor: hasVideoPreview ? 'pointer' : 'default',
-                      } as CSSProperties
-                    }
-                    aria-current={isActive}
+                    style={{ cursor: hasVideoPreview ? 'pointer' : 'default' }}
                   >
-                    <div className={styles.media}>
-                      <div className={styles.mediaBase} />
+                    <article
+                      ref={(node) => {
+                        cardRefs.current[index] = node;
+                      }}
+                      className={styles.card}
+                      data-active={isActive ? 'true' : 'false'}
+                      aria-current={isActive}
+                      style={
+                        {
+                          '--card-gradient': production.gradient,
+                        } as CSSProperties
+                      }
+                    >
+                      <div className={styles.media}>
+                        <div className={styles.mediaBase} />
 
-                      {displayImage ? (
-                        <Image
-                          src={displayImage}
-                          alt={`${production.title} poster`}
-                          fill
-                          sizes="(max-width: 767px) 82vw, (max-width: 1023px) 62vw, 30vw"
-                          className={styles.mediaImage}
-                        />
-                      ) : (
-                        <div className={styles.mediaIcon}>{TYPE_ICONS[production.type]}</div>
-                      )}
-
-                      <div className={styles.mediaMesh} />
-                      {hasVideoPreview && (
-                        <div className={styles.playOverlay}>
-                          <span className={styles.playOverlayIcon}>
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                              <path d="M8 5v14l11-7z" />
-                            </svg>
-                          </span>
-                        </div>
-                      )}
-                      <div className={styles.mediaGlow} />
-                    </div>
-
-                    <div className={styles.topRow}>
-                      <div className={styles.topLeft}>
-                        <span
-                          className={styles.typePill}
-                          style={{
-                            color: production.typeColor,
-                            borderColor: `${production.typeColor}44`,
-                          }}
-                        >
-                          {production.type}
-                        </span>
-
-                        {hasVideoPreview ? (
-                          <PlayButton
-                            label={`Play video preview for ${production.title}`}
-                            onClick={() => onPlayProduction?.(production)}
+                        {displayImage ? (
+                          <Image
+                            src={displayImage}
+                            alt={`${production.title} poster`}
+                            fill
+                            sizes="(max-width: 767px) 75vw, (max-width: 1023px) 30vw, 18vw"
+                            className={styles.mediaImage}
                           />
-                        ) : null}
+                        ) : (
+                          <div className={styles.mediaIcon}>{TYPE_ICONS[production.type]}</div>
+                        )}
+
+                        <div className={styles.mediaMesh} />
+                        {hasVideoPreview && (
+                          <div className={styles.playOverlay}>
+                            <span className={styles.playOverlayIcon}>
+                              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </span>
+                          </div>
+                        )}
+                        <div className={styles.mediaGlow} />
                       </div>
 
-                      <div className={styles.topRight}>
-                        {production.network ? (
-                          <span className={styles.networkBadge}>{production.network}</span>
-                        ) : null}
-                      </div>
-                    </div>
-
-                    <div className={styles.content}>
-                      <div className={styles.contentInner}>
-                        <div className={styles.kicker}>
-                          <span>{getCardKicker(production)}</span>
-                          <span className={styles.kickerDot} aria-hidden="true" />
-                          <span>{production.year}</span>
+                      <div className={styles.topRow}>
+                        <div className={styles.topLeft}>
+                          <span
+                            className={styles.typePill}
+                            style={{
+                              color: production.typeColor,
+                              borderColor: `${production.typeColor}44`,
+                            }}
+                          >
+                            {production.type}
+                          </span>
                         </div>
 
-                        <h3 className={styles.title}>{production.title}</h3>
-
-                        {production.description ? (
-                          <p className={styles.description}>{production.description}</p>
-                        ) : null}
-
-                        <div className={styles.footer}>
-                          <span className={styles.credit}>
-                            <span className={styles.creditLine} aria-hidden="true" />
-                            Shot at Cine Classic Studios
-                          </span>
-
-                          {hasVideoPreview ? (
-                            <span className={styles.footerHint}>Video preview available</span>
+                        <div className={styles.topRight}>
+                          {production.network ? (
+                            <span className={styles.networkBadge}>{production.network}</span>
                           ) : null}
                         </div>
                       </div>
+                    </article>
+
+                    <div className={styles.cardMetaBelow}>
+                      <h3 className={styles.belowTitle}>{production.title}</h3>
+                      <div className={styles.belowInfo}>
+                        <span>{getCardKicker(production)}</span>
+                        <span className={styles.belowDot} aria-hidden="true" />
+                        <span>{production.year}</span>
+                      </div>
                     </div>
-                  </article>
+                  </div>
                 </div>
               );
             })}
@@ -433,31 +439,7 @@ export default function HomeProductionsRail({
             )}
           </button>
 
-          {productions.length > 1 ? (
-            <div className={styles.navGroup}>
-              <button
-                type="button"
-                className={styles.navButton}
-                onClick={() => goToIndex(activeIndex - 1)}
-                aria-label="Show previous production"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                  <path d="M15 18 9 12l6-6" />
-                </svg>
-              </button>
 
-              <button
-                type="button"
-                className={styles.navButton}
-                onClick={() => goToIndex(activeIndex + 1)}
-                aria-label="Show next production"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </button>
-            </div>
-          ) : null}
         </div>
       </div>
     </div>
