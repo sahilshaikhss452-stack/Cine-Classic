@@ -97,6 +97,33 @@ export default function HomeProductionsRail({
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isManualPaused, setIsManualPaused] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const interactionTimeoutRef = useRef<number | null>(null);
+
+  const handleInteractionStart = () => {
+    if (interactionTimeoutRef.current) {
+      window.clearTimeout(interactionTimeoutRef.current);
+      interactionTimeoutRef.current = null;
+    }
+    setIsInteracting(true);
+  };
+
+  const handleInteractionEnd = () => {
+    if (interactionTimeoutRef.current) {
+      window.clearTimeout(interactionTimeoutRef.current);
+    }
+    interactionTimeoutRef.current = window.setTimeout(() => {
+      setIsInteracting(false);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (interactionTimeoutRef.current) {
+        window.clearTimeout(interactionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     cardRefs.current = cardRefs.current.slice(0, productions.length);
@@ -162,15 +189,14 @@ export default function HomeProductionsRail({
   }, [productions.length]);
 
   useEffect(() => {
-    if (productions.length < 2 || !isVisible || isHovered || isPaused || isManualPaused) {
+    if (productions.length < 2 || !isVisible || isHovered || isPaused || isManualPaused || isInteracting) {
       return;
     }
 
-    const intervalId = window.setInterval(() => {
-      if (window.innerWidth < 1024) {
-        return;
-      }
+    const isMobile = window.innerWidth < 768;
+    const delay = isMobile ? 3200 : 5200;
 
+    const intervalId = window.setInterval(() => {
       const viewport = viewportRef.current;
       const nextIndex = (activeIndex + 1) % productions.length;
       const nextCard = cardRefs.current[nextIndex];
@@ -184,10 +210,10 @@ export default function HomeProductionsRail({
       startTransition(() => {
         setActiveIndex(nextIndex);
       });
-    }, 5200);
+    }, delay);
 
     return () => window.clearInterval(intervalId);
-  }, [activeIndex, isHovered, isVisible, productions.length, isPaused, isManualPaused]);
+  }, [activeIndex, isHovered, isVisible, productions.length, isPaused, isManualPaused, isInteracting]);
 
   if (productions.length === 0) {
     return null;
@@ -248,6 +274,12 @@ export default function HomeProductionsRail({
           className={styles.viewport}
           tabIndex={0}
           onKeyDown={handleViewportKeyDown}
+          onTouchStart={handleInteractionStart}
+          onTouchEnd={handleInteractionEnd}
+          onTouchCancel={handleInteractionEnd}
+          onMouseDown={handleInteractionStart}
+          onMouseUp={handleInteractionEnd}
+          onMouseLeave={handleInteractionEnd}
         >
           <div className={styles.track}>
             <div className={styles.edgePad} aria-hidden="true" />
