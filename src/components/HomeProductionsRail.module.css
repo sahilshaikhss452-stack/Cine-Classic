@@ -520,6 +520,14 @@
     transform: none;
   }
 
+  .edgePad {
+    flex: 0 0 5%;
+  }
+
+  .cardSlot {
+    scroll-snap-align: start;
+  }
+
   .edgeFade {
     width: 2.4rem;
   }

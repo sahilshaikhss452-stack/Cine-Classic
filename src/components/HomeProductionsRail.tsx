@@ -14,34 +14,63 @@ interface HomeProductionsRailProps {
   isPaused?: boolean;
 }
 
-function getCenteredIndex(viewport: HTMLDivElement, cards: Array<HTMLElement | null>) {
-  const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
-  let closestIndex = 0;
-  let smallestDistance = Number.POSITIVE_INFINITY;
+function getActiveIndex(viewport: HTMLDivElement, cards: Array<HTMLElement | null>) {
+  const isMobile = window.innerWidth < 1024;
 
-  cards.forEach((card, index) => {
-    if (!card) {
-      return;
-    }
+  if (isMobile) {
+    const threshold = viewport.scrollLeft + 40;
+    let closestIndex = 0;
+    let smallestDistance = Number.POSITIVE_INFINITY;
 
-    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-    const distance = Math.abs(cardCenter - viewportCenter);
+    cards.forEach((card, index) => {
+      if (!card) {
+        return;
+      }
+      const distance = Math.abs(card.offsetLeft - threshold);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
 
-    if (distance < smallestDistance) {
-      smallestDistance = distance;
-      closestIndex = index;
-    }
-  });
+    return closestIndex;
+  } else {
+    const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
+    let closestIndex = 0;
+    let smallestDistance = Number.POSITIVE_INFINITY;
 
-  return closestIndex;
+    cards.forEach((card, index) => {
+      if (!card) {
+        return;
+      }
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - viewportCenter);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  }
 }
 
 function scrollCardIntoView(viewport: HTMLDivElement, card: HTMLElement) {
-  const targetLeft = card.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2;
-  viewport.scrollTo({
-    left: Math.max(0, targetLeft),
-    behavior: 'smooth',
-  });
+  const isMobile = window.innerWidth < 1024;
+
+  if (isMobile) {
+    const offset = viewport.clientWidth * 0.05;
+    viewport.scrollTo({
+      left: Math.max(0, card.offsetLeft - offset),
+      behavior: 'smooth',
+    });
+  } else {
+    const targetLeft = card.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2;
+    viewport.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: 'smooth',
+    });
+  }
 }
 
 function formatCounter(index: number, total: number) {
@@ -161,7 +190,7 @@ export default function HomeProductionsRail({
     const updateActiveIndex = () => {
       cancelAnimationFrame(frameId);
       frameId = window.requestAnimationFrame(() => {
-        const nextIndex = getCenteredIndex(viewport, cardRefs.current);
+        const nextIndex = getActiveIndex(viewport, cardRefs.current);
 
         startTransition(() => {
           setActiveIndex((currentIndex) => (currentIndex === nextIndex ? currentIndex : nextIndex));
