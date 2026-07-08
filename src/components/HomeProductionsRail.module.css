@@ -551,7 +551,21 @@
 
 @media (max-width: 767px) {
   .shell {
-    --rail-card-width: min(82vw, 20.5rem);
+    --rail-card-width: min(85vw, 22rem);
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .shell::before {
+    display: none;
+  }
+
+  .card {
+    border-radius: 1.5rem;
+    min-height: clamp(24rem, 110vw, 32rem);
   }
 
   .topRow {
@@ -614,16 +628,20 @@
 
 @media (max-width: 420px) {
   .shell {
-    border-radius: 1.45rem;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
   }
 
   .shell::before {
-    border-radius: calc(1.45rem - 1px);
+    display: none;
   }
 
   .card {
-    border-radius: 1.35rem;
-    min-height: clamp(25rem, 124vw, 34rem);
+    border-radius: 1.25rem;
+    min-height: clamp(23rem, 105vw, 29rem);
   }
 
   .topRow {
