@@ -117,7 +117,6 @@ function PlayButton({ onClick, label }: { onClick: () => void; label: string }) 
           <path d="M3 2.3v7.4L9.2 6 3 2.3Z" />
         </svg>
       </span>
-      Preview
     </button>
   );
 }
@@ -386,18 +385,14 @@ export default function HomeProductionsRail({
                         >
                           {production.type}
                         </span>
+                      </div>
 
+                      <div className={styles.topRight}>
                         {hasVideoPreview ? (
                           <PlayButton
                             label={`Play video preview for ${production.title}`}
                             onClick={() => onPlayProduction?.(production)}
                           />
-                        ) : null}
-                      </div>
-
-                      <div className={styles.topRight}>
-                        {production.network ? (
-                          <span className={styles.networkBadge}>{production.network}</span>
                         ) : null}
                       </div>
                     </div>
@@ -421,10 +416,6 @@ export default function HomeProductionsRail({
                             <span className={styles.creditLine} aria-hidden="true" />
                             Shot at Cine Classic Studios
                           </span>
-
-                          {hasVideoPreview ? (
-                            <span className={styles.footerHint}>Video preview available</span>
-                          ) : null}
                         </div>
                       </div>
                     </div>
