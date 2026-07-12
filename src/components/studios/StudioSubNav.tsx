@@ -4,23 +4,32 @@ import { useEffect, useMemo, useState } from 'react';
 
 type NavItem = {
   label: string;
-  href: '#gallery' | '#details' | '#booking';
+  href: '#gallery' | '#set-layout' | '#details' | '#booking';
   cta?: boolean;
 };
 
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Specs', href: '#details' },
-  { label: 'Book', href: '#booking', cta: true },
-] as const;
+interface Props {
+  hasGallery: boolean;
+  hasLayout: boolean;
+}
 
-export default function StudioSubNav() {
+export default function StudioSubNav({ hasGallery, hasLayout }: Props) {
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState('');
 
+  const navItems = useMemo<NavItem[]>(
+    () => [
+      ...(hasGallery ? [{ label: 'Gallery', href: '#gallery' as const }] : []),
+      ...(hasLayout ? [{ label: 'Layout', href: '#set-layout' as const }] : []),
+      { label: 'Specs', href: '#details' },
+      { label: 'Book', href: '#booking', cta: true },
+    ],
+    [hasGallery, hasLayout],
+  );
+
   const sectionIds = useMemo(
-    () => NAV_ITEMS.map((item) => item.href.replace('#', '')).filter((id) => id !== 'booking'),
-    [],
+    () => navItems.map((item) => item.href.replace('#', '')).filter((id) => id !== 'booking'),
+    [navItems],
   );
 
   useEffect(() => {
@@ -83,7 +92,7 @@ export default function StudioSubNav() {
       }}
     >
       <div className="studio-subnav__track">
-        {NAV_ITEMS.map((item) => {
+        {navItems.map((item) => {
           const id = item.href.replace('#', '');
           const isActive = active === id;
 
@@ -180,4 +189,3 @@ export default function StudioSubNav() {
     </nav>
   );
 }
-

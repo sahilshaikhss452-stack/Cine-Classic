@@ -4,9 +4,10 @@ import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import RevealProvider from '@/components/RevealProvider';
 import { loadSiteSettings } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Photoshoot Studio Mumbai | Cine Classic Studios',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Photoshoot Studio in Mumbai',
   description:
     'Looking for a photoshoot studio in Mumbai? Explore production-ready spaces for fashion, editorial, commercial, catalogue, and branded content shoots.',
   keywords: [
@@ -19,15 +20,8 @@ export const metadata: Metadata = {
     'brand shoot studio mumbai',
     'professional photography studio mumbai',
   ],
-  alternates: { canonical: '/photoshoot-studio-mumbai' },
-  openGraph: {
-    title: 'Photoshoot Studio Mumbai | Cine Classic Studios',
-    description:
-      'Production-ready photoshoot studio spaces in Mumbai for fashion, catalogue, brand, and commercial work.',
-    type: 'website',
-    locale: 'en_IN',
-  },
-};
+  path: '/photoshoot-studio-mumbai',
+});
 
 const SHOOT_TYPES = [
   { marker: '01', title: 'Fashion & editorial shoots', desc: 'Useful for lookbooks, campaign imagery, stylised portraiture, and multi-look fashion days that need controlled studio conditions.' },

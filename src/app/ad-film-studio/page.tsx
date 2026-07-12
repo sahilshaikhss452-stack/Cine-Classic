@@ -4,9 +4,10 @@ import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import RevealProvider from '@/components/RevealProvider';
 import { loadSiteSettings } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Ad Film Studio Mumbai | Cine Classic Studios',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Ad Film Studio in Mumbai',
   description:
     'Looking for an ad film studio in Mumbai? Explore production-ready studio sets for TV commercials, digital campaigns, brand films, and product shoots.',
   keywords: [
@@ -19,15 +20,8 @@ export const metadata: Metadata = {
     'corporate film studio mumbai',
     'commercial production studio mumbai',
   ],
-  alternates: { canonical: '/ad-film-studio' },
-  openGraph: {
-    title: 'Ad Film Studio Mumbai | Cine Classic Studios',
-    description:
-      'Production-ready studio spaces in Mumbai for TVCs, digital campaigns, brand films, and commercial shoots.',
-    type: 'website',
-    locale: 'en_IN',
-  },
-};
+  path: '/ad-film-studio',
+});
 
 const AD_TYPES = [
   { marker: '01', title: 'Television commercials', desc: 'A practical fit for controlled campaign shoots where timing, consistency, and studio logistics matter.' },

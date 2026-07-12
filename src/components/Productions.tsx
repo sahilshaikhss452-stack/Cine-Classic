@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
 import Link from 'next/link';
 import HomeProductionsRail from '@/components/HomeProductionsRail';
 import type { Production } from '@/lib/ui/production';

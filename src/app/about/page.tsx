@@ -5,25 +5,14 @@ import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
 import { ArrowRightIcon, CheckIcon, GridIcon, IconBadge, MessageCircleIcon, SparkIcon } from '@/components/ui/icons';
 import { loadSiteSettings } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'About Our Mumbai Production Studios',
   description:
     'Learn how Cine Classic Studios helps film, commercial, OTT, music video, and photography teams shortlist studio sets faster, plan recces smoothly, and book with confidence in Mumbai.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
-    description:
-      'A Mumbai studio rental business built for production teams that need clear set options, practical shoot planning, and faster booking decisions.',
-    url: '/about',
-    type: 'website',
-  },
-  twitter: {
-    title: 'About Cine Classic Studios | Mumbai Film & Photoshoot Studio Rental',
-    description:
-      'A Mumbai studio rental business built for production teams that need clear set options, practical shoot planning, and faster booking decisions.',
-  },
-};
+  path: '/about',
+});
 
 export const revalidate = 30;
 
@@ -168,7 +157,7 @@ export default async function AboutPage() {
                 A premium studio rental business designed to help teams <span style={{ color: 'var(--gold)' }}>assess fit and move faster</span>
               </h2>
               <p style={{ color: 'var(--gray)', lineHeight: 1.82, marginBottom: '1rem', fontSize: '1rem' }}>
-                This is not a generic portfolio-style studio website. The purpose of Cine Classic Studios is to make it easier for serious production teams to understand what each set offers, whether it suits the brief, and how quickly the booking conversation can move forward.
+                Cine Classic Studios helps production teams understand what each set offers, whether it suits the brief, and how quickly the booking conversation can move forward.
               </p>
               <p style={{ color: 'var(--gray)', lineHeight: 1.82, fontSize: '1rem' }}>
                 From recce planning to shoot coordination, the business is positioned around the questions real producers and location teams ask when time, logistics, and visual fit all matter at once.
@@ -229,7 +218,7 @@ export default async function AboutPage() {
                 Built for the people who need to answer one question quickly: <span style={{ color: 'var(--gold)' }}>can we shoot here?</span>
               </h2>
               <p style={{ color: 'var(--gray)', lineHeight: 1.8, maxWidth: '700px', margin: '0 auto' }}>
-                The website and studio experience are meant to support production decision-makers, not distract them. That means clearer set evaluation, better planning cues, and more direct next steps when a location looks right.
+                The studio experience is built around production decision-makers. That means clearer set evaluation, better planning cues, and more direct next steps when a location looks right.
               </p>
             </div>
 

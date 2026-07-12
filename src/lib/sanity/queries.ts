@@ -86,7 +86,11 @@ export const STUDIO_CARD_QUERY = `
     accentColor,
     gradient,
     "suitableFor": coalesce(suitable_for, []),
-    "heroImage": heroImage.asset->url,
+    "heroImage": coalesce(
+      heroImage.asset->url,
+      galleryImages[0].asset->url,
+      studioAreas[0].images[0].image.asset->url
+    ),
     "featured": coalesce(featured, false)
   }
 `;
@@ -114,7 +118,11 @@ export const STUDIO_DETAIL_QUERY = `
     "suitableFor": coalesce(suitable_for, []),
     "facilities": coalesce(facilities, []),
     "productions": coalesce(productions, []),
-    "heroImage": heroImage.asset->url,
+    "heroImage": coalesce(
+      heroImage.asset->url,
+      galleryImages[0].asset->url,
+      studioAreas[0].images[0].image.asset->url
+    ),
     "galleryImages": coalesce(galleryImages[].asset->url, []),
     "studioAreas": coalesce(studioAreas[]{
       _key,

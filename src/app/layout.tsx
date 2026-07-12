@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { SiteSettingsProvider } from '@/components/site/SiteSettingsProvider';
 import { loadSiteSettings } from '@/lib/sanity';
+import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -38,20 +39,21 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: settings.businessName }],
     creator: settings.businessName,
     publisher: settings.businessName,
-    metadataBase: new URL('https://cine-classic-nextjs.vercel.app'),
-    alternates: { canonical: '/' },
+    metadataBase: new URL(getSiteUrl()),
     openGraph: {
       title,
       description,
       type: 'website',
       locale: 'en_IN',
       siteName: settings.businessName,
-      url: 'https://cine-classic-nextjs.vercel.app',
+      url: getSiteUrl(),
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ['/opengraph-image'],
     },
     icons: { icon: '/images/logo.jpg', apple: '/images/logo.jpg' },
     robots: {
@@ -67,13 +69,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://cine-classic-nextjs.vercel.app/#organization',
+    '@id': absoluteUrl('/#organization'),
     name: settings.businessName,
     description:
       settings.defaultSeo?.description ??
       settings.tagline ??
       `${settings.businessName} offers production-ready studio sets in Mumbai.`,
-    url: 'https://cine-classic-nextjs.vercel.app',
+    url: getSiteUrl(),
     telephone: settings.phone,
     email: settings.email,
     address: {
@@ -84,13 +86,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       postalCode: settings.postalCode,
       addressCountry: settings.country,
     },
-    openingHoursSpecification: settings.hoursText
-      ? {
-          '@type': 'OpeningHoursSpecification',
-          description: settings.hoursText,
-        }
-      : undefined,
-    image: settings.logoUrl ?? 'https://cine-classic-nextjs.vercel.app/images/logo.jpg',
+    openingHours: settings.hoursText,
+    image: settings.logoUrl ?? absoluteUrl('/images/logo.jpg'),
+    hasMap: settings.mapsUrl,
     sameAs: settings.socialLinks.map((link) => link.url),
   };
 

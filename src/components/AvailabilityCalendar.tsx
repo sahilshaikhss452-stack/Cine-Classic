@@ -38,7 +38,7 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
   const cells = useMemo(() => generateCalendar(viewMonth.year, viewMonth.month), [viewMonth]);
 
   function dayKey(day: number) {
-    return `${viewMonth.year}-${viewMonth.month}-${day}`;
+    return `${viewMonth.year}-${String(viewMonth.month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   }
 
   function isPast(day: number) {
@@ -80,6 +80,17 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
 
   const canGoPrev = !(viewMonth.year === today.getFullYear() && viewMonth.month === today.getMonth());
 
+  function continueToInquiry() {
+    window.dispatchEvent(
+      new CustomEvent('booking-prefill', {
+        detail: {
+          studio: selectedStudio,
+          dates: [...selectedDates].sort(),
+        },
+      }),
+    );
+  }
+
   return (
     <section className="mob-section" style={{ background: 'var(--dark2)', padding: '120px 5%' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
@@ -120,8 +131,10 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
               }}
             >
               <button
+                type="button"
                 onClick={prevMonth}
                 disabled={!canGoPrev}
+                aria-label="Show previous month"
                 style={{
                   background: 'none',
                   border: '1px solid rgba(255,255,255,0.08)',
@@ -152,7 +165,9 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
               </span>
 
               <button
+                type="button"
                 onClick={nextMonth}
+                aria-label="Show next month"
                 style={{
                   background: 'none',
                   border: '1px solid rgba(255,255,255,0.08)',
@@ -183,7 +198,7 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
             <div className="cal-grid">
               {cells.map((day, index) => {
                 if (day === null) {
-                  return <div key={`empty-${index}`} className="cal-day empty" />;
+                  return <div key={`empty-${index}`} className="cal-day empty" aria-hidden="true" />;
                 }
 
                 const key = dayKey(day);
@@ -192,9 +207,17 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
                 const cellClass = `cal-day ${past ? 'booked' : selected ? 'selected' : 'available'}`;
 
                 return (
-                  <div key={key} className={cellClass} onClick={() => toggleDate(day)}>
+                  <button
+                    key={key}
+                    type="button"
+                    className={cellClass}
+                    onClick={() => toggleDate(day)}
+                    disabled={past}
+                    aria-pressed={selected}
+                    aria-label={`${selected ? 'Remove' : 'Select'} ${MONTH_NAMES[viewMonth.month]} ${day}, ${viewMonth.year}`}
+                  >
                     {day}
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -256,7 +279,7 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
               <select className="form-input" value={selectedStudio} onChange={(event) => setSelectedStudio(event.target.value)}>
                 <option value="">Any suitable studio</option>
                 {studios.map((studio) => (
-                  <option key={studio.slug} value={studio.slug}>
+                  <option key={studio.slug} value={studio.title}>
                     {studio.icon} {studio.title}
                   </option>
                 ))}
@@ -292,8 +315,7 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
               ) : (
                 <div>
                   {selectedDates.map((dateKey) => {
-                    const [year, month, day] = dateKey.split('-').map(Number);
-                    const date = new Date(year, month, day);
+                    const date = new Date(`${dateKey}T00:00:00`);
 
                     return (
                       <div
@@ -332,7 +354,12 @@ export default function AvailabilityCalendar({ studios = [] }: Props) {
               )}
             </div>
 
-            <a href="#booking" className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', textDecoration: 'none' }}>
+            <a
+              href="#booking"
+              onClick={continueToInquiry}
+              className="btn-primary"
+              style={{ width: '100%', justifyContent: 'center', display: 'flex', textDecoration: 'none' }}
+            >
               Continue to Inquiry {'->'}
             </a>
             <p style={{ color: 'var(--gray)', fontSize: '0.75rem', textAlign: 'center', marginTop: '0.75rem' }}>

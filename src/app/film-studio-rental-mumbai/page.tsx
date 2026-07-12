@@ -5,32 +5,24 @@ import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
 import { loadFaqsByPlacement, loadSiteSettings, loadStudioCards } from '@/lib/sanity';
 import { fmtSize } from '@/lib/studio-utils';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
 export const revalidate = 30;
 
-export const metadata: Metadata = {
-  title: 'Film Studio Rental Mumbai | Cine Classic Studios',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Film Studio Rental in Mumbai',
   description:
-    'Looking for film studio rental in Mumbai? Explore production-ready studio sets near Film City for films, OTT shoots, commercials, and long-form storytelling.',
+    'Looking for film studio rental in Mumbai? Explore production-ready studio sets for films, OTT shoots, commercials, and long-form storytelling.',
   keywords: [
     'film studio rental mumbai',
     'film studio on rent mumbai',
     'film set rental mumbai',
     'production studio mumbai',
-    'film studio near film city mumbai',
-    'studio on rent goregaon',
     'commercial shoot studio mumbai',
     'ott shoot location mumbai',
   ],
-  alternates: { canonical: '/film-studio-rental-mumbai' },
-  openGraph: {
-    title: 'Film Studio Rental Mumbai | Cine Classic Studios',
-    description:
-      'Production-ready studio sets in Mumbai for films, OTT shoots, commercials, and recce-driven production planning.',
-    type: 'website',
-    locale: 'en_IN',
-  },
-};
+  path: '/film-studio-rental-mumbai',
+});
 
 const WHY_CHOOSE = [
   {
@@ -41,7 +33,7 @@ const WHY_CHOOSE = [
   {
     marker: '02',
     title: 'Mumbai access for active production teams',
-    desc: 'Useful for crews that need a practical studio option in the Goregaon and Film City production corridor.',
+    desc: 'Useful for crews that need a practical studio option with a clear map, recce process, and production-vehicle access.',
   },
   {
     marker: '03',
@@ -129,7 +121,7 @@ export default async function FilmStudioRentalMumbaiPage() {
                     maxWidth: '520px',
                   }}
                 >
-                  Cine Classic Studios helps producers, line teams, and directors move from recce to booking faster with controlled studio sets, practical logistics, and a smoother inquiry process near Film City.
+                  Cine Classic Studios helps producers, line teams, and directors move from recce to booking faster with controlled studio sets, practical logistics, and a smoother inquiry process in Mumbai.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   <a href="/#booking" className="btn-primary">

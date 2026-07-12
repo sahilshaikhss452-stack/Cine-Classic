@@ -13,7 +13,10 @@ interface Props {
 }
 
 export default function StudioHero({ studio }: Props) {
-  const heroSrc = studio.heroImage;
+  const heroSrc =
+    studio.heroImage ??
+    studio.studioAreas.flatMap((area) => area.images).find((image) => image.imageUrl)?.imageUrl ??
+    studio.galleryImages[0];
   const [heroBgFailed, setHeroBgFailed] = useState(false);
   const topUseCases = studio.suitableFor.slice(0, 3);
 
@@ -356,7 +359,7 @@ export default function StudioHero({ studio }: Props) {
               View Production Specs
             </a>
 
-            <DownloadSetDeckButton studio={studio} variant="ghost" size="md" />
+            <DownloadSetDeckButton studio={studio} variant="outline" size="md" />
           </div>
 
           <div

@@ -51,7 +51,7 @@ function buildDisplayAreas(studio: SanityStudio): DisplayArea[] {
     return structuredAreas;
   }
 
-  if (studio.galleryImages.length === 0) {
+  if (studio.galleryImages.length === 0 && !studio.heroImage) {
     return [];
   }
 
@@ -61,7 +61,7 @@ function buildDisplayAreas(studio: SanityStudio): DisplayArea[] {
       name: 'Overview',
       description: studio.setLayoutDescription,
       isLegacy: true,
-      images: studio.galleryImages.map((imageUrl, index) => ({
+      images: (studio.galleryImages.length > 0 ? studio.galleryImages : [studio.heroImage!]).map((imageUrl, index) => ({
         id: `legacy-${index}`,
         imageUrl,
         alt: `${studio.title} overview image ${index + 1}`,

@@ -4,9 +4,10 @@ import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import RevealProvider from '@/components/RevealProvider';
 import { loadSiteSettings } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Music Video Shoot Location Mumbai | Cine Classic Studios',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Music Video Shoot Location in Mumbai',
   description:
     'Looking for a music video shoot location in Mumbai? Explore production-ready studio sets for performance, narrative, and stylised music video shoots.',
   keywords: [
@@ -19,15 +20,8 @@ export const metadata: Metadata = {
     'indie music video studio mumbai',
     'performance shoot studio mumbai',
   ],
-  alternates: { canonical: '/music-video-shoot-location' },
-  openGraph: {
-    title: 'Music Video Shoot Location Mumbai | Cine Classic Studios',
-    description:
-      'Production-ready music video locations in Mumbai for performance shoots, narrative looks, and stylised visual treatments.',
-    type: 'website',
-    locale: 'en_IN',
-  },
-};
+  path: '/music-video-shoot-location',
+});
 
 const MV_SETS = [
   { marker: '01', title: 'Marketplace looks', desc: 'Useful for songs that need layered backgrounds, crowd energy, and the visual texture of an active public-facing set.' },

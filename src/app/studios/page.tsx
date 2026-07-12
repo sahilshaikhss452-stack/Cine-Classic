@@ -5,14 +5,16 @@ import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
 import StudioCard from '@/components/studios/StudioCard';
 import { loadStudioCards } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
 export const revalidate = 30;
 
-export const metadata: Metadata = {
-  title: 'Studios | Cine Classic Studios Mumbai',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Production-Ready Studio Sets in Mumbai',
   description:
     'Explore production-ready studio sets in Mumbai for films, commercials, OTT shoots, music videos, and photoshoots.',
-};
+  path: '/studios',
+});
 
 export default async function StudiosPage() {
   const studios = await loadStudioCards();

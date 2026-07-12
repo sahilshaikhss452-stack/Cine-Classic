@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import About from '@/components/About';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import Booking from '@/components/Booking';
@@ -13,7 +14,7 @@ import RevealProvider from '@/components/RevealProvider';
 import Sets from '@/components/Sets';
 import ShootTimeline from '@/components/ShootTimeline';
 import Testimonials from '@/components/Testimonials';
-import MotionSection from '@/components/motion/MotionSection';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import {
   loadHomeMoviesTvProductions,
   loadHomeMusicAdsProductions,
@@ -26,6 +27,13 @@ import {
 } from '@/lib/sanity';
 
 export const revalidate = 30;
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Film & Photoshoot Studio Rental in Mumbai',
+  description:
+    'Explore production-ready studio sets in Mumbai for films, OTT shoots, commercials, music videos, and photoshoots. Check availability or arrange a recce.',
+  path: '/',
+});
 
 export default async function HomePage() {
   const [homePage, studios, studioNavItems, moviesTvDocs, musicAdsDocs, testimonialDocs] = await Promise.all([
@@ -51,59 +59,39 @@ export default async function HomePage() {
         <Hero content={homePage} />
         <NetworkLogoStrip />
 
-        <MotionSection>
-          <Sets studios={studios} />
-        </MotionSection>
+        <Sets studios={studios} />
 
-        <MotionSection>
-          <Productions
-            productions={moviesTvProductions}
-            heading="Movies, TV shows, and web series shot at Cine Classic Studios"
-            headingHighlight="Cine Classic Studios"
-            description="A quick view of long-form storytelling and episodic productions that trust the studio for controlled builds, recurring schedules, and production-ready set support."
-            enableVideoPlayback
-          />
-        </MotionSection>
+        <ProductionTypes />
 
-        <MotionSection>
-          <Productions
-            productions={musicAdsProductions}
-            sectionId="productions-music-ads"
-            heading="Music videos and ad campaigns shot at Cine Classic Studios"
-            headingHighlight="Cine Classic Studios"
-            description="A focused reel of commercial campaigns and music-led shoots that rely on the studio for art direction, polished frames, and fast-moving production days."
-            emptyDescription="Publish Music Video or Advertisement productions with a video URL in Sanity to populate this playable homepage rail."
-            enableVideoPlayback
-          />
-        </MotionSection>
+        <Productions
+          productions={moviesTvProductions}
+          heading="Movies, TV shows, and web series shot at Cine Classic Studios"
+          headingHighlight="Cine Classic Studios"
+          description="A quick view of long-form storytelling and episodic productions that trust the studio for controlled builds, recurring schedules, and production-ready set support."
+          enableVideoPlayback
+        />
 
-        <MotionSection>
-          <Testimonials testimonials={testimonials} />
-        </MotionSection>
+        <Productions
+          productions={musicAdsProductions}
+          sectionId="productions-music-ads"
+          heading="Music videos and ad campaigns shot at Cine Classic Studios"
+          headingHighlight="Cine Classic Studios"
+          description="A focused reel of commercial campaigns and music-led shoots that rely on the studio for art direction, polished frames, and fast-moving production days."
+          emptyDescription="Publish Music Video or Advertisement productions with a video URL in Sanity to populate this playable homepage rail."
+          enableVideoPlayback
+        />
 
-        <MotionSection>
-          <ProductionTypes />
-        </MotionSection>
+        <Testimonials testimonials={testimonials} />
 
-        <MotionSection>
-          <ShootTimeline />
-        </MotionSection>
+        <ShootTimeline />
 
-        <MotionSection>
-          <AvailabilityCalendar studios={studios} />
-        </MotionSection>
+        <AvailabilityCalendar studios={studios} />
 
-        <MotionSection>
-          <About content={homePage} />
-        </MotionSection>
+        <Booking studios={studioNavItems} />
 
-        <MotionSection>
-          <LocationSection />
-        </MotionSection>
+        <About content={homePage} />
 
-        <MotionSection>
-          <Booking studios={studioNavItems} />
-        </MotionSection>
+        <LocationSection />
       </main>
 
       <Footer />

@@ -5,17 +5,14 @@ import Navbar from '@/components/Navbar';
 import RevealProvider from '@/components/RevealProvider';
 import { ArrowRightIcon, CheckIcon, SparkIcon } from '@/components/ui/icons';
 import { loadFacilities } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Studio Facilities | Cine Classic Studios Mumbai',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Studio Facilities & Production Support',
   description:
     'Explore the production facilities, operational support, and crew-ready infrastructure available at Cine Classic Studios in Mumbai.',
-  alternates: { canonical: '/facilities' },
-  openGraph: {
-    title: 'Studio Facilities | Cine Classic Studios Mumbai',
-    description: 'Production support and infrastructure designed for film, commercial, OTT, and photoshoot teams in Mumbai.',
-  },
-};
+  path: '/facilities',
+});
 
 export const revalidate = 30;
 

@@ -210,7 +210,7 @@ export default function StudioBooking({ studio }: Props) {
               </Field>
 
               <Field label="WhatsApp / Phone" htmlFor="b-phone">
-                <input className="form-input" type="tel" id="b-phone" name="phone" placeholder={settings.phone} required />
+                <input className="form-input" type="tel" id="b-phone" name="phone" placeholder="+91 98765 43210" autoComplete="tel" required />
               </Field>
 
               <Field label="Preferred Shoot Date" htmlFor="b-date">

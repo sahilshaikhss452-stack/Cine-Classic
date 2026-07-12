@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
 import {
@@ -50,9 +50,28 @@ interface Props {
 export default function Booking({ studios }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [selectedStudio, setSelectedStudio] = useState('');
+  const [preferredDates, setPreferredDates] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const today = new Date().toISOString().split('T')[0];
   const settings = useSiteSettings();
+
+  useEffect(() => {
+    function handlePrefill(event: Event) {
+      const detail = (event as CustomEvent<{ studio?: string; dates?: string[] }>).detail;
+      const nextDates = Array.isArray(detail?.dates) ? detail.dates.filter(Boolean).sort() : [];
+
+      if (detail?.studio) {
+        setSelectedStudio(detail.studio);
+      }
+      if (nextDates.length > 0) {
+        setPreferredDates(nextDates);
+      }
+    }
+
+    window.addEventListener('booking-prefill', handlePrefill);
+    return () => window.removeEventListener('booking-prefill', handlePrefill);
+  }, []);
 
   const contactItems = useMemo(
     () => [
@@ -93,6 +112,8 @@ export default function Booking({ studios }: Props) {
       setErrorMessage(null);
       setStatus('success');
       formRef.current?.reset();
+      setSelectedStudio('');
+      setPreferredDates([]);
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'We could not send your inquiry right now.');
       setStatus('error');
@@ -305,10 +326,10 @@ export default function Booking({ studios }: Props) {
 
             <div className="form-row-2">
               <FormGroup label="Email Address" htmlFor="email">
-                <input className="form-input" type="email" id="email" name="email" placeholder={settings.email} />
+                <input className="form-input" type="email" id="email" name="email" placeholder="producer@company.com" autoComplete="email" />
               </FormGroup>
               <FormGroup label="WhatsApp / Phone" htmlFor="phone">
-                <input className="form-input" type="tel" id="phone" name="phone" placeholder={settings.phone} required />
+                <input className="form-input" type="tel" id="phone" name="phone" placeholder="+91 98765 43210" autoComplete="tel" required />
               </FormGroup>
             </div>
 
@@ -326,7 +347,14 @@ export default function Booking({ studios }: Props) {
                 </select>
               </FormGroup>
               <FormGroup label="Studio Interest" htmlFor="studio">
-                <select className="form-input" id="studio" name="studio" required defaultValue="">
+                <select
+                  className="form-input"
+                  id="studio"
+                  name="studio"
+                  required
+                  value={selectedStudio}
+                  onChange={(event) => setSelectedStudio(event.target.value)}
+                >
                   <option value="" disabled>
                     Select studio...
                   </option>
@@ -343,7 +371,16 @@ export default function Booking({ studios }: Props) {
 
             <div className="form-row-2">
               <FormGroup label="Shoot Date (From)" htmlFor="dateFrom">
-                <input className="form-input" type="date" id="dateFrom" name="dateFrom" min={today} required />
+                <input
+                  className="form-input"
+                  type="date"
+                  id="dateFrom"
+                  name="dateFrom"
+                  min={today}
+                  value={preferredDates[0] ?? ''}
+                  onChange={(event) => setPreferredDates(event.target.value ? [event.target.value] : [])}
+                  required
+                />
               </FormGroup>
               <FormGroup label="Crew Size" htmlFor="crewSize">
                 <select className="form-input" id="crewSize" name="crewSize" defaultValue="">
@@ -358,6 +395,13 @@ export default function Booking({ studios }: Props) {
                 </select>
               </FormGroup>
             </div>
+
+            <input type="hidden" name="preferredDate" value={preferredDates.join(', ')} />
+            {preferredDates.length > 1 && (
+              <p aria-live="polite" className="booking-prefill-note">
+                {preferredDates.length} preferred dates will be included with this inquiry.
+              </p>
+            )}
 
             <FormGroup label="Duration / Package" htmlFor="package">
               <select className="form-input" id="package" name="package" defaultValue="">

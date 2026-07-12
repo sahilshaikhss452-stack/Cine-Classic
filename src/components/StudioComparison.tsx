@@ -201,11 +201,10 @@ export default function StudioComparison({ studios = [] }: Props) {
             Request a Guided Studio Tour <span>→</span>
           </a>
           <p style={{ color: 'var(--gray)', fontSize: '0.82rem', marginTop: '1rem' }}>
-            Can't decide? Our team will help you choose the right space for your production.
+            Can&apos;t decide? Our team will help you choose the right space for your production.
           </p>
         </div>
       </div>
     </section>
   );
 }
-

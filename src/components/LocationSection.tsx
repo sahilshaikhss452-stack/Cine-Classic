@@ -24,9 +24,9 @@ const ACCESS_POINTS = [
   },
   {
     icon: TrainIcon,
-    title: 'By Metro',
+    title: 'By Rail & Metro',
     lines: [
-      'Metro connectivity through the Goregaon East side of the production belt',
+      'Confirm the most practical station and route for your crew before the recce',
       'Last-mile auto and cab access available',
     ],
   },
@@ -72,7 +72,7 @@ export default async function LocationSection() {
             Positioned for <span style={{ color: 'var(--gold)' }}>Mumbai production movement</span>
           </h2>
           <p style={{ color: 'var(--gray)', maxWidth: '580px', margin: '0 auto', lineHeight: 1.8 }}>
-            Close to Film City and the wider production corridor, with access that works for crew call times, equipment movement, and last-minute location logistics.
+            Review the exact map, road approach, and production-vehicle access before planning crew call times and equipment movement.
           </p>
         </div>
 
@@ -109,7 +109,7 @@ export default async function LocationSection() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-              {['Near Film City', settings.city, 'Truck-friendly access'].filter(Boolean).map((tag) => (
+              {[settings.addressLine2, settings.city, 'Production vehicle access'].filter(Boolean).map((tag) => (
                 <span
                   key={tag}
                   style={{

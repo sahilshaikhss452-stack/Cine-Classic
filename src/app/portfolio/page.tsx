@@ -7,15 +7,15 @@ import FeaturedProduction from '@/components/portfolio/FeaturedProduction';
 import PortfolioHero from '@/components/portfolio/PortfolioHero';
 import ProductionCompanies from '@/components/portfolio/ProductionCompanies';
 import ProductionExplorer from '@/components/portfolio/ProductionExplorer';
-import ProductionTimeline from '@/components/portfolio/ProductionTimeline';
-import TrustedProductions from '@/components/portfolio/TrustedProductions';
 import { loadFeaturedProduction, loadProductions, mapProductionToUi, mapProductionsToUi } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Portfolio | Productions Shot at Cine Classic Studios Mumbai',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Productions Shot at Our Mumbai Studios',
   description:
     'Explore films, web series, commercials, and digital productions shot at Cine Classic Studios in Mumbai.',
-};
+  path: '/portfolio',
+});
 
 export const revalidate = 30;
 
@@ -33,8 +33,6 @@ export default async function PortfolioPage() {
         <PortfolioHero totalProductions={productions.length} />
         <ProductionExplorer productions={productions} />
         <FeaturedProduction production={featuredProduction} />
-        <ProductionTimeline productions={productions} />
-        <TrustedProductions productions={productions} />
         <ProductionCompanies />
         <PortfolioBookingCTA />
       </main>

@@ -373,7 +373,7 @@ export function SetDeckDocument({ studio, businessName, contactPhone, contactEma
           <View style={s.footerLeft}>
             <Text style={s.footerBrand}>{businessName}</Text>
             <Text style={s.footerTagline}>
-              Mumbai&apos;s Premier Film Studio Complex  ·  Near Film City, Goregaon East
+              Production-ready studio sets in Mumbai
             </Text>
           </View>
           <View style={s.footerRight}>

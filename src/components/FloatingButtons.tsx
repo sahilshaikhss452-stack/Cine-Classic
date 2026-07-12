@@ -6,6 +6,7 @@ import { useSiteSettings } from '@/components/site/SiteSettingsProvider';
 
 export default function FloatingButtons() {
   const [visible, setVisible] = useState(false);
+  const [overBooking, setOverBooking] = useState(false);
   const settings = useSiteSettings();
   const pathname = usePathname();
   const bookingHref = pathname === '/' ? '#booking' : '/#booking';
@@ -19,14 +20,28 @@ export default function FloatingButtons() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const bookingSection = document.getElementById('booking');
+    if (!bookingSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setOverBooking(entry.isIntersecting),
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+    );
+    observer.observe(bookingSection);
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const shouldShow = visible && !overBooking;
+
   return (
     <div
       className="float-btns"
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        opacity: shouldShow ? 1 : 0,
+        transform: shouldShow ? 'translateY(0)' : 'translateY(20px)',
         transition: 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1)',
-        pointerEvents: visible ? 'auto' : 'none',
+        pointerEvents: shouldShow ? 'auto' : 'none',
       }}
     >
       <a

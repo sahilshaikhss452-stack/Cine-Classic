@@ -12,6 +12,7 @@ import StudioHero from '@/components/studios/StudioHero';
 import StudioSubNav from '@/components/studios/StudioSubNav';
 import SetLayout from '@/components/studios/SetLayout';
 import { loadStudioBySlug, loadStudioCards, loadStudioSlugs } from '@/lib/sanity';
+import { buildPageMetadata } from '@/lib/page-metadata';
 
 export const revalidate = 30;
 export const dynamicParams = true;
@@ -37,23 +38,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageDescription = studio.seo?.description ?? studio.tagline ?? undefined;
   const canonicalPath = `/studios/${slug}`;
 
-  return {
+  return buildPageMetadata({
     title: pageTitle,
-    description: pageDescription,
-    alternates: {
-      canonical: canonicalPath,
-    },
-    openGraph: {
-      title: pageTitle,
-      description: pageDescription,
-      type: 'website',
-      url: canonicalPath,
-    },
-    twitter: {
-      title: pageTitle,
-      description: pageDescription,
-    },
-  };
+    description:
+      pageDescription ??
+      `Explore ${studio.title} at Cine Classic Studios, including gallery views, production specifications, and booking options.`,
+    path: canonicalPath,
+    image: studio.heroImage ?? '/opengraph-image',
+  });
 }
 
 export default async function StudioPage({ params }: Props) {
@@ -70,7 +62,14 @@ export default async function StudioPage({ params }: Props) {
     <>
       <RevealProvider />
       <Navbar />
-      <StudioSubNav />
+      <StudioSubNav
+        hasGallery={
+          studio.galleryImages.length > 0 ||
+          studio.studioAreas.some((area) => area.images.some((image) => Boolean(image.imageUrl))) ||
+          Boolean(studio.heroImage)
+        }
+        hasLayout={Boolean(studio.setLayoutImage)}
+      />
 
       <main>
         <StudioHero studio={studio} />
